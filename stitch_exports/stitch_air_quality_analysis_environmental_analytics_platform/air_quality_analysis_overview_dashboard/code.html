@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AirQuality Pulse - Environmental Data Analytics</title>
+<!-- Google Fonts: Space Grotesk & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration verbatim from Design System -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#2c344c",
+            "surface-dim": "#0a1228",
+            "secondary-container": "#00a6e0",
+            "surface-container": "#171f35",
+            "on-secondary-container": "#00374d",
+            "on-error": "#690005",
+            "inverse-primary": "#006b5f",
+            "error": "#ffb4ab",
+            "secondary": "#7bd0ff",
+            "on-surface": "#dbe1ff",
+            "surface-bright": "#313850",
+            "tertiary-fixed": "#ffddb8",
+            "primary-container": "#00a392",
+            "on-surface-variant": "#bcc9c6",
+            "on-primary-fixed": "#00201c",
+            "on-tertiary-container": "#3e2400",
+            "on-primary": "#003731",
+            "surface-tint": "#4fdbc8",
+            "on-primary-fixed-variant": "#005048",
+            "on-error-container": "#ffdad6",
+            "on-background": "#dbe1ff",
+            "surface-container-low": "#131b31",
+            "on-tertiary-fixed-variant": "#653e00",
+            "tertiary-container": "#ca8100",
+            "on-tertiary-fixed": "#2a1700",
+            "tertiary": "#ffb95f",
+            "surface-container-lowest": "#050d23",
+            "error-container": "#93000a",
+            "primary-fixed": "#71f8e4",
+            "outline-variant": "#3d4947",
+            "on-tertiary": "#472a00",
+            "on-secondary": "#00354a",
+            "primary-fixed-dim": "#4fdbc8",
+            "surface-container-high": "#222940",
+            "background": "#0a1228",
+            "surface-variant": "#2c344c",
+            "secondary-fixed-dim": "#7bd0ff",
+            "outline": "#879391",
+            "on-secondary-fixed-variant": "#004c69",
+            "tertiary-fixed-dim": "#ffb95f",
+            "secondary-fixed": "#c4e7ff",
+            "surface": "#0a1228",
+            "on-primary-container": "#00302a",
+            "on-secondary-fixed": "#001e2c",
+            "inverse-surface": "#dbe1ff",
+            "inverse-on-surface": "#283047",
+            "primary": "#4fdbc8"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {},
+          "fontFamily": {
+            "headline": [
+              "Space Grotesk"
+            ],
+            "display": [
+              "Space Grotesk"
+            ],
+            "body": [
+              "Inter"
+            ],
+            "label": [
+              "Inter"
+            ]
+          },
+          "fontSize": {}
+        },
+      },
+    }
+  </script>
+<style>
+    /* Pulse glow keyframe */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.9; transform: scale(1); filter: drop-shadow(0 0 6px #4fdbc8); }
+      50% { opacity: 0.4; transform: scale(0.96); filter: drop-shadow(0 0 1px #4fdbc8); }
+    }
+    .animate-pulse-glow {
+      animation: pulseGlow 2.5s infinite ease-in-out;
+    }
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a1228;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #222940;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3d4947;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
+<!-- TOP APP BAR / WEB HEADER (Exact Shared Component adherence) -->
+<header class="w-full bg-surface-container-low border-b border-outline-variant/30 sticky top-0 z-50 shadow-sm dark:shadow-none">
+<div class="w-full px-6 flex items-center justify-between mx-auto">
+<!-- Brand Logo / Product Anchor -->
+<div class="flex items-center gap-6 py-3">
+<a class="font-headline text-lg font-bold text-on-surface flex items-center gap-2 group" href="#">
+<div class="relative flex items-center justify-center w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/50 text-primary group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-xl animate-pulse-glow">switch_account</span>
+<span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-primary ring-2 ring-surface-container-low"></span>
+</div>
+<div class="flex flex-col">
+<span class="leading-none text-base font-headline font-bold tracking-tight text-on-surface">AirQuality Pulse</span>
+<span class="text-[10px] text-on-surface-variant font-label tracking-wide mt-0.5">Environmental Data Analytics (BCA Minor Project)</span>
+</div>
+</a>
+<!-- Desktop Navigation Items -->
+<nav class="hidden lg:flex items-center gap-6 ml-4 font-headline text-sm font-medium tracking-tight">
+<!-- Active Nav Item -->
+<a class="text-primary border-b-2 border-primary font-semibold py-4 flex items-center gap-1.5 transition-all duration-200" href="#">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_#4fdbc8]"></span>
+            Overview Dashboard
+          </a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">
+            Live AQI Stations
+          </a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">
+            Historical Analytics
+          </a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">
+            City Comparison
+          </a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">
+            Data Quality Audits
+          </a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">
+            Methodology &amp; Sources
+          </a>
+</nav>
+</div>
+<!-- Right Control Cluster: Status Chip, Sync Timestamp, Alert Badge, Icons -->
+<div class="flex items-center gap-3">
+<!-- Station Network Status -->
+<div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-high border border-outline-variant/40 text-xs font-label">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="text-on-surface font-medium">Active: 42 Demo Stations</span>
+</div>
+<!-- Sync Timestamp -->
+<div class="hidden xl:flex items-center gap-1.5 text-xs text-on-surface-variant font-label px-2">
+<span class="material-symbols-outlined text-sm text-outline">sync</span>
+<span>Oct 20, 2026 11:30 AM (Demo)</span>
+</div>
+<!-- Warning Pill Alert -->
+<div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-tertiary-container/20 border border-tertiary/40 text-[11px] font-label font-semibold text-tertiary tracking-wide uppercase">
+<span class="material-symbols-outlined text-xs">science</span>
+<span>DEMO / SIMULATED DATASET</span>
+</div>
+<!-- Trailing Action Icons -->
+<div class="flex items-center gap-1 border-l border-outline-variant/30 pl-3 ml-1">
+<button class="p-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all active:scale-95" title="Refresh Live Feeds">
+<span class="material-symbols-outlined text-lg">sync</span>
+</button>
+<button class="p-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all active:scale-95 relative" title="System Alerts">
+<span class="material-symbols-outlined text-lg">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-secondary rounded-full"></span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- MAIN CANVAS -->
+<main class="flex-1 w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+<!-- SUBHEADER / QUICK STATS BAR -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-2 border-b border-outline-variant/20">
+<div>
+<h1 class="text-xl md:text-2xl font-headline font-bold text-on-surface flex items-center gap-2">
+          CPCB Simulated Telemetry Overview
+          <span class="text-xs font-normal font-label px-2.5 py-0.5 rounded-full bg-surface-container-high text-primary border border-primary/30">Release 2.4-Eval</span>
+</h1>
+<p class="text-xs text-on-surface-variant font-body mt-0.5">Comprehensive real-time ambient particulate ingestion, calibrated against standard National Ambient Air Quality Standards (NAAQS).</p>
+</div>
+<div class="flex items-center gap-2 self-start md:self-auto">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/50 text-xs font-label text-on-surface transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm text-secondary">file_download</span>
+          Export Report (.CSV)
+        </button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-on-primary-container font-headline font-semibold text-xs transition-all hover:bg-primary-fixed active:scale-95 shadow-[0_0_12px_rgba(79,219,200,0.3)]">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">tune</span>
+          Telemetry Calibration
+        </button>
+</div>
+</div>
+<!-- GLOBAL METRIC CARDS (Top 5-Card Responsive Grid) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+<!-- Card 1: National Average AQI -->
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/30 relative overflow-hidden flex flex-col justify-between group hover:border-primary/50 transition-all shadow-sm">
+<div class="flex items-center justify-between text-xs font-label text-on-surface-variant">
+<span class="font-medium">National Average AQI</span>
+<span class="p-1 rounded bg-surface-container text-primary">
+<span class="material-symbols-outlined text-sm">equalizer</span>
+</span>
+</div>
+<div class="my-2 flex items-baseline justify-between">
+<span class="font-headline text-3xl font-bold tracking-tight text-on-surface">142</span>
+<span class="text-[11px] font-label font-semibold px-2 py-0.5 rounded-full bg-tertiary-container/30 text-tertiary border border-tertiary/40">Moderate</span>
+</div>
+<div class="flex items-center justify-between text-[11px] font-label pt-2 border-t border-outline-variant/20">
+<span class="flex items-center gap-0.5 text-primary font-medium">
+<span class="material-symbols-outlined text-xs">trending_down</span>
+            -4.2% <span class="text-on-surface-variant font-normal">from yesterday</span>
+</span>
+<!-- Mini SVG sparkline -->
+<svg class="w-14 h-5 stroke-primary fill-none overflow-visible" viewbox="0 0 50 20">
+<path d="M0,15 Q10,12 18,17 T32,8 T50,5" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- Card 2: Most Polluted City Today -->
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/30 relative overflow-hidden flex flex-col justify-between group hover:border-error/40 transition-all shadow-sm">
+<div class="flex items-center justify-between text-xs font-label text-on-surface-variant">
+<span>Most Polluted City (Demo)</span>
+<span class="p-1 rounded bg-surface-container text-error">
+<span class="material-symbols-outlined text-sm">warning</span>
+</span>
+</div>
+<div class="my-2 flex items-baseline justify-between">
+<div>
+<div class="font-headline text-lg font-bold text-on-surface">Delhi NCR</div>
+<div class="font-headline text-2xl font-bold text-error tracking-tight">AQI 268</div>
+</div>
+<span class="text-[11px] font-label font-semibold px-2 py-0.5 rounded-full bg-error-container/40 text-error border border-error/40">Poor</span>
+</div>
+<div class="flex items-center justify-between text-[11px] font-label pt-2 border-t border-outline-variant/20 text-on-surface-variant">
+<span>Dominant: <strong class="text-on-surface font-semibold">PM2.5</strong></span>
+<span class="text-error font-mono font-medium">182 µg/m³</span>
+</div>
+</div>
+<!-- Card 3: Cleanest Monitored City -->
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/30 relative overflow-hidden flex flex-col justify-between group hover:border-primary/50 transition-all shadow-sm">
+<div class="flex items-center justify-between text-xs font-label text-on-surface-variant">
+<span>Cleanest Monitored City</span>
+<span class="p-1 rounded bg-surface-container text-primary">
+<span class="material-symbols-outlined text-sm">nature</span>
+</span>
+</div>
+<div class="my-2 flex items-baseline justify-between">
+<div>
+<div class="font-headline text-lg font-bold text-on-surface truncate max-w-[130px]">Thiruvananthapuram</div>
+<div class="font-headline text-2xl font-bold text-primary tracking-tight">AQI 38</div>
+</div>
+<span class="text-[11px] font-label font-semibold px-2 py-0.5 rounded-full bg-primary-container/30 text-primary border border-primary/40">Good</span>
+</div>
+<div class="flex items-center justify-between text-[11px] font-label pt-2 border-t border-outline-variant/20 text-on-surface-variant">
+<span>Coastal buffer index</span>
+<span class="text-primary font-semibold">High (94%)</span>
+</div>
+</div>
+<!-- Card 4: Primary Active Pollutant -->
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/30 relative overflow-hidden flex flex-col justify-between group hover:border-secondary/50 transition-all shadow-sm">
+<div class="flex items-center justify-between text-xs font-label text-on-surface-variant">
+<span>Primary Active Pollutant</span>
+<span class="p-1 rounded bg-surface-container text-secondary">
+<span class="material-symbols-outlined text-sm">cloud</span>
+</span>
+</div>
+<div class="my-2 flex items-baseline justify-between">
+<div>
+<div class="font-headline text-sm font-semibold text-secondary">Particulate Matter</div>
+<div class="font-headline text-2xl font-bold text-on-surface tracking-tight">PM2.5</div>
+</div>
+<span class="font-mono text-base font-bold text-secondary">68.4 <span class="text-xs font-normal">µg/m³</span></span>
+</div>
+<div class="text-[10px] font-label pt-2 border-t border-outline-variant/20 text-tertiary flex items-center justify-between">
+<span>Exceeds WHO 24h (15 µg)</span>
+<span class="text-on-surface-variant">PM10: 112.1</span>
+</div>
+</div>
+<!-- Card 5: Total Monitored Records in DB -->
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/30 relative overflow-hidden flex flex-col justify-between group hover:border-outline transition-all shadow-sm">
+<div class="flex items-center justify-between text-xs font-label text-on-surface-variant">
+<span>Total Monitored Records</span>
+<span class="p-1 rounded bg-surface-container text-outline">
+<span class="material-symbols-outlined text-sm">database</span>
+</span>
+</div>
+<div class="my-2">
+<div class="font-headline text-2xl font-bold text-on-surface tracking-tight">124,850</div>
+<div class="text-[11px] font-label text-on-surface-variant">Cleaned CPCB Archive</div>
+</div>
+<div class="flex items-center gap-1.5 text-[11px] font-label pt-2 border-t border-outline-variant/20 text-primary">
+<span class="material-symbols-outlined text-xs">verified</span>
+<span class="truncate">100% Validated (Demo Ingestion)</span>
+</div>
+</div>
+</section>
+<!-- MAIN ANALYTICAL SECTION (2-Column Grid: 8 Cols Left, 4 Cols Right) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- ================= LEFT COLUMN (8 COLS) ================= -->
+<div class="lg:col-span-8 space-y-6">
+<!-- 1. National AQI Historical Trend (30-Day Moving Average) -->
+<div class="p-5 rounded-2xl bg-surface-container-low border border-outline-variant/30 shadow-md">
+<!-- Chart Header & Filters -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-outline-variant/20">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="text-base font-headline font-bold text-on-surface">National AQI Historical Trend (30-Day Moving Average)</h2>
+<span class="text-[10px] font-label uppercase px-2 py-0.5 rounded bg-surface-container-high text-primary border border-primary/20">Demo Data Preview</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-0.5">Simulated trend based on seasonal CPCB historical archives with NAAQS standard threshold bands</p>
+</div>
+<!-- Time-Range Pills -->
+<div class="flex items-center bg-surface-container-lowest p-1 rounded-lg border border-outline-variant/30 text-xs font-label self-start sm:self-auto">
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface transition-colors">7D</button>
+<button class="px-2.5 py-1 rounded bg-primary text-on-primary-container font-semibold shadow-sm">30D</button>
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface transition-colors">90D</button>
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface transition-colors">1Y</button>
+</div>
+</div>
+<!-- SVG Chart Area with CPCB Threshold Bands -->
+<div class="relative w-full h-[320px] mt-4 font-mono select-none">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 760 280">
+<defs>
+<!-- Area Gradient for Main AQI Curve -->
+<lineargradient id="aqiAreaGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#4fdbc8" stop-opacity="0.38"></stop>
+<stop offset="60%" stop-color="#38bdf8" stop-opacity="0.12"></stop>
+<stop offset="100%" stop-color="#0a1228" stop-opacity="0.0"></stop>
+</lineargradient>
+<!-- Subtle Band Gradients -->
+<lineargradient id="bandVeryPoor" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#93000a" stop-opacity="0.16"></stop>
+<stop offset="100%" stop-color="#93000a" stop-opacity="0.06"></stop>
+</lineargradient>
+<lineargradient id="bandPoor" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#ca8100" stop-opacity="0.12"></stop>
+<stop offset="100%" stop-color="#ca8100" stop-opacity="0.04"></stop>
+</lineargradient>
+<lineargradient id="bandModerate" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#ffb95f" stop-opacity="0.09"></stop>
+<stop offset="100%" stop-color="#ffb95f" stop-opacity="0.02"></stop>
+</lineargradient>
+</defs>
+<!-- Threshold Background Bands (Y: 0 to 400 scale) -->
+<!-- Very Poor (301 - 400): y=0 to y=65 -->
+<rect fill="url(#bandVeryPoor)" height="65" width="705" x="55" y="0"></rect>
+<line stroke="#93000a" stroke-dasharray="3,3" stroke-opacity="0.4" stroke-width="1" x1="55" x2="760" y1="65" y2="65"></line>
+<!-- Poor (201 - 300): y=65 to y=130 -->
+<rect fill="url(#bandPoor)" height="65" width="705" x="55" y="65"></rect>
+<line stroke="#ca8100" stroke-dasharray="3,3" stroke-opacity="0.35" stroke-width="1" x1="55" x2="760" y1="130" y2="130"></line>
+<!-- Moderate (101 - 200): y=130 to y=195 -->
+<rect fill="url(#bandModerate)" height="65" width="705" x="55" y="130"></rect>
+<line stroke="#ffb95f" stroke-dasharray="3,3" stroke-opacity="0.3" stroke-width="1" x1="55" x2="760" y1="195" y2="195"></line>
+<!-- Satisfactory & Good (0 - 100): y=195 to y=250 -->
+<rect fill="#4fdbc8" fill-opacity="0.03" height="55" width="705" x="55" y="195"></rect>
+<line stroke="#4fdbc8" stroke-dasharray="2,2" stroke-opacity="0.25" stroke-width="1" x1="55" x2="760" y1="225" y2="225"></line>
+<!-- Y-Axis Labels -->
+<text fill="#879391" font-size="10" text-anchor="end" x="45" y="12">400</text>
+<text fill="#879391" font-size="10" text-anchor="end" x="45" y="70">300</text>
+<text fill="#879391" font-size="10" text-anchor="end" x="45" y="135">200</text>
+<text fill="#879391" font-size="10" text-anchor="end" x="45" y="200">100</text>
+<text fill="#879391" font-size="10" text-anchor="end" x="45" y="252">0</text>
+<!-- X-Axis Baseline Gridline -->
+<line stroke="#3d4947" stroke-width="1" x1="55" x2="760" y1="250" y2="250"></line>
+<!-- Vertical Date Gridlines (Light) -->
+<line stroke="#222940" stroke-dasharray="2,2" stroke-width="1" x1="150" x2="150" y1="0" y2="250"></line>
+<line stroke="#222940" stroke-dasharray="2,2" stroke-width="1" x1="270" x2="270" y1="0" y2="250"></line>
+<line stroke="#222940" stroke-dasharray="2,2" stroke-width="1" x1="390" x2="390" y1="0" y2="250"></line>
+<line stroke="#222940" stroke-dasharray="2,2" stroke-width="1" x1="510" x2="510" y1="0" y2="250"></line>
+<line stroke="#222940" stroke-dasharray="2,2" stroke-width="1" x1="630" x2="630" y1="0" y2="250"></line>
+<!-- AQI Historical Area Path -->
+<path d="M 55,188 
+                       C 85,182 120,170 150,158 
+                       C 180,146 210,165 240,155 
+                       C 270,145 300,122 330,135 
+                       C 360,148 390,180 420,172 
+                       C 450,164 480,140 510,130 
+                       C 540,120 570,145 600,152 
+                       C 630,158 660,168 690,162 
+                       C 720,156 740,160 760,155 
+                       L 760,250 L 55,250 Z" fill="url(#aqiAreaGrad)"></path>
+<!-- AQI Historical Line Stroke -->
+<path d="M 55,188 
+                       C 85,182 120,170 150,158 
+                       C 180,146 210,165 240,155 
+                       C 270,145 300,122 330,135 
+                       C 360,148 390,180 420,172 
+                       C 450,164 480,140 510,130 
+                       C 540,120 570,145 600,152 
+                       C 630,158 660,168 690,162 
+                       C 720,156 740,160 760,155" fill="none" filter="drop-shadow(0 0 5px rgba(79,219,200,0.5))" stroke="#4fdbc8" stroke-width="2.5"></path>
+<!-- Secondary 7-Day Moving Avg Line (Dashed Cyan) -->
+<path d="M 55,195 Q 200,165 350,142 T 600,158 T 760,150" fill="none" opacity="0.8" stroke="#7bd0ff" stroke-dasharray="4,3" stroke-width="1.5"></path>
+<!-- Interactive Tooltip Marker at Day 28 (x=690, y=162) -->
+<line stroke="#4fdbc8" stroke-dasharray="2,2" stroke-width="1.5" x1="690" x2="690" y1="30" y2="250"></line>
+<circle class="cursor-pointer" cx="690" cy="162" fill="#4fdbc8" r="5" stroke="#0a1228" stroke-width="2"></circle>
+<circle cx="690" cy="162" fill="none" opacity="0.6" r="9" stroke="#4fdbc8" stroke-width="1"></circle>
+<!-- Tooltip Bubble Box -->
+<g transform="translate(620, 68)">
+<rect fill="#171f35" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.6))" height="52" rx="6" stroke="#4fdbc8" stroke-width="1" width="135"></rect>
+<text fill="#bcc9c6" font-family="Inter" font-size="9" x="10" y="18">Oct 18 • Day 28 (Demo)</text>
+<text fill="#dbe1ff" font-family="Space Grotesk" font-size="12" font-weight="700" x="10" y="34">AQI: 142</text>
+<text fill="#ca8100" font-family="Inter" font-size="10" font-weight="600" x="68" y="34">Moderate</text>
+<text fill="#7bd0ff" font-family="Inter" font-size="8" x="10" y="46">PM2.5: 68 µg/m³</text>
+</g>
+<!-- X-Axis Date Markings -->
+<text fill="#879391" font-size="10" text-anchor="middle" x="55" y="268">Sep 21</text>
+<text fill="#879391" font-size="10" text-anchor="middle" x="190" y="268">Sep 28</text>
+<text fill="#879391" font-size="10" text-anchor="middle" x="330" y="268">Oct 05</text>
+<text fill="#879391" font-size="10" text-anchor="middle" x="470" y="268">Oct 12</text>
+<text fill="#879391" font-size="10" text-anchor="middle" x="610" y="268">Oct 19</text>
+<text fill="#4fdbc8" font-size="10" font-weight="600" text-anchor="middle" x="745" y="268">Today</text>
+</svg>
+</div>
+<!-- Bottom CPCB Classifications Legend Strip -->
+<div class="mt-4 pt-3 border-t border-outline-variant/20 flex flex-wrap items-center justify-between gap-3 text-xs font-label">
+<span class="text-on-surface-variant font-medium">CPCB Bands:</span>
+<div class="flex flex-wrap items-center gap-3">
+<span class="flex items-center gap-1.5">
+<span class="w-3 h-2 rounded-sm bg-primary"></span>
+<span class="text-on-surface">Good (0-50)</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="w-3 h-2 rounded-sm bg-secondary"></span>
+<span class="text-on-surface">Satisfactory (51-100)</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="w-3 h-2 rounded-sm bg-tertiary"></span>
+<span class="text-on-surface">Moderate (101-200)</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="w-3 h-2 rounded-sm bg-tertiary-container"></span>
+<span class="text-on-surface">Poor (201-300)</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="w-3 h-2 rounded-sm bg-error"></span>
+<span class="text-on-surface">Very Poor / Severe (301+)</span>
+</span>
+</div>
+</div>
+</div>
+<!-- 2. Daily Pollutant Concentration Breakdown (Stacked Bar Visual) -->
+<div class="p-5 rounded-2xl bg-surface-container-low border border-outline-variant/30 shadow-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-outline-variant/20">
+<div>
+<h2 class="text-base font-headline font-bold text-on-surface">Daily Pollutant Concentration Breakdown</h2>
+<p class="text-xs text-on-surface-variant mt-0.5">7-Day particulate and gaseous components measured across active urban telemetry hubs (µg/m³)</p>
+</div>
+<!-- Pollutant Legend Toggles -->
+<div class="flex flex-wrap items-center gap-2 text-xs font-label">
+<label class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container border border-outline-variant/40 cursor-pointer">
+<span class="w-2.5 h-2.5 rounded-sm bg-primary"></span>
+<span class="text-on-surface">PM2.5</span>
+</label>
+<label class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container border border-outline-variant/40 cursor-pointer">
+<span class="w-2.5 h-2.5 rounded-sm bg-secondary"></span>
+<span class="text-on-surface">PM10</span>
+</label>
+<label class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container border border-outline-variant/40 cursor-pointer">
+<span class="w-2.5 h-2.5 rounded-sm bg-[#6366f1]"></span>
+<span class="text-on-surface">NO2</span>
+</label>
+<label class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container border border-outline-variant/40 cursor-pointer">
+<span class="w-2.5 h-2.5 rounded-sm bg-[#8b5cf6]"></span>
+<span class="text-on-surface">SO2</span>
+</label>
+<label class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container border border-outline-variant/40 cursor-pointer">
+<span class="w-2.5 h-2.5 rounded-sm bg-tertiary"></span>
+<span class="text-on-surface">CO</span>
+</label>
+</div>
+</div>
+<!-- Stacked Bars Visual Container -->
+<div class="grid grid-cols-7 gap-3 sm:gap-4 pt-6 pb-2 items-end h-56">
+<!-- Mon -->
+<div class="flex flex-col items-center h-full justify-end group">
+<div class="text-[10px] font-mono text-on-surface-variant mb-1 group-hover:text-primary transition-colors">188</div>
+<div class="w-full max-w-[42px] flex flex-col-reverse rounded-t overflow-hidden bg-surface-container-high transition-transform group-hover:scale-[1.02]">
+<div class="h-14 bg-primary" title="PM2.5: 58 µg/m³"></div>
+<div class="h-16 bg-secondary" title="PM10: 82 µg/m³"></div>
+<div class="h-8 bg-[#6366f1]" title="NO2: 30 µg/m³"></div>
+<div class="h-4 bg-[#8b5cf6]" title="SO2: 12 µg/m³"></div>
+<div class="h-3 bg-tertiary" title="CO: 6 µg/m³"></div>
+</div>
+<span class="text-xs font-label text-on-surface-variant mt-2 font-medium">Mon</span>
+</div>
+<!-- Tue -->
+<div class="flex flex-col items-center h-full justify-end group">
+<div class="text-[10px] font-mono text-on-surface-variant mb-1 group-hover:text-primary transition-colors">214</div>
+<div class="w-full max-w-[42px] flex flex-col-reverse rounded-t overflow-hidden bg-surface-container-high transition-transform group-hover:scale-[1.02]">
+<div class="h-16 bg-primary" title="PM2.5: 72 µg/m³"></div>
+<div class="h-18 bg-secondary" title="PM10: 94 µg/m³"></div>
+<div class="h-9 bg-[#6366f1]" title="NO2: 32 µg/m³"></div>
+<div class="h-4 bg-[#8b5cf6]" title="SO2: 10 µg/m³"></div>
+<div class="h-3 bg-tertiary" title="CO: 6 µg/m³"></div>
+</div>
+<span class="text-xs font-label text-on-surface-variant mt-2 font-medium">Tue</span>
+</div>
+<!-- Wed -->
+<div class="flex flex-col items-center h-full justify-end group">
+<div class="text-[10px] font-mono text-on-surface-variant mb-1 group-hover:text-primary transition-colors">248</div>
+<div class="w-full max-w-[42px] flex flex-col-reverse rounded-t overflow-hidden bg-surface-container-high transition-transform group-hover:scale-[1.02]">
+<div class="h-20 bg-primary" title="PM2.5: 86 µg/m³"></div>
+<div class="h-20 bg-secondary" title="PM10: 104 µg/m³"></div>
+<div class="h-10 bg-[#6366f1]" title="NO2: 38 µg/m³"></div>
+<div class="h-5 bg-[#8b5cf6]" title="SO2: 12 µg/m³"></div>
+<div class="h-4 bg-tertiary" title="CO: 8 µg/m³"></div>
+</div>
+<span class="text-xs font-label text-on-surface-variant mt-2 font-medium">Wed</span>
+</div>
+<!-- Thu -->
+<div class="flex flex-col items-center h-full justify-end group">
+<div class="text-[10px] font-mono text-on-surface-variant mb-1 group-hover:text-primary transition-colors">192</div>
+<div class="w-full max-w-[42px] flex flex-col-reverse rounded-t overflow-hidden bg-surface-container-high transition-transform group-hover:scale-[1.02]">
+<div class="h-14 bg-primary" title="PM2.5: 62 µg/m³"></div>
+<div class="h-16 bg-secondary" title="PM10: 84 µg/m³"></div>
+<div class="h-8 bg-[#6366f1]" title="NO2: 28 µg/m³"></div>
+<div class="h-4 bg-[#8b5cf6]" title="SO2: 11 µg/m³"></div>
+<div class="h-3 bg-tertiary" title="CO: 7 µg/m³"></div>
+</div>
+<span class="text-xs font-label text-on-surface-variant mt-2 font-medium">Thu</span>
+</div>
+<!-- Fri -->
+<div class="flex flex-col items-center h-full justify-end group">
+<div class="text-[10px] font-mono text-on-surface-variant mb-1 group-hover:text-primary transition-colors">230</div>
+<div class="w-full max-w-[42px] flex flex-col-reverse rounded-t overflow-hidden bg-surface-container-high transition-transform group-hover:scale-[1.02]">
+<div class="h-18 bg-primary" title="PM2.5: 78 µg/m³"></div>
+<div class="h-18 bg-secondary" title="PM10: 96 µg/m³"></div>
+<div class="h-9 bg-[#6366f1]" title="NO2: 34 µg/m³"></div>
+<div class="h-5 bg-[#8b5cf6]" title="SO2: 13 µg/m³"></div>
+<div class="h-4 bg-tertiary" title="CO: 9 µg/m³"></div>
+</div>
+<span class="text-xs font-label text-on-surface-variant mt-2 font-medium">Fri</span>
+</div>
+<!-- Sat -->
+<div class="flex flex-col items-center h-full justify-end group">
+<div class="text-[10px] font-mono text-on-surface-variant mb-1 group-hover:text-primary transition-colors">168</div>
+<div class="w-full max-w-[42px] flex flex-col-reverse rounded-t overflow-hidden bg-surface-container-high transition-transform group-hover:scale-[1.02]">
+<div class="h-12 bg-primary" title="PM2.5: 50 µg/m³"></div>
+<div class="h-14 bg-secondary" title="PM10: 74 µg/m³"></div>
+<div class="h-7 bg-[#6366f1]" title="NO2: 26 µg/m³"></div>
+<div class="h-4 bg-[#8b5cf6]" title="SO2: 11 µg/m³"></div>
+<div class="h-3 bg-tertiary" title="CO: 7 µg/m³"></div>
+</div>
+<span class="text-xs font-label text-on-surface-variant mt-2 font-medium">Sat</span>
+</div>
+<!-- Sun (Today) -->
+<div class="flex flex-col items-center h-full justify-end group relative">
+<span class="absolute -top-6 text-[9px] font-headline font-semibold px-1.5 py-0.5 rounded bg-primary text-on-primary-container">TODAY</span>
+<div class="text-[10px] font-mono text-primary font-bold mb-1">154</div>
+<div class="w-full max-w-[42px] flex flex-col-reverse rounded-t overflow-hidden bg-surface-container-high ring-1 ring-primary transition-transform group-hover:scale-[1.02] shadow-[0_0_12px_rgba(79,219,200,0.25)]">
+<div class="h-10 bg-primary" title="PM2.5: 44 µg/m³"></div>
+<div class="h-14 bg-secondary" title="PM10: 70 µg/m³"></div>
+<div class="h-6 bg-[#6366f1]" title="NO2: 24 µg/m³"></div>
+<div class="h-4 bg-[#8b5cf6]" title="SO2: 10 µg/m³"></div>
+<div class="h-3 bg-tertiary" title="CO: 6 µg/m³"></div>
+</div>
+<span class="text-xs font-label text-primary font-semibold mt-2">Sun</span>
+</div>
+</div>
+<!-- Insight note -->
+<div class="mt-3 text-[11px] font-label text-on-surface-variant bg-surface-container/60 p-2.5 rounded-lg flex items-center justify-between border border-outline-variant/20">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-secondary">info</span>
+              Weekend vehicular curbs caused a <strong class="text-primary font-medium">28.3% decline</strong> in overall particulate accumulation across industrial belts.
+            </span>
+<span class="text-[10px] font-mono text-outline">NAAQS Calibrated</span>
+</div>
+</div>
+</div>
+<!-- ================= RIGHT COLUMN (4 COLS) ================= -->
+<div class="lg:col-span-4 space-y-6">
+<!-- 1. CPCB AQI Category Distribution (Donut & Breakdown) -->
+<div class="p-5 rounded-2xl bg-surface-container-low border border-outline-variant/30 shadow-md flex flex-col justify-between">
+<div class="pb-3 border-b border-outline-variant/20 flex items-center justify-between">
+<div>
+<h2 class="text-base font-headline font-bold text-on-surface">CPCB AQI Category Distribution</h2>
+<p class="text-xs text-on-surface-variant mt-0.5">Real-time status across monitored stations</p>
+</div>
+<span class="material-symbols-outlined text-outline text-base">pie_chart</span>
+</div>
+<!-- Circular Donut SVG Presentation -->
+<div class="relative w-44 h-44 mx-auto my-4 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
+<!-- Background Ring -->
+<circle cx="50" cy="50" fill="none" r="38" stroke="#171f35" stroke-width="12"></circle>
+<!-- Segment: Good 22% (Circumference ~ 238.76 -> 22% = 52.5) -->
+<circle cx="50" cy="50" fill="none" r="38" stroke="#4fdbc8" stroke-dasharray="52.5 186.26" stroke-dashoffset="0" stroke-width="12"></circle>
+<!-- Segment: Satisfactory 34% (34% = 81.18) -->
+<circle cx="50" cy="50" fill="none" r="38" stroke="#7bd0ff" stroke-dasharray="81.18 157.58" stroke-dashoffset="-52.5" stroke-width="12"></circle>
+<!-- Segment: Moderate 28% (28% = 66.85) -->
+<circle cx="50" cy="50" fill="none" r="38" stroke="#ffb95f" stroke-dasharray="66.85 171.91" stroke-dashoffset="-133.68" stroke-width="12"></circle>
+<!-- Segment: Poor 12% (12% = 28.65) -->
+<circle cx="50" cy="50" fill="none" r="38" stroke="#ca8100" stroke-dasharray="28.65 210.11" stroke-dashoffset="-200.53" stroke-width="12"></circle>
+<!-- Segment: Very Poor 4% (4% = 9.55) -->
+<circle cx="50" cy="50" fill="none" r="38" stroke="#ffb4ab" stroke-dasharray="9.55 229.21" stroke-dashoffset="-229.18" stroke-width="12"></circle>
+</svg>
+<!-- Center Donut Text -->
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+<span class="font-headline text-2xl font-bold text-on-surface leading-none">42</span>
+<span class="text-[10px] font-label text-on-surface-variant uppercase tracking-wider mt-0.5">Stations</span>
+<span class="text-[9px] font-mono text-primary mt-0.5">Total Sample</span>
+</div>
+</div>
+<!-- Category Breakdown List -->
+<div class="space-y-2 pt-2 border-t border-outline-variant/20 text-xs font-label">
+<!-- Good -->
+<div class="flex items-center justify-between py-1 px-2 rounded hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span class="text-on-surface">Good (0-50)</span>
+</div>
+<div class="flex items-center gap-2 font-mono">
+<span class="text-on-surface-variant">9 stns</span>
+<span class="text-primary font-semibold w-8 text-right">22%</span>
+</div>
+</div>
+<!-- Satisfactory -->
+<div class="flex items-center justify-between py-1 px-2 rounded hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="text-on-surface">Satisfactory (51-100)</span>
+</div>
+<div class="flex items-center gap-2 font-mono">
+<span class="text-on-surface-variant">14 stns</span>
+<span class="text-secondary font-semibold w-8 text-right">34%</span>
+</div>
+</div>
+<!-- Moderate -->
+<div class="flex items-center justify-between py-1 px-2 rounded hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span class="text-on-surface">Moderate (101-200)</span>
+</div>
+<div class="flex items-center gap-2 font-mono">
+<span class="text-on-surface-variant">12 stns</span>
+<span class="text-tertiary font-semibold w-8 text-right">28%</span>
+</div>
+</div>
+<!-- Poor -->
+<div class="flex items-center justify-between py-1 px-2 rounded hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary-container"></span>
+<span class="text-on-surface">Poor (201-300)</span>
+</div>
+<div class="flex items-center gap-2 font-mono">
+<span class="text-on-surface-variant">5 stns</span>
+<span class="text-tertiary-container font-semibold w-8 text-right">12%</span>
+</div>
+</div>
+<!-- Very Poor -->
+<div class="flex items-center justify-between py-1 px-2 rounded hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-error"></span>
+<span class="text-on-surface">Very Poor (301-400)</span>
+</div>
+<div class="flex items-center gap-2 font-mono">
+<span class="text-on-surface-variant">2 stns</span>
+<span class="text-error font-semibold w-8 text-right">4%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 2. Top Monitored Cities Live Snapshot (Demo Data Table) -->
+<div class="p-5 rounded-2xl bg-surface-container-low border border-outline-variant/30 shadow-md">
+<div class="pb-3 border-b border-outline-variant/20 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<h2 class="text-base font-headline font-bold text-on-surface">Top Monitored Cities Live Snapshot</h2>
+<span class="text-[10px] font-mono text-outline">CPCB Demo</span>
+</div>
+<!-- Micro Search / Filter Bar -->
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-2.5 top-2 text-sm text-outline">search</span>
+<input class="w-full bg-surface-container text-xs font-body pl-8 pr-3 py-1.5 rounded-lg border border-outline-variant/40 text-on-surface placeholder:text-outline focus:outline-none focus:border-primary" placeholder="Filter city or pollutant..." type="text"/>
+</div>
+</div>
+<!-- Micro Table -->
+<div class="overflow-x-auto mt-3">
+<table class="w-full text-left text-xs font-label">
+<thead>
+<tr class="text-[11px] text-on-surface-variant border-b border-outline-variant/20">
+<th class="pb-2 font-medium">City</th>
+<th class="pb-2 font-medium">Pollutant</th>
+<th class="pb-2 font-medium text-right">AQI</th>
+<th class="pb-2 font-medium text-right">Category</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10 font-body">
+<!-- Delhi NCR -->
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-2.5 font-medium text-on-surface">
+                    Delhi NCR <span class="text-[10px] text-outline font-mono">DL</span>
+</td>
+<td class="py-2.5 text-on-surface-variant font-mono">PM2.5</td>
+<td class="py-2.5 font-headline font-bold text-error text-right">268</td>
+<td class="py-2.5 text-right">
+<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-error-container/30 text-error border border-error/30">Poor</span>
+</td>
+</tr>
+<!-- Mumbai -->
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-2.5 font-medium text-on-surface">
+                    Mumbai <span class="text-[10px] text-outline font-mono">MH</span>
+</td>
+<td class="py-2.5 text-on-surface-variant font-mono">PM10</td>
+<td class="py-2.5 font-headline font-bold text-tertiary text-right">112</td>
+<td class="py-2.5 text-right">
+<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-tertiary-container/30 text-tertiary border border-tertiary/30">Moderate</span>
+</td>
+</tr>
+<!-- Bengaluru -->
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-2.5 font-medium text-on-surface">
+                    Bengaluru <span class="text-[10px] text-outline font-mono">KA</span>
+</td>
+<td class="py-2.5 text-on-surface-variant font-mono">PM2.5</td>
+<td class="py-2.5 font-headline font-bold text-secondary text-right">64</td>
+<td class="py-2.5 text-right">
+<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-secondary-container/30 text-secondary border border-secondary/30">Satisfactory</span>
+</td>
+</tr>
+<!-- Kolkata -->
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-2.5 font-medium text-on-surface">
+                    Kolkata <span class="text-[10px] text-outline font-mono">WB</span>
+</td>
+<td class="py-2.5 text-on-surface-variant font-mono">PM2.5</td>
+<td class="py-2.5 font-headline font-bold text-tertiary text-right">178</td>
+<td class="py-2.5 text-right">
+<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-tertiary-container/30 text-tertiary border border-tertiary/30">Moderate</span>
+</td>
+</tr>
+<!-- Chennai -->
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-2.5 font-medium text-on-surface">
+                    Chennai <span class="text-[10px] text-outline font-mono">TN</span>
+</td>
+<td class="py-2.5 text-on-surface-variant font-mono">NO2</td>
+<td class="py-2.5 font-headline font-bold text-secondary text-right">58</td>
+<td class="py-2.5 text-right">
+<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-secondary-container/30 text-secondary border border-secondary/30">Satisfactory</span>
+</td>
+</tr>
+<!-- Thiruvananthapuram -->
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-2.5 font-medium text-on-surface">
+                    Thiruvananthapuram <span class="text-[10px] text-outline font-mono">KL</span>
+</td>
+<td class="py-2.5 text-on-surface-variant font-mono">PM10</td>
+<td class="py-2.5 font-headline font-bold text-primary text-right">38</td>
+<td class="py-2.5 text-right">
+<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary-container/30 text-primary border border-primary/30">Good</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Bottom Action Link Button -->
+<div class="mt-4 pt-3 border-t border-outline-variant/20 flex items-center justify-between">
+<span class="text-[11px] text-on-surface-variant font-label">Displaying 6 of 42 nodes</span>
+<a class="inline-flex items-center gap-1 text-xs font-headline font-semibold text-primary hover:text-secondary transition-colors group" href="#">
+<span>View all 42 stations</span>
+<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- ACADEMIC FOOTER (Exact Shared Component adherence) -->
+<footer class="w-full bg-surface-container-lowest border-t border-outline-variant/30 mt-auto">
+<div class="w-full px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 mx-auto">
+<!-- Brand & Academic Copyright Meta -->
+<div class="flex flex-col items-center md:items-start gap-1">
+<div class="font-headline text-sm font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">eco</span>
+          AirQuality Pulse • Environmental Data Analytics
+        </div>
+<p class="font-body text-xs text-on-surface-variant text-center md:text-left">
+          © 2025 AirQuality Pulse • BCA Minor Project Evaluation Build • CPCB Archive Simulated Dataset
+        </p>
+</div>
+<!-- Compliance & Evaluation Links -->
+<div class="flex flex-wrap items-center justify-center gap-6 font-body text-xs text-on-surface-variant">
+<a class="text-on-surface-variant hover:text-on-surface hover:text-secondary transition-colors duration-150" href="#">
+          Methodology &amp; Calibration
+        </a>
+<a class="text-on-surface-variant hover:text-on-surface hover:text-secondary transition-colors duration-150" href="#">
+          CPCB Standard Guidelines
+        </a>
+<a class="text-on-surface-variant hover:text-on-surface hover:text-secondary transition-colors duration-150" href="#">
+          API Documentation
+        </a>
+<a class="text-on-surface-variant hover:text-on-surface hover:text-secondary transition-colors duration-150" href="#">
+          Evaluation Rubric
+        </a>
+</div>
+</div>
+</footer>
+</body></html>

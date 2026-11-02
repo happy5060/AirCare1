@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AirQuality Pulse - Historical Analytics &amp; Trends</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface-variant": "#bcc9c6",
+            "tertiary-fixed-dim": "#ffb95f",
+            "background": "#0a1228",
+            "inverse-primary": "#006b5f",
+            "secondary": "#7bd0ff",
+            "on-primary-fixed-variant": "#005048",
+            "on-error": "#690005",
+            "primary-container": "#00a392",
+            "inverse-surface": "#dbe1ff",
+            "surface-variant": "#2c344c",
+            "on-tertiary-fixed-variant": "#653e00",
+            "surface-container-lowest": "#050d23",
+            "surface-container-high": "#222940",
+            "tertiary-fixed": "#ffddb8",
+            "on-error-container": "#ffdad6",
+            "primary": "#4fdbc8",
+            "secondary-container": "#00a6e0",
+            "tertiary": "#ffb95f",
+            "surface": "#0a1228",
+            "primary-fixed": "#71f8e4",
+            "outline": "#879391",
+            "on-secondary-container": "#00374d",
+            "surface-dim": "#0a1228",
+            "inverse-on-surface": "#283047",
+            "on-tertiary": "#472a00",
+            "error": "#ffb4ab",
+            "on-secondary-fixed": "#001e2c",
+            "on-primary": "#003731",
+            "on-tertiary-container": "#3e2400",
+            "surface-container-highest": "#2c344c",
+            "primary-fixed-dim": "#4fdbc8",
+            "secondary-fixed-dim": "#7bd0ff",
+            "on-surface": "#dbe1ff",
+            "on-secondary": "#00354a",
+            "surface-container-low": "#131b31",
+            "tertiary-container": "#ca8100",
+            "on-primary-fixed": "#00201c",
+            "on-secondary-fixed-variant": "#004c69",
+            "surface-bright": "#313850",
+            "on-background": "#dbe1ff",
+            "surface-container": "#171f35",
+            "outline-variant": "#3d4947",
+            "surface-tint": "#4fdbc8",
+            "on-primary-container": "#00302a",
+            "secondary-fixed": "#c4e7ff",
+            "error-container": "#93000a",
+            "on-tertiary-fixed": "#2a1700"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Space Grotesk", "sans-serif"],
+            "display": ["Space Grotesk", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "label": ["Inter", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface font-body antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<!-- Shared TopNavBar Component -->
+<header class="bg-surface-container-low dark:bg-surface-container-low text-primary dark:text-primary font-headline text-sm font-medium tracking-tight docked full-width top-0 border-b border-outline-variant/30 shadow-sm dark:shadow-none sticky z-50">
+<div class="w-full px-6 flex items-center justify-between mx-auto h-16">
+<!-- Brand & Product Title -->
+<div class="flex items-center gap-6">
+<div class="font-headline text-lg font-bold text-on-surface dark:text-on-surface flex items-center gap-2">
+<div class="w-9 h-9 rounded-lg bg-surface-container-high border border-primary/30 flex items-center justify-center text-primary shadow-inner">
+<span class="material-symbols-outlined text-xl">air</span>
+</div>
+<div class="flex flex-col">
+<span class="tracking-tight leading-none text-base font-extrabold text-on-surface">AirQuality Pulse</span>
+<span class="text-[10px] font-mono font-medium text-outline tracking-wider">Environmental Data Analytics</span>
+</div>
+</div>
+<!-- Navigation Links Cluster -->
+<nav class="hidden xl:flex items-center gap-6 ml-4">
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">Overview Dashboard</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">Live AQI Stations</a>
+<a class="text-primary border-b-2 border-primary font-semibold py-4" href="#">Historical Analytics</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">City Comparison</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">Data Quality Audits</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">Methodology &amp; Sources</a>
+</nav>
+</div>
+<!-- Trailing Action Badges & Controls -->
+<div class="flex items-center gap-3">
+<div class="hidden md:flex items-center gap-2 bg-surface-container px-3 py-1.5 rounded-full border border-outline-variant/30 text-xs">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-mono text-on-surface-variant">Active: 42 Demo Stations</span>
+</div>
+<div class="flex items-center gap-1.5 bg-tertiary-container/20 border border-tertiary/40 px-3 py-1 rounded-full text-tertiary text-xs font-semibold tracking-wide">
+<span class="material-symbols-outlined text-xs">database</span>
+<span>DEMO / SIMULATED DATASET</span>
+</div>
+<div class="flex items-center gap-1 pl-2 border-l border-outline-variant/40">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-lg hover:bg-surface-container" title="Sync Dataset">
+<span class="material-symbols-outlined text-xl">sync</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-lg hover:bg-surface-container" title="System Alerts">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-[1680px] mx-auto px-4 sm:px-6 py-6 space-y-6">
+<!-- Interactive Filter & Parameter Bar -->
+<section class="bg-surface-container-low border border-outline-variant/40 rounded-xl p-4 shadow-xl backdrop-blur-md">
+<div class="flex flex-wrap items-center justify-between gap-4">
+<!-- Left Group: Date Range & Presets -->
+<div class="flex flex-wrap items-center gap-3">
+<div class="flex items-center gap-2 bg-surface-container px-3.5 py-2 rounded-lg border border-outline-variant/50 text-xs font-mono">
+<span class="material-symbols-outlined text-primary text-base">calendar_month</span>
+<span class="text-on-surface font-medium">Jan 01, 2024 - Dec 31, 2024</span>
+</div>
+<div class="inline-flex rounded-lg bg-surface-container-lowest p-1 border border-outline-variant/30 text-xs">
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface transition-colors">Last 30D</button>
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface transition-colors">6 Months</button>
+<button class="px-2.5 py-1 rounded bg-primary-container text-on-primary-container font-semibold shadow-sm">2024 Full Year</button>
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface transition-colors">5-Year Trend</button>
+</div>
+<!-- Jurisdiction Dropdown -->
+<div class="relative">
+<div class="flex items-center gap-2 bg-surface-container px-3 py-2 rounded-lg border border-outline-variant/50 text-xs font-medium cursor-pointer hover:border-primary/40 transition-colors">
+<span class="material-symbols-outlined text-secondary text-base">location_on</span>
+<span class="text-on-surface">Delhi NCR (12 Station Aggregate)</span>
+<span class="material-symbols-outlined text-outline text-sm">arrow_drop_down</span>
+</div>
+</div>
+</div>
+<!-- Center Group: Pollutants Filter Chips -->
+<div class="flex flex-wrap items-center gap-1.5 bg-surface-container-lowest/60 p-1.5 rounded-lg border border-outline-variant/20">
+<span class="text-[11px] font-mono text-outline uppercase px-2 font-semibold">Pollutants:</span>
+<label class="cursor-pointer flex items-center gap-1.5 bg-primary/10 text-primary border border-primary/40 px-2.5 py-1 rounded text-xs font-medium">
+<input checked="" class="w-3.5 h-3.5 rounded bg-surface-container border-primary text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span>PM2.5</span>
+</label>
+<label class="cursor-pointer flex items-center gap-1.5 bg-primary/10 text-primary border border-primary/40 px-2.5 py-1 rounded text-xs font-medium">
+<input checked="" class="w-3.5 h-3.5 rounded bg-surface-container border-primary text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span>PM10</span>
+</label>
+<label class="cursor-pointer flex items-center gap-1.5 bg-primary/10 text-primary border border-primary/40 px-2.5 py-1 rounded text-xs font-medium">
+<input checked="" class="w-3.5 h-3.5 rounded bg-surface-container border-primary text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span>NO2</span>
+</label>
+<label class="cursor-pointer flex items-center gap-1.5 text-on-surface-variant hover:text-on-surface px-2.5 py-1 rounded text-xs font-medium transition-colors">
+<input class="w-3.5 h-3.5 rounded bg-surface-container border-outline text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span>SO2</span>
+</label>
+<label class="cursor-pointer flex items-center gap-1.5 text-on-surface-variant hover:text-on-surface px-2.5 py-1 rounded text-xs font-medium transition-colors">
+<input class="w-3.5 h-3.5 rounded bg-surface-container border-outline text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span>CO</span>
+</label>
+<label class="cursor-pointer flex items-center gap-1.5 text-on-surface-variant hover:text-on-surface px-2.5 py-1 rounded text-xs font-medium transition-colors">
+<input class="w-3.5 h-3.5 rounded bg-surface-container border-outline text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span>Ozone</span>
+</label>
+</div>
+<!-- Right Group: Actions & Granularity -->
+<div class="flex items-center gap-2">
+<!-- Granularity Segment -->
+<div class="hidden lg:inline-flex rounded-lg bg-surface-container-lowest p-1 border border-outline-variant/30 text-xs">
+<button class="px-2.5 py-1 rounded bg-surface-bright text-on-surface font-medium">Daily Mean</button>
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface">Weekly</button>
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface">Monthly</button>
+</div>
+<button class="flex items-center gap-1.5 bg-primary hover:bg-primary-fixed text-on-primary font-semibold text-xs px-3.5 py-2 rounded-lg transition-all active:scale-95 shadow">
+<span class="material-symbols-outlined text-base">tune</span>
+<span>Apply Filters</span>
+</button>
+<button class="flex items-center gap-1 bg-surface-container hover:bg-surface-container-high border border-outline-variant text-on-surface-variant hover:text-on-surface text-xs px-3 py-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-base">restart_alt</span>
+<span>Reset</span>
+</button>
+<button class="flex items-center gap-1.5 bg-surface-container-high hover:bg-surface-bright border border-secondary/30 text-secondary text-xs px-3 py-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-base">download</span>
+<span class="hidden sm:inline">Export CSV</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Summary Metric Strip (4 Bento Metric Cards) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Metric 1: Annual Mean AQI -->
+<div class="bg-surface-container-low border border-outline-variant/30 hover:border-primary/40 rounded-xl p-5 relative overflow-hidden transition-all group">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-tertiary/10 rounded-full blur-xl group-hover:scale-125 transition-transform"></div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-mono font-medium text-outline tracking-wider uppercase">Annual Mean AQI</span>
+<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-tertiary-container/30 text-tertiary border border-tertiary/30">Moderate</span>
+</div>
+<div class="flex items-baseline gap-3 mb-2">
+<span class="font-headline text-4xl font-extrabold text-on-surface">188</span>
+<span class="text-xs font-mono text-outline">NAAQS Benchmark: 100</span>
+</div>
+<div class="flex items-center gap-1.5 text-xs text-error font-medium">
+<span class="material-symbols-outlined text-base">trending_up</span>
+<span>Historical Peak: <strong>432</strong> in Nov (Severe Spike)</span>
+</div>
+</div>
+<!-- Metric 2: Exceedance Days -->
+<div class="bg-surface-container-low border border-outline-variant/30 hover:border-primary/40 rounded-xl p-5 relative overflow-hidden transition-all group">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-error/10 rounded-full blur-xl group-hover:scale-125 transition-transform"></div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-mono font-medium text-outline tracking-wider uppercase">Exceedance Days (&gt;100 AQI)</span>
+<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-error-container/30 text-error border border-error/30">67.2% of Year</span>
+</div>
+<div class="flex items-baseline gap-3 mb-2">
+<span class="font-headline text-4xl font-extrabold text-on-surface">246</span>
+<span class="text-xs font-mono text-outline">/ 366 Days (Leap Yr)</span>
+</div>
+<div class="flex items-center gap-1.5 text-xs text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-base text-secondary">verified</span>
+<span>120 Non-Attainment Exceedance Days</span>
+</div>
+</div>
+<!-- Metric 3: Winter Inversion Spikes -->
+<div class="bg-surface-container-low border border-outline-variant/30 hover:border-primary/40 rounded-xl p-5 relative overflow-hidden transition-all group">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-error/10 rounded-full blur-xl group-hover:scale-125 transition-transform"></div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-mono font-medium text-outline tracking-wider uppercase">Winter Inversion Mean (Nov-Jan)</span>
+<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-error-container/40 text-error border border-error/40">Poor / Severe</span>
+</div>
+<div class="flex items-baseline gap-3 mb-2">
+<span class="font-headline text-4xl font-extrabold text-on-surface">AQI 294</span>
+<span class="text-xs font-mono text-error font-semibold">+142% vs Monsoon</span>
+</div>
+<div class="flex items-center gap-1.5 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-base text-tertiary">compress</span>
+<span>Boundary layer depth &lt; 400m stagnation</span>
+</div>
+</div>
+<!-- Metric 4: Monsoon Washout -->
+<div class="bg-surface-container-low border border-outline-variant/30 hover:border-primary/40 rounded-xl p-5 relative overflow-hidden transition-all group">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-primary/10 rounded-full blur-xl group-hover:scale-125 transition-transform"></div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-mono font-medium text-outline tracking-wider uppercase">Monsoon Washout (Jul-Aug)</span>
+<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary-container/30 text-primary border border-primary/40">Satisfactory</span>
+</div>
+<div class="flex items-baseline gap-3 mb-2">
+<span class="font-headline text-4xl font-extrabold text-primary">AQI 62</span>
+<span class="text-xs font-mono text-primary font-semibold">-78% vs Peak</span>
+</div>
+<div class="flex items-center gap-1.5 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-base text-primary">water_drop</span>
+<span>High convective scavenging &amp; wet deposition</span>
+</div>
+</div>
+</section>
+<!-- Main Historical Trend Line Chart (Wide Hero Card) -->
+<section class="bg-surface-container-low border border-outline-variant/40 rounded-xl p-6 relative overflow-hidden shadow-2xl">
+<!-- Chart Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 mb-4 border-b border-outline-variant/20">
+<div>
+<div class="flex items-center gap-3">
+<h2 class="font-headline text-lg sm:text-xl font-bold text-on-surface tracking-tight">Annual Historical AQI Trajectory &amp; Meteorology-Driven Seasonal Regimes</h2>
+<span class="bg-surface-container px-2 py-0.5 rounded text-[11px] font-mono text-secondary border border-secondary/30">12-Station Mean</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">Comparison between 2024 Observed Aggregation and 5-Year Historical Baseline (2019–2023) across Delhi NCR</p>
+</div>
+<!-- Legend and Status -->
+<div class="flex flex-wrap items-center gap-4 text-xs font-medium">
+<div class="flex items-center gap-2">
+<span class="w-4 h-1 bg-primary rounded-full shadow-[0_0_8px_rgba(79,219,200,0.8)]"></span>
+<span class="text-on-surface">2024 Daily AQI</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-4 h-0.5 border-b-2 border-dashed border-secondary"></span>
+<span class="text-secondary">5-Year Baseline (2019-23)</span>
+</div>
+<div class="flex items-center gap-1.5 text-outline text-[11px] font-mono bg-surface-container px-2.5 py-1 rounded">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Recorded at 24h Intervals</span>
+</div>
+</div>
+</div>
+<!-- High-Fidelity SVG Line Chart Visualization -->
+<div class="relative w-full h-[360px] sm:h-[400px]">
+<!-- Seasonal Regime Highlights / Annotation Overlay (CSS Layer) -->
+<div class="absolute inset-x-12 top-6 bottom-10 grid grid-cols-12 pointer-events-none z-0">
+<!-- Jan - Feb: Winter -->
+<div class="col-span-2 bg-error/5 border-r border-error/10 relative">
+<span class="absolute top-2 left-2 text-[10px] font-mono font-semibold text-error/80 uppercase tracking-wider bg-surface-container-lowest/80 px-1.5 py-0.5 rounded">Winter Inversion</span>
+</div>
+<!-- Mar: Transition -->
+<div class="col-span-1 border-r border-outline-variant/10"></div>
+<!-- Apr - Jun: Summer / Dust -->
+<div class="col-span-3 bg-tertiary/5 border-r border-tertiary/15 relative">
+<span class="absolute top-2 left-2 text-[10px] font-mono font-semibold text-tertiary/80 uppercase tracking-wider bg-surface-container-lowest/80 px-1.5 py-0.5 rounded">Crustal Dust &amp; Ozone</span>
+</div>
+<!-- Jul - Sep: Monsoon -->
+<div class="col-span-3 bg-primary/5 border-r border-primary/15 relative">
+<span class="absolute top-2 left-2 text-[10px] font-mono font-semibold text-primary/80 uppercase tracking-wider bg-surface-container-lowest/80 px-1.5 py-0.5 rounded">Monsoon Cleansing</span>
+</div>
+<!-- Oct - Dec: Post-Monsoon & Winter Peak -->
+<div class="col-span-3 bg-error/10 relative">
+<span class="absolute top-2 left-2 text-[10px] font-mono font-semibold text-error uppercase tracking-wider bg-surface-container-lowest/90 px-1.5 py-0.5 rounded border border-error/30">Post-Harvest Peak</span>
+</div>
+</div>
+<!-- SVG Curve Canvas -->
+<svg class="w-full h-full overflow-visible relative z-10" preserveaspectratio="none" viewbox="0 0 1000 360">
+<defs>
+<!-- Gradient for 2024 Area Fill -->
+<lineargradient id="primaryAreaGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#4fdbc8" stop-opacity="0.25"></stop>
+<stop offset="60%" stop-color="#4fdbc8" stop-opacity="0.05"></stop>
+<stop offset="100%" stop-color="#4fdbc8" stop-opacity="0.0"></stop>
+</lineargradient>
+<lineargradient id="lineGlow" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0%" stop-color="#ffb4ab"></stop>
+<stop offset="25%" stop-color="#ffb95f"></stop>
+<stop offset="50%" stop-color="#71f8e4"></stop>
+<stop offset="70%" stop-color="#38bdf8"></stop>
+<stop offset="85%" stop-color="#ffb95f"></stop>
+<stop offset="100%" stop-color="#ffb4ab"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal AQI Category Reference Guideline Bands -->
+<!-- 400 Severe -->
+<line stroke="#ffb4ab" stroke-dasharray="3 3" stroke-opacity="0.3" stroke-width="1" x1="50" x2="980" y1="40" y2="40"></line>
+<text fill="#ffb4ab" font-family="monospace" font-size="10" opacity="0.8" x="985" y="44">400 Severe</text>
+<!-- 300 Very Poor -->
+<line stroke="#ca8100" stroke-dasharray="3 3" stroke-opacity="0.3" stroke-width="1" x1="50" x2="980" y1="100" y2="100"></line>
+<text fill="#ca8100" font-family="monospace" font-size="10" opacity="0.8" x="985" y="104">300 Very Poor</text>
+<!-- 200 Moderate -->
+<line stroke="#ffb95f" stroke-dasharray="3 3" stroke-opacity="0.25" stroke-width="1" x1="50" x2="980" y1="170" y2="170"></line>
+<text fill="#ffb95f" font-family="monospace" font-size="10" opacity="0.8" x="985" y="174">200 Moderate</text>
+<!-- 100 Satisfactory -->
+<line stroke="#00a6e0" stroke-dasharray="3 3" stroke-opacity="0.25" stroke-width="1" x1="50" x2="980" y1="240" y2="240"></line>
+<text fill="#00a6e0" font-family="monospace" font-size="10" opacity="0.8" x="985" y="244">100 Sat.</text>
+<!-- 50 Good -->
+<line stroke="#4fdbc8" stroke-dasharray="3 3" stroke-opacity="0.25" stroke-width="1" x1="50" x2="980" y1="290" y2="290"></line>
+<text fill="#4fdbc8" font-family="monospace" font-size="10" opacity="0.8" x="985" y="294">50 Good</text>
+<!-- Vertical Month Gridlines -->
+<!-- Jan(50), Feb(134), Mar(218), Apr(302), May(386), Jun(470), Jul(554), Aug(638), Sep(722), Oct(806), Nov(890), Dec(974) -->
+<g stroke="#3d4947" stroke-opacity="0.25" stroke-width="1">
+<line x1="50" x2="50" y1="30" y2="320"></line>
+<line x1="134" x2="134" y1="30" y2="320"></line>
+<line x1="218" x2="218" y1="30" y2="320"></line>
+<line x1="302" x2="302" y1="30" y2="320"></line>
+<line x1="386" x2="386" y1="30" y2="320"></line>
+<line x1="470" x2="470" y1="30" y2="320"></line>
+<line x1="554" x2="554" y1="30" y2="320"></line>
+<line x1="638" x2="638" y1="30" y2="320"></line>
+<line x1="722" x2="722" y1="30" y2="320"></line>
+<line x1="806" x2="806" y1="30" y2="320"></line>
+<line x1="890" x2="890" y1="30" y2="320"></line>
+<line x1="974" x2="974" y1="30" y2="320"></line>
+</g>
+<!-- Baseline Curve (2019-2023 5-Year Mean): Dashed Cyan -->
+<path d="M 50,75 
+                   C 92,90 134,130 176,145 
+                   C 218,160 260,175 302,185 
+                   C 344,195 386,180 428,190 
+                   C 470,200 512,250 554,270 
+                   C 596,285 638,280 680,265 
+                   C 722,250 764,200 806,130 
+                   C 848,70 890,65 932,70 
+                   L 974,78" fill="none" stroke="#7bd0ff" stroke-dasharray="5 4" stroke-opacity="0.85" stroke-width="2"></path>
+<!-- 2024 Daily AQI Area Gradient -->
+<path d="M 50,68 
+                   C 92,85 134,125 176,140 
+                   C 218,155 260,180 302,175 
+                   C 344,170 386,165 428,210 
+                   C 470,240 512,285 554,295 
+                   C 596,305 638,290 680,270 
+                   C 722,240 764,130 806,90 
+                   C 848,45 890,32 932,60 
+                   L 974,72 
+                   L 974,320 L 50,320 Z" fill="url(#primaryAreaGrad)"></path>
+<!-- 2024 Daily AQI Solid Main Curve -->
+<path class="filter drop-shadow-[0_2px_10px_rgba(79,219,200,0.4)]" d="M 50,68 
+                   C 92,85 134,125 176,140 
+                   C 218,155 260,180 302,175 
+                   C 344,170 386,165 428,210 
+                   C 470,240 512,285 554,295 
+                   C 596,305 638,290 680,270 
+                   C 722,240 764,130 806,90 
+                   C 848,45 890,32 932,60 
+                   L 974,72" fill="none" stroke="#4fdbc8" stroke-linecap="round" stroke-width="3"></path>
+<!-- Key Historical Data Nodes -->
+<circle cx="50" cy="68" fill="#ffb4ab" r="4" stroke="#0a1228" stroke-width="2"></circle>
+<circle cx="302" cy="175" fill="#ffb95f" r="4" stroke="#0a1228" stroke-width="2"></circle>
+<circle cx="554" cy="295" fill="#4fdbc8" r="4" stroke="#0a1228" stroke-width="2"></circle>
+<circle cx="806" cy="90" fill="#ca8100" r="5" stroke="#0a1228" stroke-width="2"></circle>
+<circle class="animate-ping" cx="890" cy="32" fill="#ffb4ab" r="6" stroke="#0a1228" stroke-width="2"></circle>
+<circle cx="890" cy="32" fill="#ffb4ab" r="5" stroke="#0a1228" stroke-width="2"></circle>
+<!-- Pinned Interactive Annotation Tooltip at Oct/Nov Peak -->
+<g transform="translate(735, 12)">
+<rect class="shadow-xl" fill="#131b31" height="74" rx="6" stroke="#3d4947" stroke-width="1" width="170"></rect>
+<text fill="#dbe1ff" font-family="Space Grotesk" font-size="11" font-weight="700" x="12" y="18">Nov 08 Peak Exceedance</text>
+<text fill="#ffb4ab" font-family="Inter" font-size="11" font-weight="600" x="12" y="34">AQI 432 • Severe Spike</text>
+<text fill="#bcc9c6" font-family="monospace" font-size="10" x="12" y="48">PM2.5: 398 µg/m³</text>
+<text fill="#879391" font-family="monospace" font-size="9" x="12" y="62">Wind: 0.8 m/s (Calm NW)</text>
+<!-- Callout Pin -->
+<line stroke="#ffb4ab" stroke-dasharray="2 2" stroke-width="1" x1="85" x2="155" y1="74" y2="20"></line>
+</g>
+</svg>
+<!-- X-Axis Labels (Months) -->
+<div class="absolute bottom-1 inset-x-0 flex justify-between px-8 text-xs font-mono font-medium text-outline">
+<span>JAN</span>
+<span>FEB</span>
+<span>MAR</span>
+<span>APR</span>
+<span>MAY</span>
+<span>JUN</span>
+<span>JUL</span>
+<span>AUG</span>
+<span>SEP</span>
+<span>OCT</span>
+<span>NOV</span>
+<span>DEC</span>
+</div>
+</div>
+<!-- Insight Pills beneath the chart -->
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex flex-wrap items-center justify-between gap-3 text-xs">
+<div class="flex flex-wrap items-center gap-2">
+<span class="text-on-surface font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-sm">psychology</span>
+            Key Meteorological Drivers Identified:
+          </span>
+<span class="bg-surface-container px-2.5 py-1 rounded text-outline-variant text-[11px] font-mono text-on-surface">1. Thermal Planetary Inversion (Nov-Jan)</span>
+<span class="bg-surface-container px-2.5 py-1 rounded text-outline-variant text-[11px] font-mono text-on-surface">2. Wet Deposition / Washout (Jul-Aug)</span>
+<span class="bg-surface-container px-2.5 py-1 rounded text-outline-variant text-[11px] font-mono text-on-surface">3. Trans-boundary Biomass Plumes (Oct-Nov)</span>
+</div>
+<div class="text-[11px] font-mono text-outline">
+          Source: CPCB CAAQMS Aggregated Station Telemetry (Simulated)
+        </div>
+</div>
+</section>
+<!-- Bottom Two Columns Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Seasonal Pollutant Dynamics (7 cols) -->
+<section class="lg:col-span-7 bg-surface-container-low border border-outline-variant/40 rounded-xl p-6 flex flex-col justify-between shadow-xl">
+<div>
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant/20 mb-5">
+<div>
+<h3 class="font-headline text-base sm:text-lg font-bold text-on-surface tracking-tight">Seasonal Pollutant Dynamics (Winter vs Monsoon vs Summer)</h3>
+<p class="text-xs text-on-surface-variant mt-0.5">Microgram concentration shifts across distinct atmospheric regimes</p>
+</div>
+<span class="text-xs font-mono text-primary bg-primary/10 border border-primary/30 px-2 py-1 rounded">NAAQS Standard Limit</span>
+</div>
+<!-- Parameter Rows -->
+<div class="space-y-4">
+<!-- PM2.5 Parameter -->
+<div class="bg-surface-container/60 p-3.5 rounded-lg border border-outline-variant/20">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-bold text-sm text-on-surface">PM2.5</span>
+<span class="text-[11px] text-outline font-mono">Fine Respirable Matter (&lt;2.5µm)</span>
+</div>
+<div class="flex items-center gap-2 text-xs font-mono">
+<span class="text-outline">Standard: 60 µg/m³</span>
+<span class="text-error font-semibold bg-error/10 px-2 py-0.5 rounded border border-error/20">3.8x Exceedance</span>
+</div>
+</div>
+<!-- Comparison Bars -->
+<div class="grid grid-cols-3 gap-3 text-xs pt-1">
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] text-on-surface-variant">
+<span>Winter Peak</span>
+<span class="font-mono text-error font-bold">228 µg/m³</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-error h-2 rounded-full" style="width: 95%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] text-on-surface-variant">
+<span>Summer Dust</span>
+<span class="font-mono text-tertiary font-bold">98 µg/m³</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-tertiary h-2 rounded-full" style="width: 42%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] text-on-surface-variant">
+<span>Monsoon Washout</span>
+<span class="font-mono text-primary font-bold">34 µg/m³</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 15%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- PM10 Parameter -->
+<div class="bg-surface-container/60 p-3.5 rounded-lg border border-outline-variant/20">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-bold text-sm text-on-surface">PM10</span>
+<span class="text-[11px] text-outline font-mono">Coarse Particulate Dust (&lt;10µm)</span>
+</div>
+<div class="flex items-center gap-2 text-xs font-mono">
+<span class="text-outline">Standard: 100 µg/m³</span>
+<span class="text-tertiary font-semibold bg-tertiary/10 px-2 py-0.5 rounded border border-tertiary/20">3.2x Exceedance</span>
+</div>
+</div>
+<!-- Comparison Bars -->
+<div class="grid grid-cols-3 gap-3 text-xs pt-1">
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] text-on-surface-variant">
+<span>Winter Peak</span>
+<span class="font-mono text-error font-bold">324 µg/m³</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-error h-2 rounded-full" style="width: 88%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] text-on-surface-variant">
+<span>Summer Dust</span>
+<span class="font-mono text-tertiary font-bold">290 µg/m³</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-tertiary h-2 rounded-full" style="width: 78%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] text-on-surface-variant">
+<span>Monsoon Washout</span>
+<span class="font-mono text-primary font-bold">58 µg/m³</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 18%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- NO2 Parameter -->
+<div class="bg-surface-container/60 p-3.5 rounded-lg border border-outline-variant/20">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-bold text-sm text-on-surface">NO2</span>
+<span class="text-[11px] text-outline font-mono">Vehicular &amp; Combustion Emissions</span>
+</div>
+<div class="flex items-center gap-2 text-xs font-mono">
+<span class="text-outline">Standard: 80 µg/m³</span>
+<span class="text-secondary font-semibold bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20">Within Bounds</span>
+</div>
+</div>
+<!-- Comparison Bars -->
+<div class="grid grid-cols-3 gap-3 text-xs pt-1">
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] text-on-surface-variant">
+<span>Winter Peak</span>
+<span class="font-mono text-tertiary font-bold">78 µg/m³</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-tertiary h-2 rounded-full" style="width: 65%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] text-on-surface-variant">
+<span>Summer Dust</span>
+<span class="font-mono text-secondary font-bold">45 µg/m³</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-secondary h-2 rounded-full" style="width: 38%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] text-on-surface-variant">
+<span>Monsoon Washout</span>
+<span class="font-mono text-primary font-bold">22 µg/m³</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 19%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- SO2 Parameter -->
+<div class="bg-surface-container/60 p-3.5 rounded-lg border border-outline-variant/20">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-bold text-sm text-on-surface">SO2</span>
+<span class="text-[11px] text-outline font-mono">Industrial Point Source &amp; Power Plants</span>
+</div>
+<div class="flex items-center gap-2 text-xs font-mono">
+<span class="text-outline">Standard: 80 µg/m³</span>
+<span class="text-primary font-semibold bg-primary/10 px-2 py-0.5 rounded border border-primary/20">Satisfactory</span>
+</div>
+</div>
+<!-- Comparison Bars -->
+<div class="grid grid-cols-3 gap-3 text-xs pt-1">
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] text-on-surface-variant">
+<span>Winter Peak</span>
+<span class="font-mono text-secondary font-bold">24 µg/m³</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-secondary h-2 rounded-full" style="width: 30%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] text-on-surface-variant">
+<span>Summer Dust</span>
+<span class="font-mono text-secondary font-bold">18 µg/m³</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-secondary h-2 rounded-full" style="width: 22%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] text-on-surface-variant">
+<span>Monsoon Washout</span>
+<span class="font-mono text-primary font-bold">9 µg/m³</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 11%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-mono text-outline">
+<span>*Values indicate arithmetic seasonal daily averages</span>
+<span class="text-primary hover:underline cursor-pointer">View Statistical Variance σ</span>
+</div>
+</section>
+<!-- Right Column: Monthly AQI Category Distribution Matrix (5 cols) -->
+<section class="lg:col-span-5 bg-surface-container-low border border-outline-variant/40 rounded-xl p-6 flex flex-col justify-between shadow-xl">
+<div>
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant/20 mb-4">
+<div>
+<h3 class="font-headline text-base sm:text-lg font-bold text-on-surface tracking-tight">Monthly AQI Category Matrix</h3>
+<p class="text-xs text-on-surface-variant mt-0.5">CPCB Air Quality Index Categorical Spread (2024)</p>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-primary inline-block" title="Good"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary inline-block" title="Satisfactory"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary inline-block" title="Moderate"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary-container inline-block" title="Poor"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-error inline-block" title="Severe"></span>
+</div>
+</div>
+<!-- 12 Stacked Progress Bars -->
+<div class="space-y-2 text-xs">
+<!-- Jan -->
+<div class="flex items-center gap-3">
+<span class="w-8 font-mono text-outline font-semibold text-[11px]">JAN</span>
+<div class="flex-1 h-3.5 bg-surface-container-highest rounded overflow-hidden flex">
+<div class="bg-error h-full" style="width: 48%;" title="Severe: 15d"></div>
+<div class="bg-tertiary-container h-full" style="width: 35%;" title="Poor: 11d"></div>
+<div class="bg-tertiary h-full" style="width: 17%;" title="Moderate: 5d"></div>
+</div>
+<span class="w-12 text-right font-mono text-[10px] text-error font-medium">15d Sev</span>
+</div>
+<!-- Feb -->
+<div class="flex items-center gap-3">
+<span class="w-8 font-mono text-outline font-semibold text-[11px]">FEB</span>
+<div class="flex-1 h-3.5 bg-surface-container-highest rounded overflow-hidden flex">
+<div class="bg-error h-full" style="width: 24%;"></div>
+<div class="bg-tertiary-container h-full" style="width: 42%;"></div>
+<div class="bg-tertiary h-full" style="width: 34%;"></div>
+</div>
+<span class="w-12 text-right font-mono text-[10px] text-outline">7d Sev</span>
+</div>
+<!-- Mar -->
+<div class="flex items-center gap-3">
+<span class="w-8 font-mono text-outline font-semibold text-[11px]">MAR</span>
+<div class="flex-1 h-3.5 bg-surface-container-highest rounded overflow-hidden flex">
+<div class="bg-tertiary-container h-full" style="width: 18%;"></div>
+<div class="bg-tertiary h-full" style="width: 58%;"></div>
+<div class="bg-secondary h-full" style="width: 24%;"></div>
+</div>
+<span class="w-12 text-right font-mono text-[10px] text-tertiary">18d Mod</span>
+</div>
+<!-- Apr -->
+<div class="flex items-center gap-3">
+<span class="w-8 font-mono text-outline font-semibold text-[11px]">APR</span>
+<div class="flex-1 h-3.5 bg-surface-container-highest rounded overflow-hidden flex">
+<div class="bg-tertiary-container h-full" style="width: 25%;"></div>
+<div class="bg-tertiary h-full" style="width: 55%;"></div>
+<div class="bg-secondary h-full" style="width: 20%;"></div>
+</div>
+<span class="w-12 text-right font-mono text-[10px] text-tertiary">16d Mod</span>
+</div>
+<!-- May -->
+<div class="flex items-center gap-3">
+<span class="w-8 font-mono text-outline font-semibold text-[11px]">MAY</span>
+<div class="flex-1 h-3.5 bg-surface-container-highest rounded overflow-hidden flex">
+<div class="bg-tertiary-container h-full" style="width: 30%;"></div>
+<div class="bg-tertiary h-full" style="width: 50%;"></div>
+<div class="bg-secondary h-full" style="width: 20%;"></div>
+</div>
+<span class="w-12 text-right font-mono text-[10px] text-tertiary">15d Mod</span>
+</div>
+<!-- Jun -->
+<div class="flex items-center gap-3">
+<span class="w-8 font-mono text-outline font-semibold text-[11px]">JUN</span>
+<div class="flex-1 h-3.5 bg-surface-container-highest rounded overflow-hidden flex">
+<div class="bg-tertiary-container h-full" style="width: 15%;"></div>
+<div class="bg-tertiary h-full" style="width: 45%;"></div>
+<div class="bg-secondary h-full" style="width: 30%;"></div>
+<div class="bg-primary h-full" style="width: 10%;"></div>
+</div>
+<span class="w-12 text-right font-mono text-[10px] text-secondary">9d Sat</span>
+</div>
+<!-- Jul (Best Month Highlight) -->
+<div class="flex items-center gap-3 bg-primary/5 py-1 px-1 -mx-1 rounded">
+<span class="w-8 font-mono text-primary font-bold text-[11px]">JUL</span>
+<div class="flex-1 h-3.5 bg-surface-container-highest rounded overflow-hidden flex">
+<div class="bg-secondary h-full" style="width: 25%;"></div>
+<div class="bg-primary h-full" style="width: 75%;"></div>
+</div>
+<span class="w-12 text-right font-mono text-[10px] text-primary font-bold">24d Sat</span>
+</div>
+<!-- Aug -->
+<div class="flex items-center gap-3">
+<span class="w-8 font-mono text-outline font-semibold text-[11px]">AUG</span>
+<div class="flex-1 h-3.5 bg-surface-container-highest rounded overflow-hidden flex">
+<div class="bg-tertiary h-full" style="width: 10%;"></div>
+<div class="bg-secondary h-full" style="width: 35%;"></div>
+<div class="bg-primary h-full" style="width: 55%;"></div>
+</div>
+<span class="w-12 text-right font-mono text-[10px] text-primary">17d Clean</span>
+</div>
+<!-- Sep -->
+<div class="flex items-center gap-3">
+<span class="w-8 font-mono text-outline font-semibold text-[11px]">SEP</span>
+<div class="flex-1 h-3.5 bg-surface-container-highest rounded overflow-hidden flex">
+<div class="bg-tertiary h-full" style="width: 25%;"></div>
+<div class="bg-secondary h-full" style="width: 50%;"></div>
+<div class="bg-primary h-full" style="width: 25%;"></div>
+</div>
+<span class="w-12 text-right font-mono text-[10px] text-secondary">15d Sat</span>
+</div>
+<!-- Oct -->
+<div class="flex items-center gap-3">
+<span class="w-8 font-mono text-outline font-semibold text-[11px]">OCT</span>
+<div class="flex-1 h-3.5 bg-surface-container-highest rounded overflow-hidden flex">
+<div class="bg-error h-full" style="width: 22%;"></div>
+<div class="bg-tertiary-container h-full" style="width: 48%;"></div>
+<div class="bg-tertiary h-full" style="width: 30%;"></div>
+</div>
+<span class="w-12 text-right font-mono text-[10px] text-tertiary-container">15d Poor</span>
+</div>
+<!-- Nov (Severe Highlight) -->
+<div class="flex items-center gap-3 bg-error/5 py-1 px-1 -mx-1 rounded">
+<span class="w-8 font-mono text-error font-bold text-[11px]">NOV</span>
+<div class="flex-1 h-3.5 bg-surface-container-highest rounded overflow-hidden flex">
+<div class="bg-error h-full" style="width: 60%;"></div>
+<div class="bg-tertiary-container h-full" style="width: 30%;"></div>
+<div class="bg-tertiary h-full" style="width: 10%;"></div>
+</div>
+<span class="w-12 text-right font-mono text-[10px] text-error font-bold">18d Sev</span>
+</div>
+<!-- Dec -->
+<div class="flex items-center gap-3">
+<span class="w-8 font-mono text-outline font-semibold text-[11px]">DEC</span>
+<div class="flex-1 h-3.5 bg-surface-container-highest rounded overflow-hidden flex">
+<div class="bg-error h-full" style="width: 45%;"></div>
+<div class="bg-tertiary-container h-full" style="width: 40%;"></div>
+<div class="bg-tertiary h-full" style="width: 15%;"></div>
+</div>
+<span class="w-12 text-right font-mono text-[10px] text-error">14d Sev</span>
+</div>
+</div>
+<!-- Highlight Cards -->
+<div class="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-outline-variant/20">
+<div class="bg-surface-container p-2.5 rounded-lg border border-error/30 text-xs">
+<span class="text-error font-semibold block text-[11px]">Peak Critical Month</span>
+<span class="font-headline font-bold text-on-surface">November (18 Severe Days)</span>
+<p class="text-[10px] text-outline mt-0.5">Biomass residue + boundary layer trapping</p>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg border border-primary/30 text-xs">
+<span class="text-primary font-semibold block text-[11px]">Optimal Air Quality</span>
+<span class="font-headline font-bold text-on-surface">July (24 Satisfactory Days)</span>
+<p class="text-[10px] text-outline mt-0.5">Monsoon convective scavenging peak</p>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-2 flex items-center justify-between text-[11px] font-mono text-outline">
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-primary"></span> 0-50</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-secondary"></span> 51-100</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-tertiary"></span> 101-200</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-tertiary-container"></span> 201-300</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-error"></span> 301+</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Shared Academic Footer Component -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest text-primary dark:text-primary font-body text-xs text-on-surface-variant docked full-width bottom border-t border-outline-variant/30 flat no shadows mt-12">
+<div class="w-full px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 mx-auto">
+<!-- Brand & Academic Identification -->
+<div class="flex flex-col gap-1 text-center md:text-left">
+<div class="font-headline text-sm font-semibold text-on-surface dark:text-on-surface flex items-center justify-center md:justify-start gap-2">
+<span class="material-symbols-outlined text-primary text-base">analytics</span>
+<span>AirQuality Pulse • Environmental Data Analytics</span>
+</div>
+<p class="text-on-surface-variant text-[11px]">
+          © 2025 AirQuality Pulse • BCA Minor Project Evaluation Build • CPCB Archive Simulated Dataset
+        </p>
+</div>
+<!-- Academic Links -->
+<nav class="flex flex-wrap items-center justify-center gap-6 text-xs">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary" href="#">Methodology &amp; Calibration</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary" href="#">CPCB Standard Guidelines</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary" href="#">API Documentation</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary" href="#">Evaluation Rubric</a>
+</nav>
+</div>
+</footer>
+</body></html>

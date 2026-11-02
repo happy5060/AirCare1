@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AirQuality Pulse - Methodology &amp; Sources</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-variant": "#2c344c",
+            "on-primary-container": "#00302a",
+            "on-error-container": "#ffdad6",
+            "outline": "#879391",
+            "on-tertiary-fixed-variant": "#653e00",
+            "error": "#ffb4ab",
+            "error-container": "#93000a",
+            "surface-dim": "#0a1228",
+            "secondary": "#7bd0ff",
+            "on-surface": "#dbe1ff",
+            "surface-container-low": "#131b31",
+            "on-secondary": "#00354a",
+            "surface-container-high": "#222940",
+            "surface-bright": "#313850",
+            "on-surface-variant": "#bcc9c6",
+            "on-secondary-fixed-variant": "#004c69",
+            "on-secondary-container": "#00374d",
+            "surface-container": "#171f35",
+            "primary": "#4fdbc8",
+            "on-background": "#dbe1ff",
+            "tertiary-fixed-dim": "#ffb95f",
+            "on-tertiary-container": "#3e2400",
+            "on-error": "#690005",
+            "tertiary": "#ffb95f",
+            "on-tertiary-fixed": "#2a1700",
+            "inverse-on-surface": "#283047",
+            "on-primary-fixed-variant": "#005048",
+            "on-tertiary": "#472a00",
+            "on-primary": "#003731",
+            "background": "#0a1228",
+            "secondary-fixed-dim": "#7bd0ff",
+            "surface-tint": "#4fdbc8",
+            "surface-container-lowest": "#050d23",
+            "primary-fixed-dim": "#4fdbc8",
+            "on-secondary-fixed": "#001e2c",
+            "secondary-container": "#00a6e0",
+            "secondary-fixed": "#c4e7ff",
+            "primary-container": "#00a392",
+            "on-primary-fixed": "#00201c",
+            "inverse-surface": "#dbe1ff",
+            "tertiary-container": "#ca8100",
+            "surface-container-highest": "#2c344c",
+            "primary-fixed": "#71f8e4",
+            "outline-variant": "#3d4947",
+            "tertiary-fixed": "#ffddb8",
+            "inverse-primary": "#006b5f",
+            "surface": "#0a1228"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Space Grotesk", "sans-serif"],
+            "display": ["Space Grotesk", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "label": ["Inter", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface font-body antialiased min-h-screen flex flex-col selection:bg-primary/20 selection:text-primary">
+<!-- TOP NAVIGATION BAR (Shared Component Execution) -->
+<header class="bg-surface-container-low dark:bg-surface-container-low docked full-width top-0 shadow-sm dark:shadow-none border-b border-outline-variant/30 sticky z-50">
+<div class="w-full px-6 flex items-center justify-between mx-auto">
+<!-- Brand & Product Title -->
+<div class="flex items-center gap-6 py-3">
+<a class="font-headline text-lg font-bold text-on-surface dark:text-on-surface flex items-center gap-2 group" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-xl" data-icon="air">air</span>
+</div>
+<span class="tracking-tight text-on-surface">AirQuality Pulse - Environmental Data Analytics</span>
+</a>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden xl:flex items-center gap-6 font-headline text-sm font-medium tracking-tight">
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">Overview Dashboard</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">Live AQI Stations</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">Historical Analytics</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">City Comparison</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">Data Quality Audits</a>
+<!-- Active Target Item -->
+<a class="text-primary border-b-2 border-primary font-semibold py-4 flex items-center gap-1.5" href="#">
+<span>Methodology &amp; Sources</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+</a>
+</nav>
+<!-- Trailing Badges and Actions -->
+<div class="flex items-center gap-3">
+<div class="hidden md:flex flex-col items-end text-right">
+<span class="text-[11px] font-mono text-tertiary font-semibold tracking-wider flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+            DEMO / SIMULATED DATASET
+          </span>
+<span class="text-[10px] text-on-surface-variant font-mono">Active: 42 Demo Stations</span>
+</div>
+<div class="h-6 w-px bg-outline-variant/40 hidden md:block"></div>
+<div class="hidden sm:inline-flex items-center px-2.5 py-1 rounded bg-surface-container-high border border-primary/20 text-primary text-xs font-mono tracking-wide font-medium">
+          ACADEMIC EVALUATION SPECIFICATION
+        </div>
+<div class="flex items-center gap-1">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors duration-150 active:scale-95 rounded-lg hover:bg-surface-container" title="Synchronize Data Model">
+<span class="material-symbols-outlined text-lg" data-icon="sync">sync</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors duration-150 active:scale-95 rounded-lg hover:bg-surface-container relative" title="System Notifications">
+<span class="material-symbols-outlined text-lg" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-secondary"></span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- MAIN VIEW CANVAS -->
+<main class="flex-1 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+<!-- PAGE HEADER & DOCUMENT METADATA -->
+<section class="space-y-4">
+<!-- Breadcrumb -->
+<div class="flex items-center gap-2 text-xs font-mono text-on-surface-variant">
+<span class="text-secondary hover:underline cursor-pointer">Analytics Core</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-on-surface-variant">Project Specifications</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary font-medium">Methodology, Data Provenance &amp; Mathematics</span>
+</div>
+<!-- Main Title Block & CTAs -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-2">
+<div class="space-y-1.5 max-w-4xl">
+<div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-mono bg-primary/10 border border-primary/30 text-primary">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+            BCA Minor Project Academic Documentation
+          </div>
+<h1 class="text-2xl sm:text-3xl lg:text-4xl font-headline font-bold text-on-surface tracking-tight">
+            Methodology, Data Sources &amp; Analytical Architecture
+          </h1>
+<p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">
+            Complete documentation of data provenance, CPCB AQI mathematical sub-index computation, cleaning pipeline, and scientific scope boundaries (BCA Minor Project).
+          </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-wrap items-center gap-3 self-start lg:self-center">
+<button class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright border border-outline-variant/40 text-on-surface text-xs font-medium transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="picture_as_pdf">picture_as_pdf</span>
+<span>Download Specification PDF</span>
+</button>
+<button class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright border border-outline-variant/40 text-on-surface text-xs font-medium transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="code">code</span>
+<span>View clean_data.py Source</span>
+</button>
+<button class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-primary text-on-primary-container font-headline font-semibold text-xs tracking-wide hover:bg-primary/90 transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-sm font-semibold" data-icon="open_in_new">open_in_new</span>
+<span>CPCB Guidelines Reference</span>
+</button>
+</div>
+</div>
+<!-- Quick Metadata Strip (4 Cards) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+<div class="bg-surface-container p-4 rounded-xl border border-outline-variant/30 flex items-start gap-3">
+<div class="p-2 rounded-lg bg-surface-variant text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="person_outline">person_outline</span>
+</div>
+<div>
+<div class="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider">Author / Candidate</div>
+<div class="text-xs sm:text-sm font-headline font-semibold text-on-surface mt-0.5">BCA Final Year Minor Project Candidate</div>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded-xl border border-outline-variant/30 flex items-start gap-3">
+<div class="p-2 rounded-lg bg-surface-variant text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="science">science</span>
+</div>
+<div>
+<div class="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider">Subject / Specialization</div>
+<div class="text-xs sm:text-sm font-headline font-semibold text-on-surface mt-0.5">Data Analytics &amp; Environmental Info Systems</div>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded-xl border border-outline-variant/30 flex items-start gap-3">
+<div class="p-2 rounded-lg bg-surface-variant text-tertiary">
+<span class="material-symbols-outlined text-lg" data-icon="tag">tag</span>
+</div>
+<div>
+<div class="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider">Evaluation Version</div>
+<div class="text-xs sm:text-sm font-headline font-semibold text-on-surface mt-0.5">Release Candidate v1.0.4 (Demo Dataset)</div>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded-xl border border-outline-variant/30 flex items-start gap-3">
+<div class="p-2 rounded-lg bg-surface-variant text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="verified_user">verified_user</span>
+</div>
+<div>
+<div class="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider">Primary Reference Standard</div>
+<div class="text-xs sm:text-sm font-headline font-semibold text-on-surface mt-0.5">CPCB NAAQS 2014 &amp; IIT-K Formulation</div>
+</div>
+</div>
+</div>
+</section>
+<!-- MODULE 1: DATASET PROVENANCE & INGESTION SOURCES -->
+<section class="bg-surface-container p-6 rounded-2xl border border-outline-variant/30 space-y-6">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-outline-variant/20 pb-4">
+<div class="flex items-center gap-3">
+<div class="p-2.5 rounded-lg bg-primary/10 border border-primary/20 text-primary">
+<span class="material-symbols-outlined text-2xl" data-icon="database">database</span>
+</div>
+<div>
+<h2 class="text-lg font-headline font-bold text-on-surface">Dataset Provenance &amp; Data Ingestion Sources</h2>
+<p class="text-xs text-on-surface-variant">Formal accounting of input vectors, spatial sensor dispersion, and ingestion modalities</p>
+</div>
+</div>
+<span class="self-start sm:self-center px-3 py-1 rounded-full text-xs font-mono font-medium bg-primary/15 text-primary border border-primary/30">
+          7-Year Observation Corpus
+        </span>
+</div>
+<!-- 4 Key Metric Tiles -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/20">
+<div class="text-[11px] font-mono text-on-surface-variant">TOTAL OBSERVATIONS</div>
+<div class="text-2xl font-headline font-bold text-primary mt-1">128,420</div>
+<div class="text-[11px] text-on-surface-variant/80 mt-0.5">Across 2,556 Days (2018–2024)</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/20">
+<div class="text-[11px] font-mono text-on-surface-variant">AMBIENT MONITORING STATIONS</div>
+<div class="text-2xl font-headline font-bold text-secondary mt-1">42</div>
+<div class="text-[11px] text-on-surface-variant/80 mt-0.5">14 Indian States &amp; UTs (CAAQMS)</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/20">
+<div class="text-[11px] font-mono text-on-surface-variant">CRITICAL POLLUTANTS</div>
+<div class="text-2xl font-headline font-bold text-tertiary mt-1">7 Parameters</div>
+<div class="text-[11px] text-on-surface-variant/80 mt-0.5">PM2.5, PM10, NO2, SO2, CO, O3, NH3</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/20">
+<div class="text-[11px] font-mono text-on-surface-variant">TEMPORAL WINDOW</div>
+<div class="text-2xl font-headline font-bold text-on-surface mt-1">2018 - 2024</div>
+<div class="text-[11px] text-on-surface-variant/80 mt-0.5">Continuous Longitudinal Series</div>
+</div>
+</div>
+<!-- Provenance Context Banner -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 bg-surface-container-lowest/60 p-4 rounded-xl border border-outline-variant/30 text-xs">
+<div class="space-y-1 lg:col-span-2">
+<div class="font-headline font-semibold text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="account_balance">account_balance</span>
+            Source Authority &amp; Data Ingestion Modality
+          </div>
+<p class="text-on-surface-variant leading-relaxed">
+            Primary ground truth records are structured according to the open data archives of the <strong class="text-on-surface">Central Pollution Control Board (cpcb.nic.in)</strong> in collaboration with regional State Pollution Control Boards (DPCC Delhi, MPCB Maharashtra, KSPCB Karnataka, and WBPCB West Bengal). Telemetry ingestion models are parsed from official CPCB 4:00 PM Daily National Bulletins combined with CAAQMS automated continuous samplers (calibrated and simulated for this analytical platform).
+          </p>
+</div>
+<div class="space-y-1 border-t lg:border-t-0 lg:border-l border-outline-variant/30 pt-3 lg:pt-0 lg:pl-6">
+<div class="font-headline font-semibold text-secondary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="hub">hub</span>
+            Ingestion Pipeline Protocol
+          </div>
+<p class="text-on-surface-variant leading-relaxed">
+            Data pipeline employs deterministic batch ETL with UTF-8 verification, header sanitation, and zero-loss numeric casting to handle uncalibrated sensor dropouts.
+          </p>
+</div>
+</div>
+<!-- Parameter Breakdown Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/30 text-[11px] font-mono text-on-surface-variant uppercase tracking-wider">
+<th class="py-2.5 px-3">Pollutant Parameter</th>
+<th class="py-2.5 px-3">Chemical Formula</th>
+<th class="py-2.5 px-3">Averaging Period</th>
+<th class="py-2.5 px-3">Measurement Principle</th>
+<th class="py-2.5 px-3">NAAQS 24h Cap</th>
+<th class="py-2.5 px-3">Sub-Index Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/15 text-on-surface font-mono">
+<tr class="hover:bg-surface-variant/40 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-primary font-body">Fine Particulate Matter</td>
+<td class="py-2.5 px-3 font-bold">PM2.5</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">24-hour truncated mean</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">Beta Attenuation Monitor (BAM)</td>
+<td class="py-2.5 px-3">60 µg/m³</td>
+<td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-semibold border border-primary/20">MANDATORY (PM)</span></td>
+</tr>
+<tr class="hover:bg-surface-variant/40 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-primary font-body">Respirable Particulate</td>
+<td class="py-2.5 px-3 font-bold">PM10</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">24-hour truncated mean</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">Tapered Element Oscillating Microbalance</td>
+<td class="py-2.5 px-3">100 µg/m³</td>
+<td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-semibold border border-primary/20">MANDATORY (PM)</span></td>
+</tr>
+<tr class="hover:bg-surface-variant/40 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-secondary font-body">Nitrogen Dioxide</td>
+<td class="py-2.5 px-3 font-bold">NO2</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">24-hour arithmetic mean</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">Chemiluminescence Photometry</td>
+<td class="py-2.5 px-3">80 µg/m³</td>
+<td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant text-[10px] font-medium">Secondary Sub-Index</span></td>
+</tr>
+<tr class="hover:bg-surface-variant/40 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-secondary font-body">Sulfur Dioxide</td>
+<td class="py-2.5 px-3 font-bold">SO2</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">24-hour arithmetic mean</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">Pulsed Ultraviolet Fluorescence</td>
+<td class="py-2.5 px-3">80 µg/m³</td>
+<td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant text-[10px] font-medium">Secondary Sub-Index</span></td>
+</tr>
+<tr class="hover:bg-surface-variant/40 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-tertiary font-body">Carbon Monoxide</td>
+<td class="py-2.5 px-3 font-bold">CO</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">8-hour moving average</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">Non-Dispersive Infrared Spectroscopy (NDIR)</td>
+<td class="py-2.5 px-3">02 mg/m³</td>
+<td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant text-[10px] font-medium">Secondary Sub-Index</span></td>
+</tr>
+<tr class="hover:bg-surface-variant/40 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-tertiary font-body">Ground-Level Ozone</td>
+<td class="py-2.5 px-3 font-bold">O3</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">8-hour / 1-hour moving max</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">UV Photometric Absorption</td>
+<td class="py-2.5 px-3">100 µg/m³</td>
+<td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant text-[10px] font-medium">Secondary Sub-Index</span></td>
+</tr>
+<tr class="hover:bg-surface-variant/40 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-on-surface font-body">Ammonia</td>
+<td class="py-2.5 px-3 font-bold">NH3</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">24-hour arithmetic mean</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-body">Chemiluminescence / Ion Chromatography</td>
+<td class="py-2.5 px-3">400 µg/m³</td>
+<td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant text-[10px] font-medium">Secondary Sub-Index</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- MODULE 2: CPCB AQI MATHEMATICAL FORMULATION -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Formula & Breakpoint Grid -->
+<div class="lg:col-span-7 bg-surface-container p-6 rounded-2xl border border-outline-variant/30 space-y-6 flex flex-col justify-between">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="p-2.5 rounded-lg bg-secondary/10 border border-secondary/20 text-secondary">
+<span class="material-symbols-outlined text-2xl" data-icon="functions">functions</span>
+</div>
+<div>
+<h2 class="text-lg font-headline font-bold text-on-surface">Mathematical Formulation: Sub-Index Algorithm</h2>
+<p class="text-xs text-on-surface-variant">Piecewise Linear Interpolation conforming to IIT Kanpur &amp; CPCB 2014 Framework</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded bg-surface-container-high text-secondary text-xs font-mono border border-secondary/20">Eq. 2.1-A</span>
+</div>
+<!-- Formula Code Box -->
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 font-mono space-y-2 text-xs sm:text-sm">
+<div class="text-primary font-bold tracking-wide">
+              I<sub>p</sub> = [ (I<sub>HI</sub> - I<sub>LO</sub>) / (B<sub>HI</sub> - B<sub>LO</sub>) ] × (C<sub>p</sub> - B<sub>LO</sub>) + I<sub>LO</sub>
+</div>
+<div class="text-secondary font-bold tracking-wide">
+              AQI = max(I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub>, ..., I<sub>n</sub>)
+            </div>
+<div class="pt-2 border-t border-outline-variant/20 text-[11px] text-on-surface-variant font-body">
+<strong class="text-on-surface font-mono">Mandatory Validation Criterion:</strong> An overall AQI can only be calculated if data is available for at least <strong>three pollutants</strong>, out of which one must strictly be either <strong>PM2.5</strong> or <strong>PM10</strong>.
+            </div>
+</div>
+<!-- Variable Definitions -->
+<div class="grid grid-cols-2 gap-2 text-[11px] font-mono text-on-surface-variant">
+<div class="bg-surface-container-low p-2 rounded border border-outline-variant/20">
+<span class="text-primary font-bold">C<sub>p</sub></span>: Measured pollutant concentration
+            </div>
+<div class="bg-surface-container-low p-2 rounded border border-outline-variant/20">
+<span class="text-primary font-bold">I<sub>p</sub></span>: Computed sub-index for pollutant p
+            </div>
+<div class="bg-surface-container-low p-2 rounded border border-outline-variant/20">
+<span class="text-secondary font-bold">B<sub>HI</sub>, B<sub>LO</sub></span>: Breakpoint concentration caps
+            </div>
+<div class="bg-surface-container-low p-2 rounded border border-outline-variant/20">
+<span class="text-secondary font-bold">I<sub>HI</sub>, I<sub>LO</sub></span>: AQI category indices corresponding to B
+            </div>
+</div>
+<!-- CPCB 6-Category Standard Reference Table -->
+<div class="space-y-2">
+<div class="text-xs font-headline font-semibold text-on-surface flex items-center justify-between">
+<span>CPCB 6-Category National Standard Scale</span>
+<span class="text-[11px] font-mono text-on-surface-variant">Standard AQI Range (0 - 500)</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-[#10B981]/30 flex items-start gap-2.5">
+<span class="w-3 h-3 rounded-full bg-[#10B981] mt-0.5 shrink-0 shadow-[0_0_8px_#10B981]"></span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-on-surface">Good</span>
+<span class="font-mono text-[11px] text-[#10B981]">0 – 50</span>
+</div>
+<div class="text-[11px] text-on-surface-variant leading-tight">Minimal health impact</div>
+</div>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-[#34D399]/30 flex items-start gap-2.5">
+<span class="w-3 h-3 rounded-full bg-[#34D399] mt-0.5 shrink-0 shadow-[0_0_8px_#34D399]"></span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-on-surface">Satisfactory</span>
+<span class="font-mono text-[11px] text-[#34D399]">51 – 100</span>
+</div>
+<div class="text-[11px] text-on-surface-variant leading-tight">Minor breathing discomfort to sensitive people</div>
+</div>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-[#F59E0B]/30 flex items-start gap-2.5">
+<span class="w-3 h-3 rounded-full bg-[#F59E0B] mt-0.5 shrink-0 shadow-[0_0_8px_#F59E0B]"></span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-on-surface">Moderate</span>
+<span class="font-mono text-[11px] text-[#F59E0B]">101 – 200</span>
+</div>
+<div class="text-[11px] text-on-surface-variant leading-tight">Breathing discomfort to people with lung/heart disease</div>
+</div>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-[#F97316]/30 flex items-start gap-2.5">
+<span class="w-3 h-3 rounded-full bg-[#F97316] mt-0.5 shrink-0 shadow-[0_0_8px_#F97316]"></span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-on-surface">Poor</span>
+<span class="font-mono text-[11px] text-[#F97316]">201 – 300</span>
+</div>
+<div class="text-[11px] text-on-surface-variant leading-tight">Breathing discomfort to most people on prolonged exposure</div>
+</div>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-[#EF4444]/30 flex items-start gap-2.5">
+<span class="w-3 h-3 rounded-full bg-[#EF4444] mt-0.5 shrink-0 shadow-[0_0_8px_#EF4444]"></span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-on-surface">Very Poor</span>
+<span class="font-mono text-[11px] text-[#EF4444]">301 – 400</span>
+</div>
+<div class="text-[11px] text-on-surface-variant leading-tight">Respiratory illness on prolonged exposure</div>
+</div>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-[#881337]/50 flex items-start gap-2.5">
+<span class="w-3 h-3 rounded-full bg-[#881337] mt-0.5 shrink-0 shadow-[0_0_8px_#881337]"></span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-on-surface">Severe</span>
+<span class="font-mono text-[11px] text-error">401 – 500</span>
+</div>
+<div class="text-[11px] text-on-surface-variant leading-tight">Affects healthy people &amp; seriously impacts vulnerabilities</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-3 border-t border-outline-variant/20 flex items-center justify-between text-xs font-mono text-on-surface-variant">
+<span>Breakpoint Matrix Version: CPCB-2014-NAAQS</span>
+<span class="text-primary">Status: Validated &amp; Deterministic</span>
+</div>
+</div>
+<!-- Right Column: Step-by-Step Computational Architecture -->
+<div class="lg:col-span-5 bg-surface-container p-6 rounded-2xl border border-outline-variant/30 space-y-4">
+<div class="flex items-center gap-3 border-b border-outline-variant/20 pb-4">
+<div class="p-2.5 rounded-lg bg-primary/10 border border-primary/20 text-primary">
+<span class="material-symbols-outlined text-2xl" data-icon="account_tree">account_tree</span>
+</div>
+<div>
+<h2 class="text-lg font-headline font-bold text-on-surface">Computational Pipeline Flow</h2>
+<p class="text-xs text-on-surface-variant">Sequential mathematical execution stack in data engine</p>
+</div>
+</div>
+<!-- Vertical Flow Sequence -->
+<div class="space-y-3 relative before:absolute before:left-4 before:top-3 before:bottom-3 before:w-0.5 before:bg-outline-variant/30">
+<!-- Step 1 -->
+<div class="relative flex items-start gap-3 pl-1">
+<div class="w-7 h-7 rounded-full bg-surface-container-high border-2 border-primary text-primary flex items-center justify-center font-mono text-xs font-bold shrink-0 z-10 shadow-sm">
+              1
+            </div>
+<div class="bg-surface-container-low p-3 rounded-xl border border-outline-variant/20 flex-1">
+<div class="text-xs font-headline font-semibold text-on-surface">Raw Telemetry &amp; IST Normalization</div>
+<p class="text-[11px] text-on-surface-variant mt-0.5">Ingests station-level feeds, standardizing Asian/Kolkata timestamps to UTC ISO-8601 representation.</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative flex items-start gap-3 pl-1">
+<div class="w-7 h-7 rounded-full bg-surface-container-high border-2 border-primary text-primary flex items-center justify-center font-mono text-xs font-bold shrink-0 z-10 shadow-sm">
+              2
+            </div>
+<div class="bg-surface-container-low p-3 rounded-xl border border-outline-variant/20 flex-1">
+<div class="text-xs font-headline font-semibold text-on-surface">Physical Bound Check &amp; Optical Clamping</div>
+<p class="text-[11px] text-on-surface-variant mt-0.5">Enforces instrument thresholds. Values &lt; 0 µg/m³ flagged as sensor fault; optical scattering baseline calibrated.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative flex items-start gap-3 pl-1">
+<div class="w-7 h-7 rounded-full bg-surface-container-high border-2 border-secondary text-secondary flex items-center justify-center font-mono text-xs font-bold shrink-0 z-10 shadow-sm">
+              3
+            </div>
+<div class="bg-surface-container-low p-3 rounded-xl border border-outline-variant/20 flex-1">
+<div class="text-xs font-headline font-semibold text-on-surface">24-Hour Truncated Arithmetic Mean</div>
+<p class="text-[11px] text-on-surface-variant mt-0.5">Applies CPCB's 16-hour minimum valid data rule (≥ 66.7% daily temporal completeness required per diurnal cycle).</p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="relative flex items-start gap-3 pl-1">
+<div class="w-7 h-7 rounded-full bg-surface-container-high border-2 border-secondary text-secondary flex items-center justify-center font-mono text-xs font-bold shrink-0 z-10 shadow-sm">
+              4
+            </div>
+<div class="bg-surface-container-low p-3 rounded-xl border border-outline-variant/20 flex-1">
+<div class="text-xs font-headline font-semibold text-on-surface">Piecewise Linear Sub-Index Interpolation</div>
+<p class="text-[11px] text-on-surface-variant mt-0.5">Locates breakpoint brackets (B<sub>LO</sub>, B<sub>HI</sub>) for each valid pollutant and computes individual I<sub>p</sub> values.</p>
+</div>
+</div>
+<!-- Step 5 -->
+<div class="relative flex items-start gap-3 pl-1">
+<div class="w-7 h-7 rounded-full bg-surface-container-high border-2 border-tertiary text-tertiary flex items-center justify-center font-mono text-xs font-bold shrink-0 z-10 shadow-sm">
+              5
+            </div>
+<div class="bg-surface-container-low p-3 rounded-xl border border-outline-variant/20 flex-1">
+<div class="text-xs font-headline font-semibold text-on-surface">Dominant Pollutant &amp; Final AQI Maxima</div>
+<p class="text-[11px] text-on-surface-variant mt-0.5">Verifies 3-pollutant condition; extracts peak sub-index as final AQI, logging the governing pollutant identifier.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/20 rounded-xl p-3 flex items-center gap-2.5 text-xs text-primary font-mono">
+<span class="material-symbols-outlined text-sm shrink-0" data-icon="check_circle">check_circle</span>
+<span>Zero-heuristic implementation: Exact algebraic reproducibility across all 42 stations.</span>
+</div>
+</div>
+</section>
+<!-- MODULE 3: DATA CLEANING & PREPROCESSING PIPELINE (clean_data.py) -->
+<section class="bg-surface-container p-6 rounded-2xl border border-outline-variant/30 space-y-6">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-outline-variant/20 pb-4">
+<div class="flex items-center gap-3">
+<div class="p-2.5 rounded-lg bg-primary/10 border border-primary/20 text-primary">
+<span class="material-symbols-outlined text-2xl" data-icon="terminal">terminal</span>
+</div>
+<div>
+<h2 class="text-lg font-headline font-bold text-on-surface">Data Cleaning &amp; Preprocessing Pipeline (<code class="text-primary font-mono text-sm">clean_data.py</code>)</h2>
+<p class="text-xs text-on-surface-variant">Deterministic 6-stage transformation architecture applied to raw CPCB bulletin extracts</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-surface-container-high text-xs font-mono text-on-surface border border-outline-variant/30">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+            ETL Status: Automated
+          </span>
+</div>
+</div>
+<!-- 6-Stage Interactive Horizontal Pipeline -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-6 gap-3">
+<!-- Stage 1 -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 relative flex flex-col justify-between group hover:border-primary/50 transition-colors">
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-mono text-primary font-bold px-1.5 py-0.5 rounded bg-primary/10">STAGE 01</span>
+<span class="material-symbols-outlined text-sm text-on-surface-variant" data-icon="file_download">file_download</span>
+</div>
+<div class="text-xs font-headline font-bold text-on-surface">Raw Ingestion</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">
+              Batch loads heterogeneous raw bulletin CSV slices from <code class="text-secondary font-mono">raw_bulletins/</code> folder.
+            </p>
+</div>
+<div class="mt-3 pt-2 border-t border-outline-variant/20 text-[10px] font-mono text-on-surface-variant">
+            Input: Multi-header CSV
+          </div>
+</div>
+<!-- Stage 2 -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 relative flex flex-col justify-between group hover:border-primary/50 transition-colors">
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-mono text-primary font-bold px-1.5 py-0.5 rounded bg-primary/10">STAGE 02</span>
+<span class="material-symbols-outlined text-sm text-on-surface-variant" data-icon="filter_alt">filter_alt</span>
+</div>
+<div class="text-xs font-headline font-bold text-on-surface">Deduplication</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">
+              Hash deduplication across composite tuples <code class="text-secondary font-mono">(station_id, timestamp)</code>.
+            </p>
+</div>
+<div class="mt-3 pt-2 border-t border-outline-variant/20 text-[10px] font-mono text-on-surface-variant">
+            Hash: SHA-256 Tuple
+          </div>
+</div>
+<!-- Stage 3 -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 relative flex flex-col justify-between group hover:border-primary/50 transition-colors">
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-mono text-primary font-bold px-1.5 py-0.5 rounded bg-primary/10">STAGE 03</span>
+<span class="material-symbols-outlined text-sm text-on-surface-variant" data-icon="sync_alt">sync_alt</span>
+</div>
+<div class="text-xs font-headline font-bold text-on-surface">Type Conversion</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">
+              String timestamps normalized to ISO-8601 UTC. Numeric coercion strips unit artifacts (μg/m³).
+            </p>
+</div>
+<div class="mt-3 pt-2 border-t border-outline-variant/20 text-[10px] font-mono text-on-surface-variant">
+            Routine: coerce_numeric
+          </div>
+</div>
+<!-- Stage 4 -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 relative flex flex-col justify-between group hover:border-primary/50 transition-colors">
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-mono text-secondary font-bold px-1.5 py-0.5 rounded bg-secondary/10">STAGE 04</span>
+<span class="material-symbols-outlined text-sm text-on-surface-variant" data-icon="warning">warning</span>
+</div>
+<div class="text-xs font-headline font-bold text-on-surface">Outlier Clipping</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">
+              Applies 3.5σ statistical ceiling filter and eliminates non-physical negative sensor fluctuations.
+            </p>
+</div>
+<div class="mt-3 pt-2 border-t border-outline-variant/20 text-[10px] font-mono text-on-surface-variant">
+            Bounds: [0.0, μ + 3.5σ]
+          </div>
+</div>
+<!-- Stage 5 -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 relative flex flex-col justify-between group hover:border-primary/50 transition-colors">
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-mono text-secondary font-bold px-1.5 py-0.5 rounded bg-secondary/10">STAGE 05</span>
+<span class="material-symbols-outlined text-sm text-on-surface-variant" data-icon="hourglass_empty">hourglass_empty</span>
+</div>
+<div class="text-xs font-headline font-bold text-on-surface">Data Imputation</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">
+              Dynamic linear forward-fill for gaps ≤ 3h; diurnal seasonal medians for extended sensor gaps &gt; 3h.
+            </p>
+</div>
+<div class="mt-3 pt-2 border-t border-outline-variant/20 text-[10px] font-mono text-on-surface-variant">
+            Hybrid Diurnal Model
+          </div>
+</div>
+<!-- Stage 6 -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 relative flex flex-col justify-between group hover:border-primary/50 transition-colors">
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-mono text-primary font-bold px-1.5 py-0.5 rounded bg-primary/10">STAGE 06</span>
+<span class="material-symbols-outlined text-sm text-on-surface-variant" data-icon="check_circle_outline">check_circle_outline</span>
+</div>
+<div class="text-xs font-headline font-bold text-on-surface">Output Export</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">
+              Sanitized export to <code class="text-primary font-mono">cleaned_cpcb_aqi_bulletins.csv</code> ready for indexing.
+            </p>
+</div>
+<div class="mt-3 pt-2 border-t border-outline-variant/20 text-[10px] font-mono text-on-surface-variant">
+            Format: Apache Parquet / CSV
+          </div>
+</div>
+</div>
+<!-- Execution Stats Bar -->
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/30 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base" data-icon="speed">speed</span>
+<span class="text-on-surface-variant">Pipeline Verification Audit:</span>
+<span class="text-on-surface font-semibold">SUCCESS (Exit Code 0)</span>
+</div>
+<div class="flex flex-wrap items-center gap-6 text-[11px]">
+<div><span class="text-on-surface-variant">Imputation Integrity:</span> <span class="text-primary font-bold">100.0%</span></div>
+<div><span class="text-on-surface-variant">Duplicate Collisions Purged:</span> <span class="text-secondary font-bold">412 Records</span></div>
+<div><span class="text-on-surface-variant">Corrupt Timestamps:</span> <span class="text-primary font-bold">0</span></div>
+<div><span class="text-on-surface-variant">Execution Time:</span> <span class="text-on-surface font-bold">4.28s</span></div>
+</div>
+</div>
+</section>
+<!-- MODULE 4: PROJECT SCOPE BOUNDARIES & SYSTEM LIMITATIONS (2x2 Callout Grid) -->
+<section class="space-y-4">
+<div>
+<h2 class="text-lg font-headline font-bold text-on-surface">Project Scope Boundaries &amp; System Limitations</h2>
+<p class="text-xs text-on-surface-variant">Academic research demarcation, scientific constraints, and evaluation boundaries</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Callout 1 -->
+<div class="bg-surface-container p-5 rounded-2xl border border-tertiary/30 space-y-2 relative overflow-hidden">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-tertiary/5 rounded-full pointer-events-none"></div>
+<div class="flex items-center gap-2 text-tertiary">
+<span class="material-symbols-outlined text-lg" data-icon="warning_amber">warning_amber</span>
+<span class="text-xs font-headline font-bold tracking-wide uppercase">Pre-Integration Demo Status</span>
+</div>
+<h3 class="text-sm font-headline font-semibold text-on-surface">Simulated Telemetry Architecture</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+            Live telemetry readings shown across dashboard cards and active maps utilize simulated statistical sampling curves derived from historical CPCB distributions. This software build serves academic demonstration purposes and must not be used as certified legal or statutory regulatory environmental data.
+          </p>
+</div>
+<!-- Callout 2 -->
+<div class="bg-surface-container p-5 rounded-2xl border border-primary/30 space-y-2 relative overflow-hidden">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-primary/5 rounded-full pointer-events-none"></div>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="insights">insights</span>
+<span class="text-xs font-headline font-bold tracking-wide uppercase">Deterministic Analytics (No AI/ML)</span>
+</div>
+<h3 class="text-sm font-headline font-semibold text-on-surface">Explainable Mathematical Modeling</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+            The platform intentionally omits opaque deep learning or black-box predictive models (e.g., LSTM, XGBoost) to maintain total algebraic explainability. All aggregations represent deterministic arithmetic formulations compliant with Indian National Air Quality Index protocols.
+          </p>
+</div>
+<!-- Callout 3 -->
+<div class="bg-surface-container p-5 rounded-2xl border border-secondary/30 space-y-2 relative overflow-hidden">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-secondary/5 rounded-full pointer-events-none"></div>
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="map">map</span>
+<span class="text-xs font-headline font-bold tracking-wide uppercase">Spatial Interpolation Limits</span>
+</div>
+<h3 class="text-sm font-headline font-semibold text-on-surface">Discrete Node Representation</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+            The 42 CAAQMS stations represent discrete spatial sample points. Continuous surface modeling across intermediate non-monitored zones via Inverse Distance Weighting (IDW) or Ordinary Kriging remains demarcated outside the scope of this minor project evaluation build.
+          </p>
+</div>
+<!-- Callout 4 -->
+<div class="bg-surface-container p-5 rounded-2xl border border-outline-variant/40 space-y-2 relative overflow-hidden">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-outline-variant/10 rounded-full pointer-events-none"></div>
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-lg" data-icon="air">air</span>
+<span class="text-xs font-headline font-bold tracking-wide uppercase">Meteorological Dependencies</span>
+</div>
+<h3 class="text-sm font-headline font-semibold text-on-surface">Secondary Planetary Boundary Layer Metrics</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+            Atmospheric dispersion factors including Planetary Boundary Layer Height (PBLH), wind vector trajectories, and thermal inversion levels are synchronized via secondary ERA5 demo re-analysis parameters rather than on-site ultrasonic anemometers.
+          </p>
+</div>
+</div>
+</section>
+<!-- MODULE 5: TECHNOLOGY STACK & ACADEMIC SPECIFICATION -->
+<section class="bg-surface-container p-6 rounded-2xl border border-outline-variant/30 space-y-4">
+<div class="flex items-center justify-between border-b border-outline-variant/20 pb-3">
+<h2 class="text-xs font-mono uppercase tracking-wider text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="code_blocks">code_blocks</span>
+          Technology Stack &amp; Academic Artifact Metadata
+        </h2>
+<span class="text-xs font-mono text-primary font-semibold">Evaluation Term: 2026</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+<div class="space-y-1 bg-surface-container-low p-3.5 rounded-xl border border-outline-variant/20">
+<div class="text-[10px] font-mono text-on-surface-variant uppercase">Frontend Layer</div>
+<div class="font-headline font-bold text-on-surface">Modern Web Application</div>
+<div class="text-[11px] text-on-surface-variant">Tailwind CSS, Glassmorphic UI tokens, Space Grotesk</div>
+</div>
+<div class="space-y-1 bg-surface-container-low p-3.5 rounded-xl border border-outline-variant/20">
+<div class="text-[10px] font-mono text-on-surface-variant uppercase">Data Engine</div>
+<div class="font-headline font-bold text-on-surface">Python 3.11 Runtime</div>
+<div class="text-[11px] text-on-surface-variant">pandas, numpy, scipy.stats, vectorized arithmetic</div>
+</div>
+<div class="space-y-1 bg-surface-container-low p-3.5 rounded-xl border border-outline-variant/20">
+<div class="text-[10px] font-mono text-on-surface-variant uppercase">Computational Rules</div>
+<div class="font-headline font-bold text-on-surface">Deterministic Engine</div>
+<div class="text-[11px] text-on-surface-variant">CPCB 2014 &amp; IIT Kanpur piece-wise algebraic algorithm</div>
+</div>
+<div class="space-y-1 bg-surface-container-low p-3.5 rounded-xl border border-outline-variant/20">
+<div class="text-[10px] font-mono text-on-surface-variant uppercase">Curriculum Context</div>
+<div class="font-headline font-bold text-on-surface">BCA Minor Project</div>
+<div class="text-[11px] text-on-surface-variant">Bachelor of Computer Applications Final Submission</div>
+</div>
+</div>
+</section>
+</main>
+<!-- ACADEMIC FOOTER (Shared Component Execution) -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest docked full-width bottom flat no shadows border-t border-outline-variant/30 mt-auto">
+<div class="w-full px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 mx-auto font-body text-xs text-on-surface-variant">
+<!-- Brand & Copyright -->
+<div class="flex flex-col sm:flex-row items-center gap-2 text-center sm:text-left">
+<span class="font-headline text-sm font-semibold text-on-surface dark:text-on-surface">AirQuality Pulse</span>
+<span class="hidden sm:inline text-outline">•</span>
+<span>© 2025 AirQuality Pulse • BCA Minor Project Evaluation Build • CPCB Archive Simulated Dataset</span>
+</div>
+<!-- Links Cluster -->
+<div class="flex flex-wrap items-center justify-center gap-6">
+<a class="text-primary font-medium hover:text-secondary transition-colors duration-150" href="#">Methodology &amp; Calibration</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary duration-150" href="#">CPCB Standard Guidelines</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary duration-150" href="#">API Documentation</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary duration-150" href="#">Evaluation Rubric</a>
+</div>
+</div>
+</footer>
+</body></html>

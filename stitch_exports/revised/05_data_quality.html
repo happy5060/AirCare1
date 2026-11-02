@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AirQuality Pulse - Data Quality &amp; Pipeline Audits</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration verbatim from Design System -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#2c344c",
+            "surface-container-high": "#222940",
+            "on-tertiary-fixed-variant": "#653e00",
+            "error": "#ffb4ab",
+            "inverse-on-surface": "#283047",
+            "on-tertiary-container": "#3e2400",
+            "tertiary-fixed-dim": "#ffb95f",
+            "outline-variant": "#3d4947",
+            "on-secondary-fixed": "#001e2c",
+            "primary": "#4fdbc8",
+            "on-primary-fixed": "#00201c",
+            "outline": "#879391",
+            "primary-fixed-dim": "#4fdbc8",
+            "surface-container-low": "#131b31",
+            "secondary-fixed": "#c4e7ff",
+            "surface-variant": "#2c344c",
+            "error-container": "#93000a",
+            "tertiary-fixed": "#ffddb8",
+            "on-secondary-container": "#00374d",
+            "on-background": "#dbe1ff",
+            "on-secondary": "#00354a",
+            "surface-container-lowest": "#050d23",
+            "on-secondary-fixed-variant": "#004c69",
+            "on-error-container": "#ffdad6",
+            "surface-dim": "#0a1228",
+            "surface": "#0a1228",
+            "on-surface-variant": "#bcc9c6",
+            "inverse-surface": "#dbe1ff",
+            "tertiary": "#ffb95f",
+            "secondary-fixed-dim": "#7bd0ff",
+            "primary-container": "#00a392",
+            "surface-container": "#171f35",
+            "surface-tint": "#4fdbc8",
+            "inverse-primary": "#006b5f",
+            "secondary-container": "#00a6e0",
+            "on-primary-fixed-variant": "#005048",
+            "on-error": "#690005",
+            "on-tertiary-fixed": "#2a1700",
+            "secondary": "#7bd0ff",
+            "on-surface": "#dbe1ff",
+            "surface-bright": "#313850",
+            "on-primary-container": "#00302a",
+            "on-primary": "#003731",
+            "background": "#0a1228",
+            "tertiary-container": "#ca8100",
+            "primary-fixed": "#71f8e4",
+            "on-tertiary": "#472a00"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Space Grotesk"],
+            "display": ["Space Grotesk"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .bg-grid-pattern {
+      background-size: 24px 24px;
+      background-image: 
+        linear-gradient(to right, rgba(79, 219, 200, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(79, 219, 200, 0.04) 1px, transparent 1px);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
+<!-- ========================================================================= -->
+<!-- 1. TOP APP BAR (Shared Component: TopNavBar with Data Quality Audits Active) -->
+<!-- ========================================================================= -->
+<header class="bg-surface-container-low docked full-width top-0 shadow-sm border-b border-outline-variant/30 sticky top-0 z-50 backdrop-blur-md">
+<div class="w-full px-6 flex items-center justify-between mx-auto">
+<!-- Brand & Project Identity -->
+<div class="flex items-center gap-6">
+<a class="font-headline text-lg font-bold text-on-surface flex items-center gap-2 group transition-all duration-200" href="#">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high border border-primary/30 flex items-center justify-center text-primary group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">air</span>
+</div>
+<span class="tracking-tight">AirQuality Pulse - Environmental Data Analytics</span>
+</a>
+</div>
+<!-- Navigation Links Cluster (Desktop) -->
+<nav class="hidden lg:flex items-center space-x-6 font-headline text-sm font-medium tracking-tight">
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">Overview Dashboard</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">Live AQI Stations</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">Historical Analytics</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">City Comparison</a>
+<a class="text-primary border-b-2 border-primary font-semibold py-4" href="#">Data Quality Audits</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal py-4 transition-colors" href="#">Methodology &amp; Sources</a>
+</nav>
+<!-- Trailing Badges and Actions -->
+<div class="flex items-center gap-3">
+<!-- Audit Verified Badge 1 -->
+<div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container border border-primary/30 text-xs text-primary font-label">
+<span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-semibold tracking-tight">DATA INTEGRITY AUDIT: 100% VERIFIED ACCORDING TO CLEANING REPORT</span>
+</div>
+<!-- Audit Policy Badge 2 -->
+<span class="px-2.5 py-1 text-xs font-semibold rounded border border-secondary/40 bg-surface-container-high text-secondary tracking-wider font-label uppercase">
+          Non-Destructive Pipeline: Zero Records Altered / Clamped
+        </span>
+<!-- Quick Icon Actions -->
+<div class="flex items-center border-l border-outline-variant/30 pl-3 gap-1">
+<button class="p-2 rounded-lg text-on-surface-variant hover:text-primary transition-colors duration-150 active:scale-95 hover:bg-surface-container-high" title="Refresh Telemetry Stream">
+<span class="material-symbols-outlined text-xl">sync</span>
+</button>
+<button class="p-2 rounded-lg text-on-surface-variant hover:text-primary transition-colors duration-150 active:scale-95 hover:bg-surface-container-high relative" title="Alerts &amp; Logs">
+<span class="material-symbols-outlined text-xl">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-tertiary"></span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- ========================================================================= -->
+<!-- MAIN WORKSPACE CANVAS -->
+<!-- ========================================================================= -->
+<main class="flex-grow w-full px-6 py-6 max-w-[1600px] mx-auto space-y-6">
+<!-- 2. BREADCRUMBS, HEADER & ACTION TOOLBAR -->
+<section class="space-y-4">
+<div class="flex items-center gap-2 text-xs font-label text-on-surface-variant">
+<span>Analytics Core</span>
+<span class="text-outline">/</span>
+<span>Data Pipeline</span>
+<span class="text-outline">/</span>
+<span class="text-primary font-medium">Data Quality &amp; Preprocessing Audits</span>
+</div>
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+<div>
+<h1 class="text-2xl md:text-3xl font-bold font-headline text-on-surface tracking-tight flex items-center gap-3">
+            Data Quality Assurance &amp; Anomaly Diagnostics
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-surface-container-highest text-primary border border-primary/30 font-medium">
+              Verified Non-Destructive Audit
+            </span>
+</h1>
+<p class="text-sm text-on-surface-variant mt-1.5 max-w-4xl">
+            Systematic data hygiene audit across 471,015 CPCB bulletin records and 29,531 multi-city telemetry points. Adheres to strict non-destructive data governance: extreme values and missingness are diagnostically flagged rather than artificially altered.
+          </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-wrap items-center gap-2.5 shrink-0">
+<button class="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high border border-outline-variant text-on-surface text-xs font-medium transition-all duration-150 active:scale-95">
+<span class="material-symbols-outlined text-sm">download</span>
+<span>Export Cleaned CSV</span>
+</button>
+<button class="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high border border-outline-variant text-on-surface text-xs font-medium transition-all duration-150 active:scale-95">
+<span class="material-symbols-outlined text-sm">description</span>
+<span>Download Quality Report (.PDF)</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-primary-fixed text-on-primary font-semibold text-xs transition-all duration-150 shadow-md shadow-primary/20 active:scale-95">
+<span class="material-symbols-outlined text-sm">fact_check</span>
+<span>Re-Run Data Audit</span>
+</button>
+</div>
+</div>
+<!-- Filter Controls Bar -->
+<div class="p-3 bg-surface-container-low rounded-xl border border-primary/20 flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-wrap items-center gap-3">
+<!-- Dataset Selector -->
+<div class="flex items-center gap-2 bg-surface-container-highest/60 px-3 py-1.5 rounded-lg border border-outline-variant/50">
+<span class="material-symbols-outlined text-sm text-primary">database</span>
+<select class="bg-transparent text-xs text-on-surface focus:outline-none border-none p-0 pr-6 font-medium cursor-pointer">
+<option class="bg-surface-container-high" selected="">cpcb_historical_bulletins_471k.csv (Full Corpus)</option>
+<option class="bg-surface-container-high">city_day_observations_29k.csv (26 Cities)</option>
+<option class="bg-surface-container-high">realtime_aqi_telemetry_3668.json</option>
+</select>
+</div>
+<!-- Station / City Scope Selector -->
+<div class="flex items-center gap-2 bg-surface-container-highest/60 px-3 py-1.5 rounded-lg border border-outline-variant/50">
+<span class="material-symbols-outlined text-sm text-secondary">location_on</span>
+<select class="bg-transparent text-xs text-on-surface focus:outline-none border-none p-0 pr-6 font-medium cursor-pointer">
+<option class="bg-surface-container-high" selected="">All 26 Monitored Urban Centers</option>
+<option class="bg-surface-container-high">Delhi NCR Cluster (Industrial Core)</option>
+<option class="bg-surface-container-high">Mumbai Metropolitan Region</option>
+<option class="bg-surface-container-high">Indo-Gangetic Plain Stations</option>
+<option class="bg-surface-container-high">Southern Urban Centers (Bengaluru, Chennai)</option>
+</select>
+</div>
+<!-- Quality Metric Filter Pill Group -->
+<div class="hidden sm:flex items-center p-0.5 rounded-lg bg-surface-container border border-outline-variant/30 text-xs">
+<button class="px-3 py-1 rounded bg-primary text-on-primary font-medium">All Checks</button>
+<button class="px-3 py-1 text-on-surface-variant hover:text-on-surface">Missingness (NaN)</button>
+<button class="px-3 py-1 text-on-surface-variant hover:text-on-surface">Duplicate Audit (0 Collisions)</button>
+<button class="px-3 py-1 text-on-surface-variant hover:text-on-surface">Diagnostic Boolean Flags</button>
+<button class="px-3 py-1 text-on-surface-variant hover:text-on-surface">Category Inconsistencies</button>
+</div>
+</div>
+<div class="text-xs text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-xs text-primary">schedule</span>
+<span>Audit Report Status: <strong class="text-on-surface font-semibold">Verified According to Cleaning Report</strong></span>
+</div>
+</div>
+</section>
+<!-- 3. HIGH-LEVEL DATA HEALTH KPI CARDS (Bento Grid) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1: Total Processed Ingestion -->
+<div class="p-5 rounded-xl bg-surface-container border border-primary/20 hover:border-primary/40 transition-all shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-xs font-label uppercase tracking-wider text-on-surface-variant font-medium">Total Processed Records</span>
+<div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">dataset</span>
+</div>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="text-2xl font-bold font-headline text-on-surface">471,015</span>
+<span class="text-xs text-primary font-medium">Bulletins</span>
+</div>
+<div class="mt-2 text-xs text-on-surface-variant leading-relaxed">
+          Historical CPCB AQI Bulletins (2015–2024)
+        </div>
+<div class="mt-2 flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-secondary/15 text-secondary border border-secondary/25">
+            + 29,531 City-Day Records
+          </span>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-primary/15 text-primary border border-primary/25">
+            3,668 Live Real-time Readings
+          </span>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 flex items-center justify-between text-xs">
+<span class="text-on-surface-variant">Corpus Coverage</span>
+<span class="text-secondary font-medium">10-Yr Corpus (26 Major Centers)</span>
+</div>
+</div>
+<!-- Card 2: Duplicate Record Audit -->
+<div class="p-5 rounded-xl bg-surface-container border border-primary/20 hover:border-primary/40 transition-all shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-xs font-label uppercase tracking-wider text-on-surface-variant font-medium">Duplicate Record Audit</span>
+<div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">fingerprint</span>
+</div>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="text-2xl font-bold font-headline text-on-surface">0 Duplicates</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-primary/20 text-primary border border-primary/30">
+            100% Key Uniqueness Verified
+          </span>
+</div>
+<div class="mt-2 text-xs text-on-surface-variant leading-relaxed">
+          0 duplicate (city, date) entries in historical bulletins
+        </div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 flex items-center justify-between text-xs">
+<span class="text-on-surface-variant">Validation Check</span>
+<span class="text-on-surface font-medium font-mono text-[11px]">Strict Hash (city, timestamp)</span>
+</div>
+</div>
+<!-- Card 3: Missing Data Handling Policy -->
+<div class="p-5 rounded-xl bg-surface-container border border-primary/20 hover:border-primary/40 transition-all shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-xs font-label uppercase tracking-wider text-on-surface-variant font-medium">Missing Data Handling Policy</span>
+<div class="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-lg">rule</span>
+</div>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="text-xl font-bold font-headline text-on-surface">Non-Destructive Retention</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-secondary/20 text-secondary border border-secondary/30">
+            No Artificial Spline/Mean Fills
+          </span>
+</div>
+<div class="mt-2 text-xs text-on-surface-variant leading-relaxed">
+          0 Imputed (Original Missingness Retained). Preserved authentically as NaN for statistical EDA.
+        </div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 flex items-center justify-between text-xs">
+<span class="text-on-surface-variant">Data Governance</span>
+<span class="text-primary font-medium">Zero Synthetic Bias Introduced</span>
+</div>
+</div>
+<!-- Card 4: Outlier & Anomaly Diagnostics -->
+<div class="p-5 rounded-xl bg-surface-container border border-primary/20 hover:border-primary/40 transition-all shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-xs font-label uppercase tracking-wider text-on-surface-variant font-medium">Outlier &amp; Anomaly Diagnostics</span>
+<div class="w-8 h-8 rounded-lg bg-tertiary-container/30 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-lg">flag</span>
+</div>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="text-2xl font-bold font-headline text-on-surface">576 Extreme Values</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-tertiary/20 text-tertiary border border-tertiary/30">
+            + 268 Category Flags
+          </span>
+</div>
+<div class="mt-2 text-xs text-on-surface-variant leading-relaxed">
+          Preserved Intact for Review (City-Day Dataset). Non-destructive: AQI &gt; 500 &amp; PM10 ≥ 1000 µg/m³ kept intact.
+        </div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 flex items-center justify-between text-xs">
+<span class="text-on-surface-variant">Preservation Model</span>
+<span class="text-secondary font-medium">Diagnostic Boolean Audit Flags</span>
+</div>
+</div>
+</section>
+<!-- 4. CORE DATA QUALITY VISUALIZATIONS -->
+<!-- Section 1: Authentic Sensor Missingness Rates across 26 Monitored Cities & Pollutants -->
+<section class="rounded-xl bg-surface-container border border-primary/20 p-5 shadow-sm space-y-5">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+<div>
+<h2 class="text-base font-bold font-headline text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">grid_on</span>
+            Authentic Sensor Missingness Rates across 26 Monitored Cities &amp; Pollutants
+          </h2>
+<p class="text-xs text-on-surface-variant mt-0.5">
+            Documented telemetry absence metrics across 29,531 multi-city daily records. <strong class="text-secondary font-semibold">Non-Destructive Retention Policy:</strong> Missing values preserved as NaN for transparent statistical exploratory data analysis without introducing synthetic bias.
+          </p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs text-on-surface-variant">Handling Policy:</span>
+<span class="px-2.5 py-1 rounded bg-surface-container-high border border-outline-variant/50 text-xs text-primary font-medium">
+            Original Missingness Retained (0% Imputed)
+          </span>
+</div>
+</div>
+<!-- Parameter Summary Pills (Verified Missingness Rates) -->
+<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 pt-1">
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 flex flex-col">
+<span class="text-[10px] font-label uppercase text-on-surface-variant font-medium">Xylene</span>
+<span class="text-base font-bold font-mono text-tertiary mt-0.5">61.3%</span>
+<span class="text-[10px] text-outline">Missing (NaN)</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 flex flex-col">
+<span class="text-[10px] font-label uppercase text-on-surface-variant font-medium">PM10</span>
+<span class="text-base font-bold font-mono text-tertiary mt-0.5">37.7%</span>
+<span class="text-[10px] text-outline">Missing (NaN)</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 flex flex-col">
+<span class="text-[10px] font-label uppercase text-on-surface-variant font-medium">NH3</span>
+<span class="text-base font-bold font-mono text-tertiary mt-0.5">35.0%</span>
+<span class="text-[10px] text-outline">Missing (NaN)</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 flex flex-col">
+<span class="text-[10px] font-label uppercase text-on-surface-variant font-medium">AQI</span>
+<span class="text-base font-bold font-mono text-secondary mt-0.5">15.9%</span>
+<span class="text-[10px] text-outline">Missing (NaN)</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 flex flex-col">
+<span class="text-[10px] font-label uppercase text-on-surface-variant font-medium">PM2.5</span>
+<span class="text-base font-bold font-mono text-secondary mt-0.5">15.6%</span>
+<span class="text-[10px] text-outline">Missing (NaN)</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 flex flex-col">
+<span class="text-[10px] font-label uppercase text-on-surface-variant font-medium">SO2</span>
+<span class="text-base font-bold font-mono text-secondary mt-0.5">13.8%</span>
+<span class="text-[10px] text-outline">Missing (NaN)</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 flex flex-col">
+<span class="text-[10px] font-label uppercase text-on-surface-variant font-medium">NO2</span>
+<span class="text-base font-bold font-mono text-primary mt-0.5">12.4%</span>
+<span class="text-[10px] text-outline">Missing (NaN)</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 flex flex-col">
+<span class="text-[10px] font-label uppercase text-on-surface-variant font-medium">CO</span>
+<span class="text-base font-bold font-mono text-primary mt-0.5">7.1%</span>
+<span class="text-[10px] text-outline">Missing (NaN)</span>
+</div>
+</div>
+<!-- Matrix Heatmap Table Grid: City-Level Completeness and Retained Missingness -->
+<div class="overflow-x-auto rounded-lg border border-outline-variant/30">
+<table class="w-full text-xs text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-highest text-on-surface-variant border-b border-outline-variant/40">
+<th class="py-3 px-4 font-semibold uppercase tracking-wider font-label w-56">Urban Center / Region</th>
+<th class="py-3 px-3 text-center font-semibold uppercase font-label">PM2.5 (15.6% Miss)</th>
+<th class="py-3 px-3 text-center font-semibold uppercase font-label">PM10 (37.7% Miss)</th>
+<th class="py-3 px-3 text-center font-semibold uppercase font-label">NO2 (12.4% Miss)</th>
+<th class="py-3 px-3 text-center font-semibold uppercase font-label">SO2 (13.8% Miss)</th>
+<th class="py-3 px-3 text-center font-semibold uppercase font-label">CO (7.1% Miss)</th>
+<th class="py-3 px-3 text-center font-semibold uppercase font-label">NH3 (35.0% Miss)</th>
+<th class="py-3 px-3 text-center font-semibold uppercase font-label">Xylene (61.3% Miss)</th>
+<th class="py-3 px-3 text-center font-semibold uppercase font-label bg-surface-container-high text-primary">AQI Valid Record</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 bg-surface-container-low font-mono">
+<!-- Row 1: Delhi -->
+<tr class="hover:bg-surface-container-high/50 transition-colors">
+<td class="py-3 px-4 font-body font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                Delhi NCR (Capital Hub)
+              </td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">97.8% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">94.2% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">98.4% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 font-semibold">91.1% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">98.9% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-tertiary/20 text-tertiary border border-tertiary/30 font-semibold">78.4% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-error-container/30 text-error border border-error-container/40 font-semibold">44.2% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center bg-surface-container-high/40">
+<span class="inline-block w-full py-1 rounded bg-primary/25 text-primary border border-primary/40 font-bold">96.8%</span>
+</td>
+</tr>
+<!-- Row 2: Mumbai -->
+<tr class="hover:bg-surface-container-high/50 transition-colors">
+<td class="py-3 px-4 font-body font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                Mumbai (Coastal Urban)
+              </td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">96.5% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 font-semibold">89.1% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">95.0% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 font-semibold">86.2% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">97.3% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-tertiary/20 text-tertiary border border-tertiary/30 font-semibold">68.2% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-error-container/30 text-error border border-error-container/40 font-semibold">39.5% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center bg-surface-container-high/40">
+<span class="inline-block w-full py-1 rounded bg-primary/25 text-primary border border-primary/40 font-bold">94.5%</span>
+</td>
+</tr>
+<!-- Row 3: Bengaluru -->
+<tr class="hover:bg-surface-container-high/50 transition-colors">
+<td class="py-3 px-4 font-body font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                Bengaluru (Southern Plateau)
+              </td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">95.1% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-tertiary/20 text-tertiary border border-tertiary/30 font-semibold">68.0% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">98.4% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 font-semibold">93.8% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">99.0% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-tertiary/20 text-tertiary border border-tertiary/30 font-semibold">72.1% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-error-container/30 text-error border border-error-container/40 font-semibold">32.8% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center bg-surface-container-high/40">
+<span class="inline-block w-full py-1 rounded bg-secondary/25 text-secondary border border-secondary/40 font-bold">92.0%</span>
+</td>
+</tr>
+<!-- Row 4: Kolkata -->
+<tr class="hover:bg-surface-container-high/50 transition-colors">
+<td class="py-3 px-4 font-body font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                Kolkata (Eastern Riverine)
+              </td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 font-semibold">91.2% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-tertiary/20 text-tertiary border border-tertiary/30 font-semibold">58.5% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">94.2% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 font-semibold">90.6% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 font-semibold">95.4% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-tertiary/20 text-tertiary border border-tertiary/30 font-semibold">61.0% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-error-container/30 text-error border border-error-container/40 font-semibold">28.4% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center bg-surface-container-high/40">
+<span class="inline-block w-full py-1 rounded bg-secondary/25 text-secondary border border-secondary/40 font-bold">88.5%</span>
+</td>
+</tr>
+<!-- Row 5: Chennai -->
+<tr class="hover:bg-surface-container-high/50 transition-colors">
+<td class="py-3 px-4 font-body font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                Chennai (Coromandel Coast)
+              </td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">98.4% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-tertiary/20 text-tertiary border border-tertiary/30 font-semibold">62.9% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">97.0% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 font-semibold">94.2% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-primary/20 text-primary border border-primary/30 font-semibold">99.1% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-tertiary/20 text-tertiary border border-tertiary/30 font-semibold">64.5% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-error-container/30 text-error border border-error-container/40 font-semibold">36.1% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center bg-surface-container-high/40">
+<span class="inline-block w-full py-1 rounded bg-primary/25 text-primary border border-primary/40 font-bold">93.2%</span>
+</td>
+</tr>
+<!-- Row 6: Ahmedabad -->
+<tr class="hover:bg-surface-container-high/50 transition-colors">
+<td class="py-3 px-4 font-body font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                Ahmedabad (Western Industrial)
+              </td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 font-semibold">92.7% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-tertiary/20 text-tertiary border border-tertiary/30 font-semibold">64.8% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 font-semibold">92.1% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 font-semibold">88.0% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 font-semibold">96.0% Preserved</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-tertiary/20 text-tertiary border border-tertiary/30 font-semibold">62.0% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-block w-full py-1 rounded bg-error-container/30 text-error border border-error-container/40 font-semibold">41.2% (NaN Kept)</span>
+</td>
+<td class="py-2.5 px-3 text-center bg-surface-container-high/40">
+<span class="inline-block w-full py-1 rounded bg-secondary/25 text-secondary border border-secondary/40 font-bold">89.4%</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Bottom Legend & Non-Destructive Policy Callout -->
+<div class="pt-2 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 text-xs">
+<!-- Color Legend -->
+<div class="flex flex-wrap items-center gap-3 text-on-surface-variant font-label">
+<span class="font-medium text-on-surface">Data Availability Scale:</span>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded bg-primary/30 border border-primary"></span>
+<span>≥90% Present (Intact)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded bg-secondary/30 border border-secondary"></span>
+<span>80 - 89% Present</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded bg-tertiary/30 border border-tertiary"></span>
+<span>50 - 79% (NaN Preserved)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded bg-error-container/40 border border-error"></span>
+<span>&lt;50% Absence (Transparent NaN)</span>
+</div>
+</div>
+<!-- Imputation Rules Callout -->
+<div class="flex flex-wrap items-center gap-2 text-on-surface-variant bg-surface-container-high px-3 py-1.5 rounded-lg border border-outline-variant/30 text-[11px]">
+<span class="text-primary font-semibold">Audit Policy:</span>
+<span>Zero Synthetic Mean / Spline Interpolation</span>
+<span class="text-outline">•</span>
+<span>Preserved as authentic NaN for exploratory data analysis</span>
+<span class="text-outline">•</span>
+<span>100% Provenance Retention</span>
+</div>
+</div>
+</section>
+<!-- Section 2: Two Equal Column Cards -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Left Column Card: Diagnostic Boolean Flags & Extreme Value Review -->
+<div class="rounded-xl bg-surface-container border border-primary/20 p-5 space-y-4 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<h2 class="text-base font-bold font-headline text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-xl">flag</span>
+              Diagnostic Boolean Flags &amp; Extreme Value Review
+            </h2>
+<span class="text-xs px-2.5 py-0.5 rounded bg-surface-container-high text-tertiary border border-tertiary/30 font-mono font-medium">
+              576 Extreme Values Flagged
+            </span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">
+            Severe episodic conditions and sensor ceilings preserved intact with diagnostic boolean flags rather than destructive clipping or filtering.
+          </p>
+<!-- 4 Authentic Diagnostic Boolean Flags Breakdown -->
+<div class="mt-4 space-y-3">
+<!-- Flag 1: flag_aqi_above_500 -->
+<div class="p-3 rounded-lg bg-surface-container-low border border-primary/20 space-y-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-tertiary-container/40 text-tertiary border border-tertiary/40">flag_aqi_above_500</span>
+<span class="font-semibold text-xs text-on-surface">543 Records Preserved</span>
+</div>
+<span class="text-[11px] font-mono font-medium text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
+                Retained Intact
+              </span>
+</div>
+<div class="text-on-surface-variant text-[11px] leading-relaxed">
+              Extreme winter hazardous spikes in Indo-Gangetic Plain preserved intact for severe pollution episode research.
+            </div>
+</div>
+<!-- Flag 2: flag_pm10_sensor_cap -->
+<div class="p-3 rounded-lg bg-surface-container-low border border-primary/20 space-y-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-error-container/40 text-error border border-error-container">flag_pm10_sensor_cap</span>
+<span class="font-semibold text-xs text-on-surface">1 Record Flagged</span>
+</div>
+<span class="text-[11px] font-mono font-medium text-secondary bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20">
+                Not Discarded
+              </span>
+</div>
+<div class="text-on-surface-variant text-[11px] leading-relaxed">
+              Hardware optical ceiling of 1000 µg/m³ documented as instrument ceiling saturation; unmodified in dataset.
+            </div>
+</div>
+<!-- Flag 3: flag_pm25_extreme -->
+<div class="p-3 rounded-lg bg-surface-container-low border border-primary/20 space-y-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-secondary/20 text-secondary border border-secondary/30">flag_pm25_extreme</span>
+<span class="font-semibold text-xs text-on-surface">37 Records Preserved</span>
+</div>
+<span class="text-[11px] font-mono font-medium text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
+                Retained Intact
+              </span>
+</div>
+<div class="text-on-surface-variant text-[11px] leading-relaxed">
+              Acute post-harvest biomass burning episodes &gt;380 µg/m³ retained with boolean annotation for air quality modeling.
+            </div>
+</div>
+<!-- Flag 4: flag_co_extreme -->
+<div class="p-3 rounded-lg bg-surface-container-low border border-primary/20 space-y-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-tertiary-container/40 text-tertiary border border-tertiary/40">flag_co_extreme</span>
+<span class="font-semibold text-xs text-on-surface">120 Records Preserved</span>
+</div>
+<span class="text-[11px] font-mono font-medium text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
+                Retained Intact
+              </span>
+</div>
+<div class="text-on-surface-variant text-[11px] leading-relaxed">
+              High-density industrial traffic junction spikes retained without artificial compression or smoothing.
+            </div>
+</div>
+</div>
+</div>
+<div class="pt-3 border-t border-outline-variant/20 flex items-center justify-between text-xs text-on-surface-variant">
+<span>Diagnostic Audit Principle</span>
+<span class="text-primary font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">verified</span>
+            Zero Records Altered or Clamped
+          </span>
+</div>
+</div>
+<!-- Right Column Card: Audit Classification & Corpus Continuity -->
+<div class="rounded-xl bg-surface-container border border-primary/20 p-5 space-y-4 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<h2 class="text-base font-bold font-headline text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">account_tree</span>
+              Audit Classification &amp; Corpus Continuity
+            </h2>
+<span class="text-xs px-2.5 py-0.5 rounded bg-surface-container-high text-primary border border-primary/30 font-medium">
+              471,015 Records Verified
+            </span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">
+            Complete provenance audit across 10 years of official bulletins and multi-city observations.
+          </p>
+<!-- Key Classification & Corpus Highlights -->
+<div class="mt-4 space-y-3">
+<!-- Historical Bulletins Corpus -->
+<div class="p-3.5 rounded-lg bg-surface-container-low border border-outline-variant/30 space-y-1.5">
+<div class="flex justify-between items-center text-xs font-mono">
+<span class="text-on-surface font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-primary">description</span>
+                CPCB Historical Bulletin Archive (2015–2024)
+              </span>
+<span class="text-primary font-bold">471,015 Records</span>
+</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">
+              Nationwide daily bulletin corpus. Audited for duplicate keys, formatting normalization, and date standardization. 0 duplicate collisions detected.
+            </p>
+</div>
+<!-- Daily Multi-City Observations -->
+<div class="p-3.5 rounded-lg bg-surface-container-low border border-outline-variant/30 space-y-1.5">
+<div class="flex justify-between items-center text-xs font-mono">
+<span class="text-on-surface font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-secondary">location_city</span>
+                Daily Multi-City Observations Dataset
+              </span>
+<span class="text-secondary font-bold">29,531 Records (26 Cities)</span>
+</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">
+              Consolidated urban center continuous monitoring series. Missingness preserved authentically as NaN without synthetic imputation bias.
+            </p>
+</div>
+<!-- 268 Category Inconsistencies -->
+<div class="p-3.5 rounded-lg bg-surface-container-low border border-tertiary/30 space-y-1.5">
+<div class="flex justify-between items-center text-xs font-mono">
+<span class="text-tertiary font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-tertiary">difference</span>
+                Category Inconsistencies Flagged
+              </span>
+<span class="text-tertiary font-bold">268 Records Flagged</span>
+</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">
+              Calculated AQI sub-index vs recorded bulletin category discrepancies explicitly documented with <code class="text-xs font-mono text-tertiary-fixed">is_category_inconsistent = True</code> for researcher review.
+            </p>
+</div>
+</div>
+<!-- Zero Data Destruction Guarantee Box -->
+<div class="mt-4 p-3 rounded-lg bg-primary/10 border border-primary/30 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-primary text-base shrink-0 mt-0.5">verified_user</span>
+<div class="text-xs text-on-surface-variant leading-relaxed">
+<strong class="text-primary font-semibold">Zero Data Destruction Guarantee:</strong>
+              100% raw telemetry provenance preserved. No arbitrary outlier truncation, no forward-fill synthetic hallucination, and full reproducibility for academic evaluation.
+            </div>
+</div>
+</div>
+<div class="pt-3 border-t border-outline-variant/20 flex items-center justify-between text-xs text-on-surface-variant font-mono">
+<span>Corpus Authenticity: <strong class="text-primary font-semibold">100% Preserved</strong></span>
+<span class="text-secondary font-medium">0 Synthesized Records</span>
+</div>
+</div>
+</section>
+<!-- 5. FLAGGED ANOMALIES & RESOLUTION AUDIT LOG TABLE -->
+<section class="rounded-xl bg-surface-container border border-primary/20 p-5 shadow-sm space-y-4">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="text-base font-bold font-headline text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-xl">fact_check</span>
+            Flagged Anomalies &amp; Resolution Audit Log
+          </h2>
+<p class="text-xs text-on-surface-variant mt-0.5">
+            Deterministic diagnostic trail adhering to the project's non-destructive data cleaning report.
+          </p>
+</div>
+<!-- Search & Count Status -->
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-2 text-sm text-outline">search</span>
+<input class="w-72 pl-8 pr-3 py-1.5 rounded-lg bg-surface-container-high border border-outline-variant/50 text-xs text-on-surface placeholder:text-outline focus:outline-none focus:border-primary font-body" placeholder="Search city, flag, or parameter..." type="text"/>
+</div>
+<span class="text-xs text-on-surface-variant font-medium whitespace-nowrap">
+            Showing <strong class="text-on-surface">5</strong> sample verified records
+          </span>
+</div>
+</div>
+<!-- Rich Data Table -->
+<div class="overflow-x-auto rounded-lg border border-outline-variant/30">
+<table class="w-full text-xs text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-highest text-on-surface-variant border-b border-outline-variant/40 font-label uppercase">
+<th class="py-3 px-4 font-semibold">City / Node Name</th>
+<th class="py-3 px-3 font-semibold">Timestamp / Date</th>
+<th class="py-3 px-3 font-semibold">Parameter</th>
+<th class="py-3 px-3 font-semibold">Observed Raw Telemetry</th>
+<th class="py-3 px-3 font-semibold">Audit Diagnostic Flag</th>
+<th class="py-3 px-3 font-semibold">Expected vs Recorded</th>
+<th class="py-3 px-4 font-semibold">Applied Audit Policy</th>
+<th class="py-3 px-4 font-semibold text-right">Audit Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 bg-surface-container-low font-body">
+<!-- Row 1: Anand Vihar, Delhi -->
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3 px-4 font-medium text-on-surface">
+                Anand Vihar, Delhi
+                <span class="block text-[10px] text-outline font-mono">NODE_DL_004</span>
+</td>
+<td class="py-3 px-3 font-mono text-on-surface-variant">2024-11-04</td>
+<td class="py-3 px-3 font-semibold text-on-surface">AQI &amp; PM2.5</td>
+<td class="py-3 px-3 font-mono">
+<span class="text-error font-semibold">AQI 538</span>
+<span class="block text-[10px] text-on-surface-variant font-mono">PM2.5: 412 µg/m³</span>
+</td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary font-mono text-[11px] border border-tertiary/40 font-semibold">
+                  flag_aqi_above_500 = True
+                </span>
+</td>
+<td class="py-3 px-3 text-on-surface-variant">
+<span class="font-medium text-on-surface">Expected: Severe</span>
+<span class="block text-[10px] text-outline">Recorded: Severe (&gt;500)</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant">
+                Diagnostic Flag Added / Raw Value Retained Intact
+                <span class="block text-[10px] text-outline">Preserved for severe pollution episode research</span>
+</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-flex items-center gap-1 text-[11px] font-medium text-primary bg-primary/10 px-2 py-1 rounded border border-primary/20">
+<span class="material-symbols-outlined text-xs">verified</span>
+                  Preserved Intact
+                </span>
+</td>
+</tr>
+<!-- Row 2: BKC, Mumbai -->
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3 px-4 font-medium text-on-surface">
+                BKC, Mumbai
+                <span class="block text-[10px] text-outline font-mono">NODE_MH_012</span>
+</td>
+<td class="py-3 px-3 font-mono text-on-surface-variant">2024-05-18</td>
+<td class="py-3 px-3 font-semibold text-on-surface">PM10</td>
+<td class="py-3 px-3 font-mono">
+<span class="text-tertiary font-semibold">1,000.0 µg/m³</span>
+<span class="block text-[10px] text-outline">Optical saturation ceiling</span>
+</td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-error-container/30 text-error font-mono text-[11px] border border-error-container font-semibold">
+                  flag_pm10_sensor_cap = True
+                </span>
+</td>
+<td class="py-3 px-3 text-on-surface-variant">
+<span class="font-medium text-on-surface">Expected: Severe</span>
+<span class="block text-[10px] text-outline">Recorded: Sensor Ceiling Cap</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant">
+                Sensor Saturation Documented / No Clamping
+                <span class="block text-[10px] text-outline">Non-destructive preservation of instrument limit</span>
+</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-flex items-center gap-1 text-[11px] font-medium text-primary bg-primary/10 px-2 py-1 rounded border border-primary/20">
+<span class="material-symbols-outlined text-xs">verified</span>
+                  Preserved Intact
+                </span>
+</td>
+</tr>
+<!-- Row 3: Victoria Memorial, Kolkata -->
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3 px-4 font-medium text-on-surface">
+                Victoria Memorial, Kolkata
+                <span class="block text-[10px] text-outline font-mono">NODE_WB_007</span>
+</td>
+<td class="py-3 px-3 font-mono text-on-surface-variant">2024-09-02</td>
+<td class="py-3 px-3 font-semibold text-on-surface">AQI Category</td>
+<td class="py-3 px-3 font-mono">
+<span class="text-tertiary font-semibold">AQI 122 ("Satisfactory")</span>
+<span class="block text-[10px] text-tertiary">Bulletin Category Mismatch</span>
+</td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary font-mono text-[11px] border border-tertiary/40 font-semibold">
+                  is_category_inconsistent = True
+                </span>
+</td>
+<td class="py-3 px-3 text-on-surface-variant">
+<span class="font-medium text-on-surface">Expected: Moderate (101-200)</span>
+<span class="block text-[10px] text-error">Recorded: Satisfactory</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant">
+                Mislabeled Bulletin Category Flagged for Review
+                <span class="block text-[10px] text-outline">Documented category inconsistency; raw record intact</span>
+</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-flex items-center gap-1 text-[11px] font-medium text-primary bg-primary/10 px-2 py-1 rounded border border-primary/20">
+<span class="material-symbols-outlined text-xs">verified</span>
+                  Preserved Intact
+                </span>
+</td>
+</tr>
+<!-- Row 4: BTM Layout, Bengaluru -->
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3 px-4 font-medium text-on-surface">
+                BTM Layout, Bengaluru
+                <span class="block text-[10px] text-outline font-mono">NODE_KA_002</span>
+</td>
+<td class="py-3 px-3 font-mono text-on-surface-variant">2024-03-21</td>
+<td class="py-3 px-3 font-semibold text-on-surface">CO</td>
+<td class="py-3 px-3 font-mono">
+<span class="text-tertiary font-semibold">18.4 mg/m³</span>
+<span class="block text-[10px] text-outline">Industrial traffic spike</span>
+</td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-secondary/20 text-secondary font-mono text-[11px] border border-secondary/30 font-semibold">
+                  flag_co_extreme = True
+                </span>
+</td>
+<td class="py-3 px-3 text-on-surface-variant">
+<span class="font-medium text-on-surface">Expected: Very Poor</span>
+<span class="block text-[10px] text-outline">Recorded: High Localized Peak</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant">
+                Extreme Spike Retained / Boolean Flag Recorded
+                <span class="block text-[10px] text-outline">Localized high-emission junction surge preserved</span>
+</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-flex items-center gap-1 text-[11px] font-medium text-primary bg-primary/10 px-2 py-1 rounded border border-primary/20">
+<span class="material-symbols-outlined text-xs">verified</span>
+                  Preserved Intact
+                </span>
+</td>
+</tr>
+<!-- Row 5: IIT Madras, Chennai -->
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3 px-4 font-medium text-on-surface">
+                IIT Madras, Chennai
+                <span class="block text-[10px] text-outline font-mono">NODE_TN_005</span>
+</td>
+<td class="py-3 px-3 font-mono text-on-surface-variant">2024-12-10</td>
+<td class="py-3 px-3 font-semibold text-on-surface">Primary Key</td>
+<td class="py-3 px-3 font-mono">
+<span class="text-primary font-semibold">Key: (Chennai, 2024-12-10)</span>
+<span class="block text-[10px] text-primary">0 Collisions</span>
+</td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-primary/20 text-primary font-mono text-[11px] border border-primary/30 font-semibold">
+                  Duplicate Check: 0 Collisions
+                </span>
+</td>
+<td class="py-3 px-3 text-on-surface-variant">
+<span class="font-medium text-on-surface">Expected: Unique Record</span>
+<span class="block text-[10px] text-primary">Recorded: Unique Key</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant">
+                Verified 100% Composite Key Uniqueness
+                <span class="block text-[10px] text-outline">Hash verification confirms zero duplicated telemetry rows</span>
+</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-flex items-center gap-1 text-[11px] font-medium text-primary bg-primary/10 px-2 py-1 rounded border border-primary/20">
+<span class="material-symbols-outlined text-xs">verified</span>
+                  Validated Unique
+                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination Controls -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 text-xs text-on-surface-variant">
+<span>Showing 1-5 of sample verified records across 471,015 bulletin items</span>
+<div class="flex items-center gap-1">
+<button class="px-3 py-1.5 rounded bg-surface-container-high border border-outline-variant/30 text-outline cursor-not-allowed">
+            Previous
+          </button>
+<button class="px-3 py-1.5 rounded bg-primary text-on-primary font-medium">
+            1
+          </button>
+<button class="px-3 py-1.5 rounded bg-surface-container-high border border-outline-variant/30 hover:text-on-surface">
+            2
+          </button>
+<button class="px-3 py-1.5 rounded bg-surface-container-high border border-outline-variant/30 hover:text-on-surface">
+            3
+          </button>
+<span class="px-1 text-outline">...</span>
+<button class="px-3 py-1.5 rounded bg-surface-container-high border border-outline-variant/30 hover:text-on-surface">
+            94
+          </button>
+<button class="px-3 py-1.5 rounded bg-surface-container-high border border-outline-variant/30 hover:text-on-surface">
+            Next
+          </button>
+</div>
+</div>
+</section>
+</main>
+<!-- ========================================================================= -->
+<!-- 6. ACADEMIC PROJECT FOOTER (Shared Component: Footer) -->
+<!-- ========================================================================= -->
+<footer class="bg-surface-container-lowest docked full-width bottom border-t border-outline-variant/30 mt-10">
+<div class="w-full px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 mx-auto">
+<!-- Academic & Project Info -->
+<div class="space-y-1 text-center md:text-left">
+<div class="font-headline text-sm font-semibold text-on-surface flex items-center justify-center md:justify-start gap-2">
+<span>AirQuality Pulse</span>
+<span class="text-xs px-2 py-0.5 rounded bg-surface-container text-primary font-mono border border-primary/20">
+            BCA Minor Project Build
+          </span>
+</div>
+<div class="font-body text-xs text-on-surface-variant">
+          Module: Preprocessing &amp; Data Quality Pipeline (clean_data.py audit) • © 2025 AirQuality Pulse • BCA Minor Project Evaluation Build • CPCB Archive Verified Dataset
+        </div>
+<div class="text-[11px] text-outline italic">
+          Audit Report: 100% verified according to data cleaning report. Extreme values preserved via non-destructive diagnostic flags.
+        </div>
+</div>
+<!-- Links Cluster -->
+<div class="flex flex-wrap items-center justify-center gap-6 font-body text-xs text-on-surface-variant">
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-150" href="#">Methodology &amp; Calibration</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-150" href="#">CPCB Standard Guidelines</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-150" href="#">API Documentation</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-150" href="#">Evaluation Rubric</a>
+</div>
+</div>
+</footer>
+</body></html>

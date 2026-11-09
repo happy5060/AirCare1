@@ -23,6 +23,9 @@ export const TodaysAqi: React.FC<TodaysAqiProps> = ({ onNavigate }) => {
   const [selectedCity, setSelectedCity] = useState<string>('Delhi');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
+  // Expandable CPCB Sub-Index Calculation Breakdown state
+  const [showBreakdown, setShowBreakdown] = useState<boolean>(true);
+
   // Live API State
   const [liveData, setLiveData] = useState<LiveAqiReading | null>(null);
   const [isLoadingLive, setIsLoadingLive] = useState<boolean>(true);
@@ -111,10 +114,10 @@ export const TodaysAqi: React.FC<TodaysAqiProps> = ({ onNavigate }) => {
 
         {/* View Mode Switcher: Live Atmospheric Model vs Physical Ground Station Snapshot */}
         <div className="flex items-center justify-center pt-2">
-          <div className="inline-flex p-1 rounded-xl bg-surface-container border border-outline-variant/40 text-xs font-medium">
+          <div className="inline-flex flex-col sm:flex-row p-1 rounded-xl bg-surface-container border border-outline-variant/40 text-xs font-medium w-full sm:w-auto max-w-lg">
             <button
               onClick={() => handleTabChange('live')}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg transition-all ${
+              className={`flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-lg transition-all min-h-[44px] ${
                 activeTab === 'live'
                   ? 'bg-primary text-on-primary font-bold shadow'
                   : 'text-on-surface-variant hover:text-white'
@@ -125,14 +128,14 @@ export const TodaysAqi: React.FC<TodaysAqiProps> = ({ onNavigate }) => {
             </button>
             <button
               onClick={() => handleTabChange('stations')}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg transition-all ${
+              className={`flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-lg transition-all min-h-[44px] ${
                 activeTab === 'stations'
                   ? 'bg-primary text-on-primary font-bold shadow'
                   : 'text-on-surface-variant hover:text-white'
               }`}
             >
               <span className="material-symbols-outlined text-sm">sensors</span>
-              <span>Physical Ground Stations (Oct 20, 2026 Snapshot)</span>
+              <span>Ground Stations (Frozen Snapshot)</span>
             </button>
           </div>
         </div>
@@ -140,7 +143,7 @@ export const TodaysAqi: React.FC<TodaysAqiProps> = ({ onNavigate }) => {
         {/* City Search Bar */}
         <div className="pt-2">
           <div className="relative max-w-xl mx-auto">
-            <span className="material-symbols-outlined absolute left-3.5 top-3 text-xl text-outline">
+            <span className="material-symbols-outlined absolute left-3.5 top-3.5 text-xl text-outline">
               search
             </span>
             <input
@@ -148,13 +151,13 @@ export const TodaysAqi: React.FC<TodaysAqiProps> = ({ onNavigate }) => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Type to search an Indian city (e.g., Delhi, Mumbai, Bengaluru, Amritsar)..."
-              className="w-full pl-11 pr-4 py-3 rounded-xl bg-surface-container-high border border-outline-variant/50 text-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary shadow-lg transition-all"
+              className="w-full pl-11 pr-4 py-3 rounded-xl bg-surface-container-high border border-outline-variant/50 text-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary shadow-lg transition-all min-h-[44px]"
             />
           </div>
 
           {/* Quick Select City Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-3 text-xs">
-            <span className="text-outline font-medium">Quick select:</span>
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-3 text-xs">
+            <span className="text-outline font-medium w-full sm:w-auto text-center mb-1 sm:mb-0">Quick select:</span>
             {filteredPills.map((c) => (
               <button
                 key={c}
@@ -162,9 +165,9 @@ export const TodaysAqi: React.FC<TodaysAqiProps> = ({ onNavigate }) => {
                   setSelectedCity(c);
                   setSearchQuery('');
                 }}
-                className={`px-3 py-1 rounded-lg border transition-all text-xs font-medium ${
+                className={`min-h-[38px] px-3 py-1.5 rounded-lg border transition-all text-xs font-medium ${
                   selectedCity === c
-                    ? 'bg-primary text-on-primary border-primary font-semibold shadow-sm'
+                    ? 'bg-primary text-on-primary border-primary font-bold shadow-sm'
                     : 'bg-surface-container hover:bg-surface-container-high text-on-surface-variant border-outline-variant/30'
                 }`}
               >
@@ -175,7 +178,8 @@ export const TodaysAqi: React.FC<TodaysAqiProps> = ({ onNavigate }) => {
               <select
                 value={selectedCity}
                 onChange={(e) => setSelectedCity(e.target.value)}
-                className="px-2.5 py-1 rounded-lg bg-surface-container border border-outline-variant/40 text-xs text-on-surface font-mono cursor-pointer"
+                className="min-h-[38px] px-2.5 py-1.5 rounded-lg bg-surface-container border border-outline-variant/40 text-xs text-on-surface font-mono cursor-pointer"
+                aria-label="Select more cities"
               >
                 <option value={selectedCity}>More ({allSnapshotCities.length} Cities)...</option>
                 {allSnapshotCities.map((cityName) => (
@@ -411,6 +415,183 @@ export const TodaysAqi: React.FC<TodaysAqiProps> = ({ onNavigate }) => {
               </div>
             </section>
           ) : null}
+
+          {/* 2B. CPCB SUB-INDEX CALCULATION BREAKDOWN (TRANSPARENT MATHEMATICS) */}
+          {liveData && liveData.pollutantBreakdown && (
+            <section className="bg-surface-container-low border border-outline-variant/30 rounded-2xl overflow-hidden shadow-xl">
+              <button
+                onClick={() => setShowBreakdown(!showBreakdown)}
+                className="w-full p-4 sm:p-5 flex items-center justify-between bg-surface-container/70 hover:bg-surface-container transition-colors text-left focus:outline-none min-h-[44px]"
+                aria-expanded={showBreakdown}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/25 text-primary flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-xl">calculate</span>
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="text-base font-headline font-bold text-white">
+                        CPCB Sub-Index Calculation Breakdown
+                      </h3>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-primary/15 text-primary border border-primary/25">
+                        6 Criteria Pollutants Evaluated
+                      </span>
+                    </div>
+                    <p className="text-xs text-on-surface-variant mt-0.5">
+                      Inspect mathematical piecewise linear equations, observed concentrations, and dominant pollutant assignment.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0 ml-2">
+                  <span className="text-xs font-mono text-primary font-semibold hidden md:inline">
+                    {showBreakdown ? 'Collapse Breakdown' : 'Expand Equations'}
+                  </span>
+                  <span
+                    className={`material-symbols-outlined text-primary text-2xl transition-transform duration-200 ${
+                      showBreakdown ? 'rotate-180' : ''
+                    }`}
+                  >
+                    expand_more
+                  </span>
+                </div>
+              </button>
+
+              {showBreakdown && (
+                <div className="p-4 sm:p-6 space-y-5 border-t border-outline-variant/20">
+                  {/* Minimum Criteria Status Banner */}
+                  <div
+                    className={`p-4 rounded-xl border flex items-start gap-3 text-xs leading-relaxed ${
+                      liveData.isNaqiCompliant
+                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+                        : 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-lg shrink-0 mt-0.5">
+                      {liveData.isNaqiCompliant ? 'verified' : 'warning'}
+                    </span>
+                    <div className="space-y-1">
+                      <div className="font-headline font-bold text-white text-sm">
+                        {liveData.isNaqiCompliant
+                          ? 'CPCB NAQI Minimum Data Criteria Satisfied'
+                          : 'Partial Criteria Coverage Alert'}
+                      </div>
+                      <p className="text-on-surface-variant">
+                        {liveData.complianceNote} Under official CPCB NAQI methodology (October 2014), the overall composite AQI is the maximum of all valid individual sub-indices (
+                        <span className="font-mono font-bold text-white">
+                          AQI = max(sub-indices) = {liveData.aqi}
+                        </span>
+                        ), which makes{' '}
+                        <strong className="text-white">{liveData.prominentPollutant}</strong> the prominent pollutant.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Responsive Sub-Index Table */}
+                  <div className="overflow-x-auto rounded-xl border border-outline-variant/30">
+                    <table className="w-full text-left border-collapse text-xs">
+                      <thead>
+                        <tr className="bg-surface-container font-mono text-[11px] text-outline uppercase border-b border-outline-variant/30">
+                          <th className="py-3 px-3.5">Pollutant</th>
+                          <th className="py-3 px-3.5">Concentration</th>
+                          <th className="py-3 px-3.5">Averaging Window</th>
+                          <th className="py-3 px-3.5">CPCB Standard</th>
+                          <th className="py-3 px-3.5">Sub-Index</th>
+                          <th className="py-3 px-3.5">Category</th>
+                          <th className="py-3 px-3.5 min-w-[220px]">Piecewise Equation</th>
+                          <th className="py-3 px-3.5">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-outline-variant/20 font-body">
+                        {liveData.pollutantBreakdown.map((poll) => {
+                          const catColor = poll.category ? getCategoryColor(poll.category) : getCategoryColor('Moderate');
+                          return (
+                            <tr
+                              key={poll.code}
+                              className={`transition-colors ${
+                                poll.isDominant
+                                  ? 'bg-primary/10 hover:bg-primary/15 font-medium'
+                                  : 'hover:bg-surface-container/50'
+                              }`}
+                            >
+                              <td className="py-3 px-3.5">
+                                <div className="font-headline font-bold text-white">
+                                  {poll.name}
+                                </div>
+                              </td>
+                              <td className="py-3 px-3.5 font-mono text-white">
+                                {poll.concentration !== null ? `${poll.concentration} ${poll.unit}` : 'N/A'}
+                              </td>
+                              <td className="py-3 px-3.5 font-mono text-on-surface-variant">
+                                {poll.averagingPeriod}
+                              </td>
+                              <td className="py-3 px-3.5 font-mono text-outline">
+                                {poll.cpcbStandard}
+                              </td>
+                              <td className="py-3 px-3.5">
+                                <span
+                                  className={`text-sm font-headline font-black ${
+                                    poll.subIndex !== null ? catColor.text : 'text-outline'
+                                  }`}
+                                >
+                                  {poll.subIndex !== null ? poll.subIndex : '—'}
+                                </span>
+                              </td>
+                              <td className="py-3 px-3.5">
+                                {poll.category ? (
+                                  <span
+                                    className={`px-2 py-0.5 rounded text-[10px] font-bold border ${catColor.border} ${catColor.bg} ${catColor.text}`}
+                                  >
+                                    {poll.category}
+                                  </span>
+                                ) : (
+                                  <span className="text-outline text-[11px]">Unavailable</span>
+                                )}
+                              </td>
+                              <td className="py-3 px-3.5 font-mono text-[11px] text-on-surface-variant">
+                                {poll.calculationDetails}
+                              </td>
+                              <td className="py-3 px-3.5 whitespace-nowrap">
+                                {poll.isDominant ? (
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary text-on-primary shadow-sm">
+                                    <span className="material-symbols-outlined text-[12px]">star</span>
+                                    Dominant Pollutant
+                                  </span>
+                                ) : (
+                                  <span className="text-[11px] font-mono text-outline">
+                                    Contributing
+                                  </span>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Academic Methodology & Model Discrepancy Explanation Box */}
+                  <div className="p-4 rounded-xl bg-surface-container border border-outline-variant/30 space-y-2 text-xs leading-relaxed">
+                    <div className="flex items-center gap-2 font-headline font-bold text-white">
+                      <span className="material-symbols-outlined text-sm text-secondary">help</span>
+                      Why does model-estimated AQI differ from official CAAQMS ground stations?
+                    </div>
+                    <ul className="list-disc list-inside space-y-1 text-on-surface-variant">
+                      <li>
+                        <strong className="text-white">Spatial Scale:</strong> Continuous ambient stations (CAAQMS) are ground-level physical sensors (3–10m elevation) capturing immediate micro-environment vehicle and biomass plumes. Open-Meteo simulates a regional ~11km grid atmospheric reanalysis (ECMWF CAMS).
+                      </li>
+                      <li>
+                        <strong className="text-white">Diurnal Averaging Windows:</strong> Official daily CPCB bulletins require 24-hour diurnal averages for PM2.5, PM10, NO2, and SO2. Real-time feeds capture 1-hour instantaneous simulations.
+                      </li>
+                      <li>
+                        <strong className="text-white">Photochemical Dynamics:</strong> During midday hours, high solar radiation accelerates photochemical reactions forming Ozone (O3). In numerical models, Ozone often yields the highest sub-index in daylight hours, whereas physical ground stations in winter remain dominated by ground-trapped PM2.5.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </section>
+          )}
 
           {/* 3. KEY POLLUTANTS TILES (PM2.5, PM10, NO2, SO2, O3, CO) */}
           {liveData && (

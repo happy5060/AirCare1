@@ -1,11 +1,13 @@
 // Live AQI and Monitoring Station Service
 // Connects genuine atmospheric APIs with CPCB National Air Quality Index (NAQI) sub-index formulas.
 
+import type { CpcbCategory, PollutantSubIndex } from '../types';
+
 export interface LiveAqiReading {
   city: string;
   timestamp: string;
   aqi: number;
-  category: 'Good' | 'Satisfactory' | 'Moderate' | 'Poor' | 'Very Poor' | 'Severe';
+  category: CpcbCategory;
   prominentPollutant: string;
   pm25: number | null;
   pm10: number | null;
@@ -20,6 +22,7 @@ export interface LiveAqiReading {
   complianceNote: string;
   methodologyNote: string;
   hourlyTrend: { time: string; aqi: number }[];
+  pollutantBreakdown: PollutantSubIndex[];
 }
 
 export interface StationData {
@@ -75,11 +78,12 @@ export const DEFAULT_CITY_COORDINATES: Record<string, { lat: number; lon: number
 
 // =========================================================================
 // Official CPCB Sub-Index Formulae (CPCB National Air Quality Index, 2014)
-// Units: PM2.5, PM10, NO2, SO2, O3 in µg/m³; CO in mg/m³
+// Units: PM2.5, PM10, NO2, SO2, O3, NH3 in µg/m³; CO in mg/m³
+// All functions validate input and handle negative, NaN, non-finite values.
 // =========================================================================
 
 export function calcCpcbSubIndexPM25(pm25: number): number {
-  if (pm25 <= 0) return 0;
+  if (pm25 <= 0 || isNaN(pm25) || !isFinite(pm25)) return 0;
   if (pm25 <= 30) return Math.round((pm25 * 50) / 30);
   if (pm25 <= 60) return Math.round(50 + ((pm25 - 30) * 50) / 30);
   if (pm25 <= 90) return Math.round(100 + ((pm25 - 60) * 100) / 30);
@@ -89,7 +93,7 @@ export function calcCpcbSubIndexPM25(pm25: number): number {
 }
 
 export function calcCpcbSubIndexPM10(pm10: number): number {
-  if (pm10 <= 0) return 0;
+  if (pm10 <= 0 || isNaN(pm10) || !isFinite(pm10)) return 0;
   if (pm10 <= 50) return Math.round(pm10);
   if (pm10 <= 100) return Math.round(pm10);
   if (pm10 <= 250) return Math.round(100 + ((pm10 - 100) * 100) / 150);
@@ -99,7 +103,7 @@ export function calcCpcbSubIndexPM10(pm10: number): number {
 }
 
 export function calcCpcbSubIndexNO2(no2: number): number {
-  if (no2 <= 0) return 0;
+  if (no2 <= 0 || isNaN(no2) || !isFinite(no2)) return 0;
   if (no2 <= 40) return Math.round((no2 * 50) / 40);
   if (no2 <= 80) return Math.round(50 + ((no2 - 40) * 50) / 40);
   if (no2 <= 180) return Math.round(100 + ((no2 - 80) * 100) / 100);
@@ -109,7 +113,7 @@ export function calcCpcbSubIndexNO2(no2: number): number {
 }
 
 export function calcCpcbSubIndexSO2(so2: number): number {
-  if (so2 <= 0) return 0;
+  if (so2 <= 0 || isNaN(so2) || !isFinite(so2)) return 0;
   if (so2 <= 40) return Math.round((so2 * 50) / 40);
   if (so2 <= 80) return Math.round(50 + ((so2 - 40) * 50) / 40);
   if (so2 <= 380) return Math.round(100 + ((so2 - 80) * 100) / 300);
@@ -121,7 +125,7 @@ export function calcCpcbSubIndexSO2(so2: number): number {
 // CPCB Carbon Monoxide (8-hr avg) in mg/m³
 // Open-Meteo returns CO in µg/m³; we convert to mg/m³ by dividing by 1000
 export function calcCpcbSubIndexCO(co_ug: number): number {
-  if (co_ug <= 0) return 0;
+  if (co_ug <= 0 || isNaN(co_ug) || !isFinite(co_ug)) return 0;
   const co_mg = co_ug / 1000.0;
   if (co_mg <= 1.0) return Math.round(co_mg * 50);
   if (co_mg <= 2.0) return Math.round(50 + (co_mg - 1.0) * 50);
@@ -133,13 +137,230 @@ export function calcCpcbSubIndexCO(co_ug: number): number {
 
 // CPCB Ozone (8-hr avg) in µg/m³
 export function calcCpcbSubIndexO3(o3: number): number {
-  if (o3 <= 0) return 0;
+  if (o3 <= 0 || isNaN(o3) || !isFinite(o3)) return 0;
   if (o3 <= 50) return Math.round(o3);
   if (o3 <= 100) return Math.round(o3);
   if (o3 <= 168) return Math.round(100 + ((o3 - 100) * 100) / 68);
   if (o3 <= 208) return Math.round(200 + ((o3 - 168) * 100) / 40);
   if (o3 <= 748) return Math.round(300 + ((o3 - 208) * 100) / 540);
   return Math.min(500, Math.round(400 + ((o3 - 748) * 100) / 252));
+}
+
+// CPCB Ammonia NH3 (24-hr avg) in µg/m³
+export function calcCpcbSubIndexNH3(nh3: number): number {
+  if (nh3 <= 0 || isNaN(nh3) || !isFinite(nh3)) return 0;
+  if (nh3 <= 200) return Math.round((nh3 * 50) / 200);
+  if (nh3 <= 400) return Math.round(50 + ((nh3 - 200) * 50) / 200);
+  if (nh3 <= 800) return Math.round(100 + ((nh3 - 400) * 100) / 400);
+  if (nh3 <= 1200) return Math.round(200 + ((nh3 - 800) * 100) / 400);
+  if (nh3 <= 1800) return Math.round(300 + ((nh3 - 1200) * 100) / 600);
+  return Math.min(500, Math.round(400 + ((nh3 - 1800) * 100) / 600));
+}
+
+// Helper to construct transparent sub-index breakdown for all evaluated pollutants
+export function buildPollutantBreakdown(data: {
+  pm25: number | null;
+  pm10: number | null;
+  no2: number | null;
+  so2: number | null;
+  o3: number | null;
+  co: number | null; // in ug/m3
+}): PollutantSubIndex[] {
+  const list: PollutantSubIndex[] = [];
+
+  const addPollutant = (
+    name: string,
+    code: 'pm25' | 'pm10' | 'no2' | 'so2' | 'co' | 'o3',
+    rawConcentration: number | null,
+    displayConcentration: number | null,
+    unit: string,
+    averagingPeriod: string,
+    cpcbStandard: string,
+    calcFn: (val: number) => number,
+    formatStep: (val: number, subIndex: number) => string
+  ) => {
+    const isValid =
+      rawConcentration !== null &&
+      rawConcentration !== undefined &&
+      !isNaN(rawConcentration) &&
+      isFinite(rawConcentration) &&
+      rawConcentration >= 0;
+
+    if (!isValid) {
+      list.push({
+        name,
+        code,
+        concentration: null,
+        unit,
+        subIndex: null,
+        category: null,
+        averagingPeriod,
+        cpcbStandard,
+        isDominant: false,
+        isValid: false,
+        calculationDetails:
+          rawConcentration !== null && rawConcentration !== undefined && rawConcentration < 0
+            ? 'Negative measurement rejected as sensor artifact'
+            : 'Measurement unavailable',
+      });
+      return;
+    }
+
+    const sub = calcFn(rawConcentration);
+    const cat = getCpcbCategory(sub);
+    const step = formatStep(displayConcentration ?? rawConcentration, sub);
+
+    list.push({
+      name,
+      code,
+      concentration: displayConcentration ?? rawConcentration,
+      unit,
+      subIndex: sub,
+      category: cat,
+      averagingPeriod,
+      cpcbStandard,
+      isDominant: false,
+      isValid: true,
+      calculationDetails: step,
+    });
+  };
+
+  // PM2.5 (24-hr avg, limit 60 µg/m³)
+  addPollutant(
+    'PM2.5 (Fine Particles)',
+    'pm25',
+    data.pm25,
+    data.pm25,
+    'µg/m³',
+    '24-hour',
+    '60 µg/m³',
+    calcCpcbSubIndexPM25,
+    (c, s) => {
+      if (c <= 30) return `Linear interpolation: (${c} × 50) / 30 = ${s}`;
+      if (c <= 60) return `Linear interpolation: 50 + [(${c} - 30) × 50 / 30] = ${s}`;
+      if (c <= 90) return `Linear interpolation: 100 + [(${c} - 60) × 100 / 30] = ${s}`;
+      if (c <= 120) return `Linear interpolation: 200 + [(${c} - 90) × 100 / 30] = ${s}`;
+      if (c <= 250) return `Linear interpolation: 300 + [(${c} - 120) × 100 / 130] = ${s}`;
+      return `Linear interpolation: min(500, 400 + [(${c} - 250) × 100 / 130]) = ${s}`;
+    }
+  );
+
+  // PM10 (24-hr avg, limit 100 µg/m³)
+  addPollutant(
+    'PM10 (Coarse Dust)',
+    'pm10',
+    data.pm10,
+    data.pm10,
+    'µg/m³',
+    '24-hour',
+    '100 µg/m³',
+    calcCpcbSubIndexPM10,
+    (c, s) => {
+      if (c <= 50) return `Direct 1:1 scale: ${c} = ${s}`;
+      if (c <= 100) return `Direct 1:1 scale: ${c} = ${s}`;
+      if (c <= 250) return `Linear interpolation: 100 + [(${c} - 100) × 100 / 150] = ${s}`;
+      if (c <= 350) return `Linear interpolation: 200 + (${c} - 250) = ${s}`;
+      if (c <= 430) return `Linear interpolation: 300 + [(${c} - 350) × 100 / 80] = ${s}`;
+      return `Linear interpolation: min(500, 400 + [(${c} - 430) × 100 / 70]) = ${s}`;
+    }
+  );
+
+  // NO2 (24-hr avg, limit 80 µg/m³)
+  addPollutant(
+    'NO2 (Nitrogen Dioxide)',
+    'no2',
+    data.no2,
+    data.no2,
+    'µg/m³',
+    '24-hour',
+    '80 µg/m³',
+    calcCpcbSubIndexNO2,
+    (c, s) => {
+      if (c <= 40) return `Linear interpolation: (${c} × 50) / 40 = ${s}`;
+      if (c <= 80) return `Linear interpolation: 50 + [(${c} - 40) × 50 / 40] = ${s}`;
+      if (c <= 180) return `Linear interpolation: 100 + [(${c} - 80) × 100 / 100] = ${s}`;
+      if (c <= 280) return `Linear interpolation: 200 + [(${c} - 180) × 100 / 100] = ${s}`;
+      if (c <= 400) return `Linear interpolation: 300 + [(${c} - 280) × 100 / 120] = ${s}`;
+      return `Linear interpolation: min(500, 400 + [(${c} - 400) × 100 / 100]) = ${s}`;
+    }
+  );
+
+  // SO2 (24-hr avg, limit 80 µg/m³)
+  addPollutant(
+    'SO2 (Sulphur Dioxide)',
+    'so2',
+    data.so2,
+    data.so2,
+    'µg/m³',
+    '24-hour',
+    '80 µg/m³',
+    calcCpcbSubIndexSO2,
+    (c, s) => {
+      if (c <= 40) return `Linear interpolation: (${c} × 50) / 40 = ${s}`;
+      if (c <= 80) return `Linear interpolation: 50 + [(${c} - 40) × 50 / 40] = ${s}`;
+      if (c <= 380) return `Linear interpolation: 100 + [(${c} - 80) × 100 / 300] = ${s}`;
+      if (c <= 800) return `Linear interpolation: 200 + [(${c} - 380) × 100 / 420] = ${s}`;
+      if (c <= 1600) return `Linear interpolation: 300 + [(${c} - 800) × 100 / 800] = ${s}`;
+      return `Linear interpolation: min(500, 400 + [(${c} - 1600) × 100 / 400]) = ${s}`;
+    }
+  );
+
+  // CO (8-hr avg, limit 2.0 mg/m³)
+  const coMg = data.co !== null ? Math.round((data.co / 1000) * 100) / 100 : null;
+  addPollutant(
+    'CO (Carbon Monoxide)',
+    'co',
+    data.co,
+    coMg,
+    'mg/m³',
+    '8-hour',
+    '2.0 mg/m³',
+    calcCpcbSubIndexCO,
+    (c, s) => {
+      if (c <= 1.0) return `Linear interpolation: ${c} × 50 = ${s}`;
+      if (c <= 2.0) return `Linear interpolation: 50 + [(${c} - 1.0) × 50] = ${s}`;
+      if (c <= 10.0) return `Linear interpolation: 100 + [(${c} - 2.0) × 100 / 8] = ${s}`;
+      if (c <= 17.0) return `Linear interpolation: 200 + [(${c} - 10.0) × 100 / 7] = ${s}`;
+      if (c <= 34.0) return `Linear interpolation: 300 + [(${c} - 17.0) × 100 / 17] = ${s}`;
+      return `Linear interpolation: min(500, 400 + [(${c} - 34.0) × 100 / 16]) = ${s}`;
+    }
+  );
+
+  // Ozone (8-hr avg, limit 100 µg/m³)
+  addPollutant(
+    'O3 (Ground Ozone)',
+    'o3',
+    data.o3,
+    data.o3,
+    'µg/m³',
+    '8-hour',
+    '100 µg/m³',
+    calcCpcbSubIndexO3,
+    (c, s) => {
+      if (c <= 50) return `Direct 1:1 scale: ${c} = ${s}`;
+      if (c <= 100) return `Direct 1:1 scale: ${c} = ${s}`;
+      if (c <= 168) return `Linear interpolation: 100 + [(${c} - 100) × 100 / 68] = ${s}`;
+      if (c <= 208) return `Linear interpolation: 200 + [(${c} - 168) × 100 / 40] = ${s}`;
+      if (c <= 748) return `Linear interpolation: 300 + [(${c} - 208) × 100 / 540] = ${s}`;
+      return `Linear interpolation: min(500, 400 + [(${c} - 748) × 100 / 252]) = ${s}`;
+    }
+  );
+
+  // Mark dominant pollutant: maximum valid subIndex
+  let maxSub = -1;
+  let dominantIdx = -1;
+  list.forEach((item, idx) => {
+    if (item.isValid && item.subIndex !== null && item.subIndex > maxSub) {
+      maxSub = item.subIndex;
+      dominantIdx = idx;
+    }
+  });
+
+  if (dominantIdx !== -1 && maxSub > 0) {
+    list[dominantIdx].isDominant = true;
+  }
+
+  return list;
 }
 
 export function getCpcbCategory(aqi: number): 'Good' | 'Satisfactory' | 'Moderate' | 'Poor' | 'Very Poor' | 'Severe' {
@@ -282,6 +503,14 @@ export async function fetchLiveAqi(cityName: string, lat?: number, lon?: number)
             complianceNote: 'Aggregated ground monitoring station feed.',
             methodologyNote: 'Reported directly by monitoring stations through the World Air Quality Index project.',
             hourlyTrend: [],
+            pollutantBreakdown: buildPollutantBreakdown({
+              pm25: d.iaqi?.pm25?.v || null,
+              pm10: d.iaqi?.pm10?.v || null,
+              no2: d.iaqi?.no2?.v || null,
+              so2: d.iaqi?.so2?.v || null,
+              o3: d.iaqi?.o3?.v || null,
+              co: d.iaqi?.co?.v || null,
+            }),
           };
           liveReadingCache.set(normalizedKey, { timestamp: Date.now(), data: reading });
           return reading;
@@ -313,37 +542,43 @@ export async function fetchLiveAqi(cityName: string, lat?: number, lon?: number)
   const o3 = current.ozone !== undefined && current.ozone !== null ? Math.round(current.ozone * 10) / 10 : null;
   const co = current.carbon_monoxide !== undefined && current.carbon_monoxide !== null ? Math.round(current.carbon_monoxide * 10) / 10 : null;
 
-  // Calculate CPCB sub-indices for all available pollutants
-  const subindices: { name: string; val: number }[] = [];
-  if (pm25 !== null) subindices.push({ name: 'PM2.5', val: calcCpcbSubIndexPM25(pm25) });
-  if (pm10 !== null) subindices.push({ name: 'PM10', val: calcCpcbSubIndexPM10(pm10) });
-  if (no2 !== null) subindices.push({ name: 'NO2', val: calcCpcbSubIndexNO2(no2) });
-  if (so2 !== null) subindices.push({ name: 'SO2', val: calcCpcbSubIndexSO2(so2) });
-  if (o3 !== null) subindices.push({ name: 'OZONE', val: calcCpcbSubIndexO3(o3) });
-  if (co !== null) subindices.push({ name: 'CO', val: calcCpcbSubIndexCO(co) });
+  // Build complete transparent pollutant breakdown with step-by-step formulas
+  const pollutantBreakdown = buildPollutantBreakdown({
+    pm25,
+    pm10,
+    no2,
+    so2,
+    o3,
+    co,
+  });
 
   // Official CPCB Minimum Pollutant Criteria:
   // Requires minimum of 3 criteria pollutants, of which at least one must be PM10 or PM2.5
-  const hasParticulate = pm25 !== null || pm10 !== null;
-  const validPollutantsCount = subindices.length;
+  const validPollutants = pollutantBreakdown.filter((p) => p.isValid && p.subIndex !== null);
+  const hasParticulate = pollutantBreakdown.some(
+    (p) => (p.code === 'pm25' || p.code === 'pm10') && p.isValid && p.subIndex !== null
+  );
+  const validPollutantsCount = validPollutants.length;
   const isNaqiCompliant = hasParticulate && validPollutantsCount >= 3;
 
   let computedAqi = 0;
   let dominantPoll = 'None';
   let complianceNote = '';
 
+  const dominantItem = pollutantBreakdown.find((p) => p.isDominant);
+  if (dominantItem && dominantItem.subIndex !== null) {
+    computedAqi = dominantItem.subIndex;
+    dominantPoll = dominantItem.name.split(' ')[0]; // E.g. "PM2.5", "O3", "PM10"
+  } else if (validPollutants.length > 0) {
+    const sorted = [...validPollutants].sort((a, b) => (b.subIndex ?? 0) - (a.subIndex ?? 0));
+    computedAqi = sorted[0].subIndex ?? 0;
+    dominantPoll = sorted[0].name.split(' ')[0];
+  }
+
   if (isNaqiCompliant) {
-    subindices.sort((a, b) => b.val - a.val);
-    computedAqi = subindices[0].val;
-    dominantPoll = subindices[0].name;
-    complianceNote = `Compliant with CPCB minimum criteria (${validPollutantsCount} criteria pollutants evaluated, including particulates).`;
+    complianceNote = `Compliant with CPCB minimum criteria (${validPollutantsCount} criteria pollutants evaluated, including particulate fraction).`;
   } else {
-    complianceNote = `Insufficient pollutant data for official CPCB NAQI standard (requires at least 3 pollutants with PM2.5 or PM10; only ${validPollutantsCount} available).`;
-    if (subindices.length > 0) {
-      subindices.sort((a, b) => b.val - a.val);
-      computedAqi = subindices[0].val;
-      dominantPoll = subindices[0].name;
-    }
+    complianceNote = `Insufficient pollutant coverage for official CPCB NAQI standard (requires at least 3 pollutants with PM2.5 or PM10; only ${validPollutantsCount} available).`;
   }
 
   const category = getCpcbCategory(computedAqi);
@@ -401,6 +636,7 @@ export async function fetchLiveAqi(cityName: string, lat?: number, lon?: number)
     methodologyNote:
       'Calculated from 1-hour instantaneous atmospheric model concentrations using CPCB sub-index breakpoints. Note that official CPCB daily bulletins require 24-hour diurnal averages for PM/NO2/SO2 and 8-hour averages for CO/O3 from ground CAAQMS stations.',
     hourlyTrend,
+    pollutantBreakdown,
   };
 
   liveReadingCache.set(normalizedKey, { timestamp: Date.now(), data: reading });

@@ -6,6 +6,8 @@ import {
   fetchCityDayIndex,
   fetchCityDay,
   calculatePeriodStats,
+  calculateMonthlyTrends,
+  generateHistoricalCsv,
   getCategoryColor,
   getExpectedCategory,
   type BulletinCityMeta,
@@ -45,6 +47,11 @@ export const PastAqi: React.FC<PastAqiProps> = ({ onNavigate }) => {
 
   // Hover state for interactive chart
   const [hoveredRecord, setHoveredRecord] = useState<BulletinRecord | null>(null);
+
+  // Advanced Historical Analytics & Report states
+  const [analyticsSubTab, setAnalyticsSubTab] = useState<'daily' | 'monthly'>('daily');
+  const [selectedYear, setSelectedYear] = useState<number>(2024);
+  const [showReportModal, setShowReportModal] = useState<boolean>(false);
 
   // Chemical / City-Day state
   const [cityDayCities, setCityDayCities] = useState<CityDayCityMeta[]>([]);
@@ -104,6 +111,42 @@ export const PastAqi: React.FC<PastAqiProps> = ({ onNavigate }) => {
   };
 
   const currentCityMeta = bulletinCities.find((c) => c.key === selectedCityKey);
+
+  // Monthly trends for selected year
+  const monthlyTrends = useMemo(() => {
+    return calculateMonthlyTrends(cityRecords, selectedYear);
+  }, [cityRecords, selectedYear]);
+
+  // Available recording years for city
+  const availableYears = useMemo(() => {
+    const years = Array.from(
+      new Set(cityRecords.map((r) => parseInt(r.d.slice(0, 4), 10)))
+    )
+      .filter((y) => !isNaN(y))
+      .sort((a, b) => b - a);
+    return years.length > 0 ? years : [2024, 2023, 2022, 2021, 2020];
+  }, [cityRecords]);
+
+  // CSV download trigger
+  const handleDownloadCsv = () => {
+    const targetRecords = viewMode === 'single' && singleDayRecord ? [singleDayRecord] : periodStats.recordsInRange;
+    const csvContent = generateHistoricalCsv(
+      targetRecords,
+      currentCityMeta?.city || selectedCityKey
+    );
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute(
+      'download',
+      `AirCare_${selectedCityKey}_${viewMode === 'single' ? singleDate : `${periodStats.startDate}_to_${periodStats.endDate}`}.csv`
+    );
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <main className="flex-1 w-full max-w-[1280px] mx-auto px-4 sm:px-6 py-8 space-y-8">
@@ -323,13 +366,32 @@ export const PastAqi: React.FC<PastAqiProps> = ({ onNavigate }) => {
                 </p>
               </div>
 
-              <button
-                onClick={() => onNavigate('compare')}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high border border-outline-variant text-xs text-on-surface font-medium transition-colors self-start sm:self-center"
-              >
-                <span className="material-symbols-outlined text-sm">compare_arrows</span>
-                <span>Compare with Another City</span>
-              </button>
+              {/* Action Buttons: CSV Download, Summary Report & Comparison */}
+              <div className="flex flex-wrap items-center gap-2 self-start sm:self-center">
+                <button
+                  onClick={handleDownloadCsv}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-xs text-white font-medium transition-colors min-h-[40px]"
+                  title="Download historical records as CSV"
+                >
+                  <span className="material-symbols-outlined text-sm text-primary">download</span>
+                  <span>Download CSV</span>
+                </button>
+                <button
+                  onClick={() => setShowReportModal(true)}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-xs text-white font-medium transition-colors min-h-[40px]"
+                  title="View formatted city evaluation report"
+                >
+                  <span className="material-symbols-outlined text-sm text-secondary">description</span>
+                  <span>Summary Report</span>
+                </button>
+                <button
+                  onClick={() => onNavigate('compare')}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-xs text-on-surface font-medium transition-colors min-h-[40px]"
+                >
+                  <span className="material-symbols-outlined text-sm">compare_arrows</span>
+                  <span>Compare</span>
+                </button>
+              </div>
             </div>
 
             {/* Loading Indicator */}
@@ -508,8 +570,116 @@ export const PastAqi: React.FC<PastAqiProps> = ({ onNavigate }) => {
                   </div>
                 </div>
 
-                {/* REAL HISTORICAL TIME-SERIES SVG CHART */}
-                <div className="space-y-2">
+                {/* View Switcher: Daily Timeline vs Monthly Aggregations */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-outline-variant/20">
+                  <div className="inline-flex p-1 rounded-xl bg-surface-container border border-outline-variant/40 text-xs font-medium self-start">
+                    <button
+                      onClick={() => setAnalyticsSubTab('daily')}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all min-h-[36px] ${
+                        analyticsSubTab === 'daily'
+                          ? 'bg-primary text-on-primary font-bold shadow'
+                          : 'text-on-surface-variant hover:text-white'
+                      }`}
+                    >
+                      <span className="material-symbols-outlined text-sm">show_chart</span>
+                      <span>Daily Trajectory</span>
+                    </button>
+                    <button
+                      onClick={() => setAnalyticsSubTab('monthly')}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all min-h-[36px] ${
+                        analyticsSubTab === 'monthly'
+                          ? 'bg-primary text-on-primary font-bold shadow'
+                          : 'text-on-surface-variant hover:text-white'
+                      }`}
+                    >
+                      <span className="material-symbols-outlined text-sm">calendar_view_month</span>
+                      <span>Monthly Trends</span>
+                    </button>
+                  </div>
+
+                  {analyticsSubTab === 'monthly' && (
+                    <div className="flex items-center gap-2 text-xs font-mono">
+                      <span className="text-outline">Select Year:</span>
+                      <select
+                        value={selectedYear}
+                        onChange={(e) => setSelectedYear(Number(e.target.value))}
+                        className="px-2.5 py-1.5 rounded-lg bg-surface-container border border-outline-variant/40 text-xs text-white font-mono cursor-pointer min-h-[36px]"
+                      >
+                        {availableYears.map((yr) => (
+                          <option key={yr} value={yr}>
+                            {yr} ({cityRecords.filter((r) => r.d.startsWith(String(yr))).length} days recorded)
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                </div>
+
+                {/* SUB-VIEW 1: MONTHLY AGGREGATIONS */}
+                {analyticsSubTab === 'monthly' && (
+                  <div className="space-y-4 pt-2">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs font-mono gap-1">
+                      <span className="font-headline font-semibold text-white">
+                        Monthly Aggregations for {selectedYear} ({monthlyTrends.length} Months Evaluated)
+                      </span>
+                      <span className="text-outline">
+                        Monthly averages derived strictly from valid daily bulletins
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                      {monthlyTrends.map((m) => {
+                        const mCatColor = m.category !== 'No Data' ? getCategoryColor(m.category) : getCategoryColor('Moderate');
+                        return (
+                          <div
+                            key={m.month}
+                            className="p-4 rounded-xl bg-surface-container border border-outline-variant/30 space-y-2.5 hover:border-outline-variant/60 transition-all"
+                          >
+                            <div className="flex items-start justify-between">
+                              <div>
+                                <h3 className="font-headline font-bold text-white text-sm">
+                                  {m.monthLabel}
+                                </h3>
+                                <span className="text-[11px] font-mono text-outline">
+                                  {m.recordedDays} of {m.totalDays} days ({m.completenessPct}%)
+                                </span>
+                              </div>
+
+                              <div className="text-right">
+                                <span className={`text-xl font-headline font-black ${mCatColor.text}`}>
+                                  {m.avgAqi !== null ? m.avgAqi : '—'}
+                                </span>
+                                <span className={`block text-[10px] font-bold ${mCatColor.text}`}>
+                                  {m.category}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-mono text-outline">
+                              <span>Min: <strong className="text-primary">{m.minAqi !== null ? m.minAqi : '—'}</strong></span>
+                              <span>Max: <strong className="text-error">{m.maxAqi !== null ? m.maxAqi : '—'}</strong></span>
+                              <span>Completeness: <strong className="text-white">{m.completenessPct}%</strong></span>
+                            </div>
+
+                            {/* Completeness progress bar */}
+                            <div className="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-secondary rounded-full"
+                                style={{ width: `${Math.min(100, m.completenessPct)}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* SUB-VIEW 2: DAILY TIME-SERIES SVG CHART */}
+                {analyticsSubTab === 'daily' && (
+                  <>
+                  {/* REAL HISTORICAL TIME-SERIES SVG CHART */}
+                  <div className="space-y-2">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs font-mono gap-1">
                     <span className="font-headline font-semibold text-white">
                       Daily AQI Trajectory ({periodStats.recordsInRange.length} Data Points)
@@ -759,6 +929,8 @@ export const PastAqi: React.FC<PastAqiProps> = ({ onNavigate }) => {
                     </div>
                   </div>
                 )}
+                </>
+              )}
               </div>
             )}
           </section>
@@ -874,6 +1046,156 @@ export const PastAqi: React.FC<PastAqiProps> = ({ onNavigate }) => {
             </div>
           )}
         </section>
+      )}
+
+      {/* 4. CITY AIR QUALITY EVALUATION REPORT MODAL */}
+      {showReportModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-surface-container-low border border-outline-variant/40 rounded-2xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="flex items-start justify-between border-b border-outline-variant/20 pb-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-primary"></span>
+                  <span className="text-xs font-mono uppercase text-primary font-bold">
+                    AirCare Analytical Report
+                  </span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-headline font-bold text-white mt-1">
+                  Air Quality Summary: {currentCityMeta?.city || selectedCityKey}
+                </h2>
+                <p className="text-xs text-on-surface-variant font-mono mt-0.5">
+                  Period: {viewMode === 'single' ? singleDate : `${periodStats.startDate} to ${periodStats.endDate}`}
+                </p>
+              </div>
+
+              <button
+                onClick={() => setShowReportModal(false)}
+                className="p-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+                aria-label="Close report modal"
+              >
+                <span className="material-symbols-outlined text-xl">close</span>
+              </button>
+            </div>
+
+            {/* Core Metrics Bento */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+              <div className="p-3.5 rounded-xl bg-surface-container border border-outline-variant/20 space-y-1">
+                <span className="text-[11px] font-mono text-outline uppercase">Period Average</span>
+                <div className="text-2xl font-headline font-black text-white">
+                  {periodStats.periodAverage !== null ? periodStats.periodAverage : 'N/A'}
+                </div>
+                <span className="text-[11px] font-semibold text-primary">
+                  {periodStats.periodCategory}
+                </span>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-surface-container border border-outline-variant/20 space-y-1">
+                <span className="text-[11px] font-mono text-outline uppercase">Peak Spike</span>
+                <div className="text-2xl font-headline font-black text-error">
+                  {periodStats.peakRecord?.aqi ?? 'N/A'}
+                </div>
+                <span className="text-[11px] font-mono text-outline">
+                  {periodStats.peakRecord?.d ?? 'No records'}
+                </span>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-surface-container border border-outline-variant/20 space-y-1">
+                <span className="text-[11px] font-mono text-outline uppercase">Cleanest Day</span>
+                <div className="text-2xl font-headline font-black text-primary">
+                  {periodStats.cleanestRecord?.aqi ?? 'N/A'}
+                </div>
+                <span className="text-[11px] font-mono text-outline">
+                  {periodStats.cleanestRecord?.d ?? 'No records'}
+                </span>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-surface-container border border-outline-variant/20 space-y-1">
+                <span className="text-[11px] font-mono text-outline uppercase">Record Completeness</span>
+                <div className="text-2xl font-headline font-black text-secondary">
+                  {periodStats.completenessPercent}%
+                </div>
+                <span className="text-[11px] font-mono text-outline">
+                  {periodStats.availableDays} / {periodStats.totalCalendarDays} days
+                </span>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-surface-container border border-outline-variant/20 space-y-1">
+                <span className="text-[11px] font-mono text-outline uppercase">Missing Days</span>
+                <div className="text-2xl font-headline font-black text-amber-400">
+                  {periodStats.missingDaysCount}
+                </div>
+                <span className="text-[11px] font-mono text-outline">
+                  Zero imputation
+                </span>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-surface-container border border-outline-variant/20 space-y-1">
+                <span className="text-[11px] font-mono text-outline uppercase">Dominant Pollutant</span>
+                <div className="text-xl font-headline font-bold text-white truncate">
+                  {periodStats.dominantPollutants[0]?.pollutant ?? 'N/A'}
+                </div>
+                <span className="text-[11px] font-mono text-outline">
+                  {periodStats.dominantPollutants[0]?.count ?? 0} days recorded
+                </span>
+              </div>
+            </div>
+
+            {/* Category Distribution Breakdown */}
+            <div className="space-y-2">
+              <span className="text-xs font-mono uppercase text-outline font-semibold">
+                Category Distribution in Selected Range
+              </span>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                {Object.entries(periodStats.categoryDistribution).map(([cat, count]) => {
+                  const pct = periodStats.availableDays > 0 ? Math.round((count / periodStats.availableDays) * 100) : 0;
+                  const col = getCategoryColor(cat);
+                  return (
+                    <div key={cat} className={`p-2.5 rounded-lg border ${col.border} ${col.bg} flex justify-between items-center`}>
+                      <span className="font-semibold text-white">{cat}</span>
+                      <span className={`font-mono font-bold ${col.text}`}>{count}d ({pct}%)</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Academic Disclosures */}
+            <div className="p-4 rounded-xl bg-surface-container border border-outline-variant/30 text-xs text-on-surface-variant space-y-1.5 leading-relaxed">
+              <div className="flex items-center gap-1.5 font-bold text-white">
+                <span className="material-symbols-outlined text-sm text-secondary">verified</span>
+                Data Source Attribution &amp; Academic Integrity
+              </div>
+              <p>
+                This report is generated directly from official Central Pollution Control Board (CPCB) 4:00 PM Daily AQI Bulletins. Under AirCare data-handling protocol, unreleased bulletins are preserved as missing records rather than imputed as zeroes.
+              </p>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="flex flex-wrap items-center justify-end gap-3 pt-2 border-t border-outline-variant/20">
+              <button
+                onClick={() => window.print()}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant text-xs text-white font-medium transition-colors min-h-[40px]"
+              >
+                <span className="material-symbols-outlined text-sm">print</span>
+                <span>Print Report</span>
+              </button>
+              <button
+                onClick={handleDownloadCsv}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-on-primary font-bold text-xs shadow hover:opacity-90 transition-opacity min-h-[40px]"
+              >
+                <span className="material-symbols-outlined text-sm">download</span>
+                <span>Export CSV</span>
+              </button>
+              <button
+                onClick={() => setShowReportModal(false)}
+                className="px-4 py-2 rounded-xl bg-surface-container-highest hover:bg-surface-container text-xs text-on-surface transition-colors min-h-[40px]"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </main>
   );

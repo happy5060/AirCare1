@@ -67,20 +67,21 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onNavigate }) => {
         </div>
 
         {/* Right Status Controls */}
-        <div className="flex items-center gap-2.5 sm:gap-3">
-          {/* Snapshot Notice (Honest Demarcation) */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container border border-outline-variant/40 text-xs">
-            <span className="w-2 h-2 rounded-full bg-secondary"></span>
-            <span className="text-on-surface-variant font-mono text-[11px]">
-              Snapshot Baseline: <strong className="text-white">Oct 20, 2026</strong>
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Snapshot Notice (Honest Demarcation - hidden on extra small mobile to prevent header overflow) */}
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container border border-outline-variant/40 text-xs">
+            <span className="w-2 h-2 rounded-full bg-secondary shrink-0"></span>
+            <span className="text-on-surface-variant font-mono text-[11px] whitespace-nowrap">
+              Snapshot: <strong className="text-white">Oct 20, 2026</strong>
             </span>
           </div>
 
-          {/* Mobile Menu Toggle Button */}
+          {/* Mobile Menu Toggle Button (Touch target >= 44x44) */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors"
-            aria-label="Toggle menu"
+            className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl text-on-surface-variant hover:text-white hover:bg-surface-container transition-colors focus:outline-none focus:ring-2 focus:ring-primary/40"
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
           >
             <span className="material-symbols-outlined text-2xl">
               {mobileMenuOpen ? 'close' : 'menu'}
@@ -91,7 +92,7 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onNavigate }) => {
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-outline-variant/30 bg-surface-container-low px-4 py-3 space-y-1 shadow-xl">
+        <div className="lg:hidden border-t border-outline-variant/30 bg-surface-container-low px-4 py-3 space-y-1.5 shadow-xl">
           {navItems.map((item) => {
             const isActive = activePage === item.id;
             return (
@@ -101,19 +102,20 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onNavigate }) => {
                   onNavigate(item.id);
                   setMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left ${
+                className={`w-full min-h-[44px] flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors text-left ${
                   isActive
-                    ? 'bg-primary-container text-on-primary-container font-semibold'
-                    : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
+                    ? 'bg-primary text-on-primary font-bold shadow-md shadow-primary/20'
+                    : 'text-on-surface-variant hover:bg-surface-container hover:text-white'
                 }`}
               >
-                <span className="material-symbols-outlined text-base">{item.icon}</span>
-                {item.label}
+                <span className="material-symbols-outlined text-xl">{item.icon}</span>
+                <span>{item.label}</span>
               </button>
             );
           })}
-          <div className="pt-2 border-t border-outline-variant/20 text-[11px] font-mono text-outline px-2">
-            Baseline Snapshot: Oct 20, 2026 • CPCB 2015–2025 Archive
+          <div className="pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-mono text-outline px-1">
+            <span>Snapshot: Oct 20, 2026</span>
+            <span>CPCB 2015–2025 Archive</span>
           </div>
         </div>
       )}

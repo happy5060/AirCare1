@@ -76,13 +76,45 @@ def main():
     print(f"  ✓ Preserved official bulletin override: AQI 300 classified as 'Very Poor' (Flagged: True)")
 
     # 6. Missing / Out-of-Range Date Verification
-    print(f"\n[6/6] Verifying Zero-Imputation Protection (Delhi, 1990-01-01):")
+    print(f"\n[6/8] Verifying Zero-Imputation Protection (Delhi, 1990-01-01):")
     pre_records = df[(df['city'] == 'Delhi') & (df['date'] == '1990-01-01')]
     assert len(pre_records) == 0, "No synthetic records should exist for 1990-01-01"
     print(f"  ✓ Verified: Out-of-range dates contain 0 rows (zero synthetic imputation policy enforced)")
 
+    # 7. Monthly Aggregations & Year-over-Year (YoY)
+    print(f"\n[7/8] Verifying Monthly Aggregations & YoY Trends (Delhi November):")
+    delhi_df = df[df['city'] == 'Delhi'].copy()
+    delhi_df['month'] = delhi_df['date'].str.slice(0, 7)
+    delhi_df['year'] = delhi_df['date'].str.slice(0, 4)
+
+    nov_records = delhi_df[delhi_df['date'].str.slice(5, 7) == '11']
+    yoy_nov = nov_records.groupby('year')['aqi'].agg(['mean', 'count', 'max']).round(1)
+    print(f"  ✓ Calculated YoY November averages across {len(yoy_nov)} years.")
+    assert '2024' in yoy_nov.index
+    assert yoy_nov.loc['2024', 'mean'] == 374.4
+
+    # 8. City Rankings with Coverage Eligibility Gate (>= 70%)
+    print(f"\n[8/8] Verifying City Rankings with Data Coverage Gating (>= 70% threshold):")
+    city_stats = df.groupby('city').agg(
+        valid_records=('aqi', 'count'),
+        avg_aqi=('aqi', 'mean')
+    ).round(1)
+    # Total records per city:
+    city_counts = df.groupby('city').size()
+    city_stats['total_records'] = city_counts
+    city_stats['coverage_pct'] = ((city_stats['valid_records'] / city_stats['total_records']) * 100).round(1)
+    city_stats['is_eligible'] = city_stats['coverage_pct'] >= 70.0
+
+    eligible_cities = city_stats[city_stats['is_eligible']].sort_values('avg_aqi')
+    print(f"  ✓ {len(eligible_cities)} of {len(city_stats)} cities meet >= 70% coverage eligibility.")
+    assert len(eligible_cities) > 0, "There should be eligible cities"
+    cleanest = eligible_cities.index[0]
+    dirtiest = eligible_cities.index[-1]
+    print(f"  ✓ Cleanest eligible city: {cleanest} (Avg AQI: {eligible_cities.loc[cleanest, 'avg_aqi']})")
+    print(f"  ✓ Most polluted eligible city: {dirtiest} (Avg AQI: {eligible_cities.loc[dirtiest, 'avg_aqi']})")
+
     print("\n" + "=" * 70)
-    print("ALL HISTORICAL ANALYTICS TESTS PASSED (100% SUCCESS RATE)")
+    print("ALL HISTORICAL ANALYTICS & RANKING TESTS PASSED (100% SUCCESS RATE)")
     print("=" * 70)
 
 if __name__ == '__main__':

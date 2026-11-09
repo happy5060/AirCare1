@@ -193,7 +193,7 @@ async function runBrowserTests() {
   if (hasChatbotNav) throw new Error('Chatbot navigation still present in DOM!');
 
   // 2. Verify Today's AQI View & Atmospheric Model Disclaimers
-  console.log('\n[*] 2. TODAY\'S AQI HERO & MODEL ATTRIBUTION VERIFICATION:');
+  console.log('\n[*] 2. TODAY\'S AQI HERO, ATTRIBUTION & CALCULATION BREAKDOWN:');
   const todaysViewEval = await sendCommand('Runtime.evaluate', {
     expression: `
       (() => {
@@ -206,7 +206,10 @@ async function runBrowserTests() {
         const isModelLabeled = bodyLower.includes('model-estimated cpcb aqi') || 
                               bodyLower.includes('atmospheric estimate');
         const hasScientificDisclaimer = bodyLower.includes('open-meteo') || bodyLower.includes('atmospheric model estimates');
-        return { h1, cityHeading, aqiText, catBadge, isModelLabeled, hasScientificDisclaimer };
+        const hasBreakdownTable = !!document.querySelector('table');
+        const pollutantRows = Array.from(document.querySelectorAll('tbody tr')).length;
+        const hasDominantBadge = bodyLower.includes('dominant pollutant');
+        return { h1, cityHeading, aqiText, catBadge, isModelLabeled, hasScientificDisclaimer, hasBreakdownTable, pollutantRows, hasDominantBadge };
       })()
     `,
     returnByValue: true,
@@ -218,8 +221,11 @@ async function runBrowserTests() {
   console.log('  ✓ Category Badge:', todayData.catBadge);
   console.log('  ✓ "Model-Estimated CPCB AQI" Label Present:', todayData.isModelLabeled ? 'PASS' : 'FAIL');
   console.log('  ✓ Scientific Model Disclaimer Present:', todayData.hasScientificDisclaimer ? 'PASS' : 'FAIL');
-  if (!todayData.isModelLabeled || !todayData.hasScientificDisclaimer) {
-    throw new Error('Model estimate attribution or scientific disclaimer missing from Today\'s AQI view!');
+  console.log('  ✓ CPCB Sub-Index Breakdown Table Present:', todayData.hasBreakdownTable ? 'PASS' : 'FAIL');
+  console.log(`  ✓ Evaluated Criteria Pollutants in Breakdown: ${todayData.pollutantRows} rows`);
+  console.log('  ✓ Dominant Pollutant Star Badge:', todayData.hasDominantBadge ? 'PASS' : 'FAIL');
+  if (!todayData.isModelLabeled || !todayData.hasScientificDisclaimer || !todayData.hasBreakdownTable) {
+    throw new Error('Model estimate attribution or calculation breakdown missing from Today\'s AQI view!');
   }
 
   // Test City Switcher (e.g. click "Mumbai" quick select pill)
@@ -301,6 +307,80 @@ async function runBrowserTests() {
   console.log('  ✓ Date Range Inputs Synchronized:', JSON.stringify(presetResultEval.result.value.dateInputs));
   console.log('  ✓ Preset Summary:', presetResultEval.result.value.summary);
 
+  // Test CSV Download Button & Summary Report Modal
+  console.log('\n[*] Testing CSV Download Button & Summary Report Modal:');
+  const actionButtonsEval = await sendCommand('Runtime.evaluate', {
+    expression: `
+      (() => {
+        const csvBtn = Array.from(document.querySelectorAll('button')).find(b => b.innerText.includes('Download CSV'));
+        const reportBtn = Array.from(document.querySelectorAll('button')).find(b => b.innerText.includes('Summary Report'));
+        return { hasCsvBtn: !!csvBtn, hasReportBtn: !!reportBtn };
+      })()
+    `,
+    returnByValue: true,
+  });
+  console.log('  ✓ "Download CSV" Button Present:', actionButtonsEval.result.value.hasCsvBtn ? 'PASS' : 'FAIL');
+  console.log('  ✓ "Summary Report" Button Present:', actionButtonsEval.result.value.hasReportBtn ? 'PASS' : 'FAIL');
+  if (!actionButtonsEval.result.value.hasCsvBtn || !actionButtonsEval.result.value.hasReportBtn) {
+    throw new Error('CSV Download or Summary Report button missing in Past AQI view!');
+  }
+
+  // Open and verify Summary Report Modal
+  await sendCommand('Runtime.evaluate', {
+    expression: `
+      const reportBtn = Array.from(document.querySelectorAll('button')).find(b => b.innerText.includes('Summary Report'));
+      if (reportBtn) reportBtn.click();
+    `,
+  });
+  await sleep(600);
+
+  const modalEval = await sendCommand('Runtime.evaluate', {
+    expression: `
+      (() => {
+        const modal = document.querySelector('.fixed.inset-0');
+        const modalTitle = modal?.querySelector('h2')?.innerText;
+        const modalTextLower = (modal?.innerText || '').toLowerCase();
+        const hasAverages = modalTextLower.includes('period average');
+        const hasPrintBtn = modalTextLower.includes('print report');
+        const closeBtn = modal?.querySelector('button[aria-label="Close report modal"]');
+        if (closeBtn) closeBtn.click();
+        return { isOpen: !!modal, modalTitle, hasAverages, hasPrintBtn };
+      })()
+    `,
+    returnByValue: true,
+  });
+  console.log('  ✓ Summary Report Modal Opened:', modalEval.result.value.isOpen ? 'PASS' : 'FAIL');
+  console.log('  ✓ Modal Title:', modalEval.result.value.modalTitle);
+  console.log('  ✓ Modal Metrics Rendered:', modalEval.result.value.hasAverages ? 'PASS' : 'FAIL');
+  await sleep(400);
+
+  // Test Monthly Trends Sub-tab toggle
+  console.log('\n[*] Testing Monthly Trends Sub-tab on Past AQI:');
+  await sendCommand('Runtime.evaluate', {
+    expression: `
+      const monthlyBtn = Array.from(document.querySelectorAll('button')).find(b => b.innerText.includes('Monthly Trends'));
+      if (monthlyBtn) monthlyBtn.click();
+    `,
+  });
+  await sleep(600);
+
+  const monthlyViewEval = await sendCommand('Runtime.evaluate', {
+    expression: `
+      (() => {
+        const hasMonthlyCards = document.body.innerText.includes('Monthly Aggregations for');
+        const monthCardsCount = document.querySelectorAll('main div.grid div.rounded-xl').length;
+        // switch back to daily
+        const dailyBtn = Array.from(document.querySelectorAll('button')).find(b => b.innerText.includes('Daily Trajectory'));
+        if (dailyBtn) dailyBtn.click();
+        return { hasMonthlyCards, monthCardsCount };
+      })()
+    `,
+    returnByValue: true,
+  });
+  console.log('  ✓ Monthly Aggregations View Loaded:', monthlyViewEval.result.value.hasMonthlyCards ? 'PASS' : 'FAIL');
+  console.log(`  ✓ Monthly Cards Rendered: ${monthlyViewEval.result.value.monthCardsCount} elements`);
+  await sleep(400);
+
   // 4. Test Navigation to "Compare Cities"
   console.log('\n[*] 4. COMPARE CITIES MULTI-CITY ANALYTICS VERIFICATION:');
   const navCompareResult = await sendCommand('Runtime.evaluate', {
@@ -326,7 +406,7 @@ async function runBrowserTests() {
         const hasInsights = document.body.innerText.includes('Atmospheric & Topographical Insights') ||
                             document.body.innerText.includes('Elevated Deccan plateau') ||
                             document.body.innerText.includes('Indo-Gangetic Plain');
-        const divergenceText = Array.from(document.querySelectorAll('div, p')).find(e => e.innerText?.includes('Pollution Divergence') || e.innerText?.includes('divergence'))?.innerText;
+        const divergenceText = Array.from(document.querySelectorAll('div, p')).find(e => e.innerText?.includes('Comparison Summary') || e.innerText?.includes('cleanest air quality'))?.innerText;
         return { heading, selects, hasIdenticalBadge, hasInsights, divergenceText: divergenceText?.slice(0, 100) };
       })()
     `,
@@ -339,47 +419,64 @@ async function runBrowserTests() {
   console.log('  ✓ Geographical Topography Insights:', compData.hasInsights ? 'PASS' : 'FAIL');
   console.log('  ✓ Comparative Divergence Card:', compData.divergenceText?.replace(/\n/g, ' '));
 
-  // 5. Test Responsive Viewports
-  console.log('\n[*] 5. RESPONSIVE LAYOUT VERIFICATION:');
-  // Mobile Viewport (375x667)
-  await sendCommand('Emulation.setDeviceMetricsOverride', {
-    width: 375,
-    height: 667,
-    deviceScaleFactor: 2,
-    mobile: true,
-  });
-  await sleep(1000);
-  const mobileEval = await sendCommand('Runtime.evaluate', {
-    expression: `
-      (() => {
-        const header = document.querySelector('header');
-        const main = document.querySelector('main');
-        return { 
-          headerExists: !!header,
-          headerHeight: header?.offsetHeight,
-          mainExists: !!main,
-          bodyScrollWidth: document.body.scrollWidth,
-          clientWidth: document.documentElement.clientWidth
-        };
-      })()
-    `,
-    returnByValue: true,
-  });
-  const mRes = mobileEval.result.value;
-  console.log(`  ✓ Mobile Viewport (375px): header height = ${mRes.headerHeight}px, scrollWidth = ${mRes.bodyScrollWidth}px (no horizontal overflow)`);
-  if (mRes.bodyScrollWidth > mRes.clientWidth + 5) {
-    throw new Error(`Horizontal scroll overflow detected on mobile viewport: scrollWidth ${mRes.bodyScrollWidth} > clientWidth ${mRes.clientWidth}`);
-  }
+  // 5. Test Multi-Viewport Responsive Layouts across 7 Breakpoints
+  console.log('\n[*] 5. MULTI-VIEWPORT RESPONSIVE LAYOUT VERIFICATION (320px - 1440px):');
+  const viewportsToTest = [
+    { name: 'Small Mobile (iPhone SE 1st gen)', width: 320, height: 568, mobile: true },
+    { name: 'Standard Mobile (iPhone SE)', width: 375, height: 667, mobile: true },
+    { name: 'Modern Smartphone (iPhone 13/14)', width: 390, height: 844, mobile: true },
+    { name: 'Large Smartphone (iPhone 14 Pro Max)', width: 430, height: 932, mobile: true },
+    { name: 'Tablet Portrait (iPad Mini)', width: 768, height: 1024, mobile: true },
+    { name: 'Tablet Landscape / Small Laptop', width: 1024, height: 768, mobile: false },
+    { name: 'Desktop Display (1440p baseline)', width: 1440, height: 900, mobile: false },
+  ];
 
-  // Tablet Viewport (768x1024)
-  await sendCommand('Emulation.setDeviceMetricsOverride', {
-    width: 768,
-    height: 1024,
-    deviceScaleFactor: 1.5,
-    mobile: true,
-  });
-  await sleep(800);
-  console.log('  ✓ Tablet Viewport (768px): Rendered cleanly without clipping');
+  for (const vp of viewportsToTest) {
+    await sendCommand('Emulation.setDeviceMetricsOverride', {
+      width: vp.width,
+      height: vp.height,
+      deviceScaleFactor: vp.mobile ? 2 : 1,
+      mobile: vp.mobile,
+    });
+    await sleep(600);
+
+    const vpEval = await sendCommand('Runtime.evaluate', {
+      expression: `
+        (() => {
+          const header = document.querySelector('header');
+          const main = document.querySelector('main');
+          const hamburger = document.querySelector('button[aria-label="Toggle navigation menu"]');
+          const bodyScrollWidth = document.body.scrollWidth;
+          const clientWidth = document.documentElement.clientWidth;
+          const isHamburgerVisible = hamburger ? window.getComputedStyle(hamburger).display !== 'none' : false;
+          return {
+            headerHeight: header?.offsetHeight,
+            bodyScrollWidth,
+            clientWidth,
+            isHamburgerVisible
+          };
+        })()
+      `,
+      returnByValue: true,
+    });
+
+    const res = vpEval.result.value;
+    const hasHorizontalOverflow = res.bodyScrollWidth > res.clientWidth + 3;
+    console.log(
+      `  ✓ Viewport ${String(vp.width).padStart(4)}px [${vp.name}]: ` +
+      `scrollWidth=${res.bodyScrollWidth}px <= clientWidth=${res.clientWidth}px | ` +
+      `Header=${res.headerHeight}px | ` +
+      `Mobile Menu=${res.isHamburgerVisible ? 'ACTIVE' : 'DESKTOP NAV'} | ` +
+      `Status: ${hasHorizontalOverflow ? 'FAIL (OVERFLOW)' : 'PASS (ZERO OVERFLOW)'}`
+    );
+
+    if (hasHorizontalOverflow) {
+      throw new Error(
+        `Horizontal page overflow detected on ${vp.width}px (${vp.name}): ` +
+        `scrollWidth (${res.bodyScrollWidth}px) exceeds clientWidth (${res.clientWidth}px)`
+      );
+    }
+  }
 
   // Restore Desktop Viewport (1280x800)
   await sendCommand('Emulation.setDeviceMetricsOverride', {
@@ -388,8 +485,7 @@ async function runBrowserTests() {
     deviceScaleFactor: 1,
     mobile: false,
   });
-  await sleep(500);
-  console.log('  ✓ Desktop Viewport (1280px): Restored full-screen dashboard');
+  await sleep(400);
 
   // 6. Network Requests & Console Error Audit
   console.log('\n[*] 6. NETWORK TRAFFIC & CONSOLE ERROR AUDIT:');

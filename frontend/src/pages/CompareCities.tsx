@@ -550,11 +550,16 @@ export const CompareCities: React.FC<CompareCitiesProps> = ({ onNavigate }) => {
             </p>
           </div>
 
-          <div className="flex items-center gap-3 text-xs font-mono">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono">
             {slots.map((s) => (
-              <div key={s.cityKey} className="flex items-center gap-1.5">
+              <div key={s.cityKey} className="flex items-center gap-1.5 bg-surface-container px-2 py-1 rounded-md border border-outline-variant/30">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: s.color }}></span>
-                <span className="text-white">{s.name}</span>
+                <span className="text-white font-medium">{s.name}</span>
+                {s.stats && s.stats.missingDaysCount > 0 && (
+                  <span className="text-[10px] text-amber-400 font-mono" title={`${s.stats.missingDaysCount} unreleased bulletin days`}>
+                    ({s.stats.availableDays}d)
+                  </span>
+                )}
               </div>
             ))}
           </div>

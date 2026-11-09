@@ -1,3 +1,10 @@
+import type {
+  MonthlyTrend,
+  YearOverYearStat,
+  CityRanking,
+  CpcbCategory,
+} from '../types';
+
 export interface BulletinCityMeta {
   city: string;
   key: string;
@@ -254,4 +261,189 @@ export function calculatePeriodStats(
     dominantPollutants,
     recordsInRange: inRange,
   };
+}
+
+// =========================================================================
+// Advanced Historical Analytics Functions (Phase 5 & 6)
+// =========================================================================
+
+/**
+ * Calculates monthly aggregations (average, min, max, completeness %) for a selected year or entire record.
+ */
+export function calculateMonthlyTrends(
+  records: BulletinRecord[],
+  yearFilter?: number
+): MonthlyTrend[] {
+  const filtered = yearFilter
+    ? records.filter((r) => r.d.startsWith(String(yearFilter)))
+    : records;
+
+  const monthMap: Record<string, { validAqi: number[]; minAqi: number; maxAqi: number; dates: Set<string> }> = {};
+
+  for (const r of filtered) {
+    const monthKey = r.d.slice(0, 7); // 'YYYY-MM'
+    if (!monthMap[monthKey]) {
+      monthMap[monthKey] = {
+        validAqi: [],
+        minAqi: Infinity,
+        maxAqi: -Infinity,
+        dates: new Set(),
+      };
+    }
+    monthMap[monthKey].dates.add(r.d);
+
+    if (r.aqi !== null && !isNaN(r.aqi)) {
+      monthMap[monthKey].validAqi.push(r.aqi);
+      if (r.aqi < monthMap[monthKey].minAqi) monthMap[monthKey].minAqi = r.aqi;
+      if (r.aqi > monthMap[monthKey].maxAqi) monthMap[monthKey].maxAqi = r.aqi;
+    }
+  }
+
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  return Object.keys(monthMap)
+    .sort()
+    .map((monthKey) => {
+      const data = monthMap[monthKey];
+      const [yr, mo] = monthKey.split('-').map(Number);
+      const totalDaysInMonth = new Date(yr, mo, 0).getDate();
+      const recordedDays = data.validAqi.length;
+
+      const avgAqi =
+        recordedDays > 0
+          ? Math.round((data.validAqi.reduce((a, b) => a + b, 0) / recordedDays) * 10) / 10
+          : null;
+
+      const monthLabel = `${monthNames[mo - 1]} ${yr}`;
+      const category = (avgAqi !== null ? getExpectedCategory(avgAqi) : 'No Data') as CpcbCategory | 'No Data';
+
+      return {
+        month: monthKey,
+        monthLabel,
+        avgAqi,
+        minAqi: data.minAqi !== Infinity ? data.minAqi : null,
+        maxAqi: data.maxAqi !== -Infinity ? data.maxAqi : null,
+        recordedDays,
+        totalDays: totalDaysInMonth,
+        completenessPct: Math.round((recordedDays / totalDaysInMonth) * 1000) / 10,
+        category,
+      };
+    });
+}
+
+/**
+ * Calculates Year-over-Year (YoY) metrics for a city, optionally scoped to a particular month (e.g., November smog season).
+ */
+export function calculateYearOverYear(
+  records: BulletinRecord[],
+  targetMonth?: number // 1 to 12 (e.g. 11 for November)
+): YearOverYearStat[] {
+  const filtered = targetMonth
+    ? records.filter((r) => {
+        const mo = parseInt(r.d.slice(5, 7), 10);
+        return mo === targetMonth;
+      })
+    : records;
+
+  const yearMap: Record<string, { validAqi: number[]; severeCount: number; cleanCount: number; dates: Set<string> }> = {};
+
+  for (const r of filtered) {
+    const yr = r.d.slice(0, 4);
+    if (!yearMap[yr]) {
+      yearMap[yr] = {
+        validAqi: [],
+        severeCount: 0,
+        cleanCount: 0,
+        dates: new Set(),
+      };
+    }
+    yearMap[yr].dates.add(r.d);
+
+    if (r.aqi !== null && !isNaN(r.aqi)) {
+      yearMap[yr].validAqi.push(r.aqi);
+      if (r.aqi > 400) yearMap[yr].severeCount++;
+      if (r.aqi <= 100) yearMap[yr].cleanCount++;
+    }
+  }
+
+  return Object.keys(yearMap)
+    .sort()
+    .map((yrStr) => {
+      const yr = parseInt(yrStr, 10);
+      const data = yearMap[yrStr];
+      const validDays = data.validAqi.length;
+      const totalExpectedDays = targetMonth ? new Date(yr, targetMonth, 0).getDate() : 365;
+
+      const avgAqi =
+        validDays > 0
+          ? Math.round((data.validAqi.reduce((a, b) => a + b, 0) / validDays) * 10) / 10
+          : null;
+
+      const category = (avgAqi !== null ? getExpectedCategory(avgAqi) : 'No Data') as CpcbCategory | 'No Data';
+
+      return {
+        year: yr,
+        avgAqi,
+        validDays,
+        totalDays: totalExpectedDays,
+        completenessPct: Math.round((validDays / totalExpectedDays) * 1000) / 10,
+        severeDays: data.severeCount,
+        goodSatisfactoryDays: data.cleanCount,
+        category,
+      };
+    });
+}
+
+/**
+ * Calculates city rankings with data-coverage eligibility threshold (default: >= 70% coverage).
+ */
+export function calculateCityRankings(
+  cities: BulletinCityMeta[],
+  minCoveragePct = 70
+): CityRanking[] {
+  const withCoverage = cities.map((c) => {
+    const coverage = c.total_records > 0 ? (c.valid_records / c.total_records) * 100 : 0;
+    return {
+      city: c.city,
+      key: c.key,
+      avgAqi: Math.round(c.avg_aqi * 10) / 10,
+      category: getExpectedCategory(c.avg_aqi) as CpcbCategory,
+      validRecords: c.valid_records,
+      totalRecords: c.total_records,
+      coveragePct: Math.round(coverage * 10) / 10,
+      isCoverageEligible: coverage >= minCoveragePct,
+    };
+  });
+
+  // Sort by average AQI ascending (cleanest first)
+  withCoverage.sort((a, b) => a.avgAqi - b.avgAqi);
+
+  return withCoverage.map((item, idx) => ({
+    rank: idx + 1,
+    ...item,
+  }));
+}
+
+/**
+ * Generates RFC 4180 compliant CSV string from historical records for client-side download.
+ */
+export function generateHistoricalCsv(records: BulletinRecord[], cityName: string): string {
+  const headers = [
+    'Date',
+    'City',
+    'CPCB_AQI',
+    'Category',
+    'Prominent_Pollutant',
+    'Reporting_Stations',
+    'Category_Shift_Flag',
+  ];
+
+  const rows = records.map((r) => {
+    const safePoll = r.poll ? `"${r.poll.replace(/"/g, '""')}"` : '""';
+    const aqiStr = r.aqi !== null ? String(r.aqi) : '';
+    const inconStr = r.incon ? 'TRUE' : 'FALSE';
+    return `${r.d},"${cityName.replace(/"/g, '""')}",${aqiStr},"${r.cat}",${safePoll},${r.stn},${inconStr}`;
+  });
+
+  return [headers.join(','), ...rows].join('\r\n');
 }

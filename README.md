@@ -1,7 +1,7 @@
 # AirCare — Air Quality Analysis and Visualization Platform
 > **BCA Minor Project** | *Air Quality Analysis and Visualization Using Data Analytics*  
 > **Technologies**: React 19, TypeScript, Vite, Tailwind CSS, Python (Pandas/NumPy), Open-Meteo API  
-> **Version**: v1.0.0 (Release Candidate)  
+> **Version**: v1.1.0 (Production Overhaul & Enhanced Analytics)  
 
 ---
 
@@ -257,3 +257,13 @@ E:\minor project\
 3. **Open Government Data (OGD) Platform India (`data.gov.in`)**: Published environmental open data datasets.
 
 *This project is submitted in partial fulfillment of the requirements for the Bachelor of Computer Applications (BCA) degree. All environmental data analysis is intended for academic research, educational demonstration, and citizen awareness.*
+
+---
+
+## 📚 10. Advanced Architectural Proposals & Reports
+
+- **FastAPI Backend Proposal**: [`docs/BACKEND_ARCHITECTURE_PROPOSAL.md`](docs/BACKEND_ARCHITECTURE_PROPOSAL.md)
+- **Machine Learning Roadmap (v2.0)**: [`docs/MACHINE_LEARNING_PROPOSAL.md`](docs/MACHINE_LEARNING_PROPOSAL.md)
+- **Comprehensive Project Report**: [`docs/PROJECT_REPORT.md`](docs/PROJECT_REPORT.md)
+- **Data Methodology & Sources**: [`docs/DATA_SOURCES_AND_METHODOLOGY.md`](docs/DATA_SOURCES_AND_METHODOLOGY.md)
+- **Testing & Multi-Viewport Verification**: [`docs/TESTING_REPORT.md`](docs/TESTING_REPORT.md)

@@ -4,6 +4,20 @@ export type PageId = 'today' | 'past' | 'compare';
 
 export type CpcbCategory = 'Good' | 'Satisfactory' | 'Moderate' | 'Poor' | 'Very Poor' | 'Severe';
 
+export interface PollutantSubIndex {
+  name: string;
+  code: 'pm25' | 'pm10' | 'no2' | 'so2' | 'co' | 'o3' | 'nh3';
+  concentration: number | null;
+  unit: string;
+  subIndex: number | null;
+  category: CpcbCategory | null;
+  averagingPeriod: string;
+  cpcbStandard: string;
+  isDominant: boolean;
+  isValid: boolean;
+  calculationDetails: string;
+}
+
 export interface LiveAqiReading {
   city: string;
   timestamp: string;
@@ -23,6 +37,7 @@ export interface LiveAqiReading {
   complianceNote: string;
   methodologyNote: string;
   hourlyTrend: { time: string; aqi: number }[];
+  pollutantBreakdown: PollutantSubIndex[];
 }
 
 export interface StationData {
@@ -103,5 +118,40 @@ export interface PeriodStats {
   dominantPollutant: string;
   severeDaysCount: number;
   inconsistentCount: number;
+}
+
+export interface MonthlyTrend {
+  month: string; // 'YYYY-MM'
+  monthLabel: string; // 'Jan 2024'
+  avgAqi: number | null;
+  minAqi: number | null;
+  maxAqi: number | null;
+  recordedDays: number;
+  totalDays: number;
+  completenessPct: number;
+  category: CpcbCategory | 'No Data';
+}
+
+export interface YearOverYearStat {
+  year: number;
+  avgAqi: number | null;
+  validDays: number;
+  totalDays: number;
+  completenessPct: number;
+  severeDays: number;
+  goodSatisfactoryDays: number;
+  category: CpcbCategory | 'No Data';
+}
+
+export interface CityRanking {
+  rank: number;
+  city: string;
+  key: string;
+  avgAqi: number;
+  category: CpcbCategory;
+  validRecords: number;
+  totalRecords: number;
+  coveragePct: number;
+  isCoverageEligible: boolean; // >= 70% coverage
 }
 

@@ -1,11 +1,13 @@
 import React from 'react';
+import { Database } from 'lucide-react';
 import type { PageId } from './Header';
 
 interface FooterProps {
   onNavigate: (page: PageId) => void;
+  onOpenDiagnostics?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenDiagnostics }) => {
   return (
     <footer className="w-full bg-surface-container-low border-t border-outline-variant/30 mt-16 py-8">
       <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,7 +22,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </span>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4 text-xs font-label text-on-surface-variant">
+          <div className="flex flex-wrap justify-center items-center gap-4 text-xs font-label text-on-surface-variant">
             <button
               onClick={() => onNavigate('today')}
               className="hover:text-primary transition-colors cursor-pointer"
@@ -41,6 +43,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             >
               Compare Cities
             </button>
+            {onOpenDiagnostics && (
+              <>
+                <span className="text-outline-variant">•</span>
+                <button
+                  onClick={onOpenDiagnostics}
+                  className="hover:text-primary transition-colors cursor-pointer inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-medium"
+                  title="Inspect Supabase database storage and connection diagnostics"
+                >
+                  <Database className="w-3.5 h-3.5" />
+                  Database Status
+                </button>
+              </>
+            )}
           </div>
         </div>
 

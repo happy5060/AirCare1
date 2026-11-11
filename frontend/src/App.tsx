@@ -5,6 +5,7 @@ import { Footer } from './components/Footer';
 import { TodaysAqi } from './pages/TodaysAqi';
 import { PastAqi } from './pages/PastAqi';
 import { CompareCities } from './pages/CompareCities';
+import { DatabaseDiagnosticModal } from './pages/DatabaseDiagnostic';
 
 const VALID_PAGES: PageId[] = ['today', 'past', 'compare'];
 
@@ -15,10 +16,16 @@ function getPageFromHash(): PageId {
 
 export function App() {
   const [currentPage, setCurrentPage] = useState<PageId>(getPageFromHash);
+  const [isDiagnosticOpen, setIsDiagnosticOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const handleHashChange = () => {
-      setCurrentPage(getPageFromHash());
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'diagnostics') {
+        setIsDiagnosticOpen(true);
+      } else {
+        setCurrentPage(getPageFromHash());
+      }
     };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
@@ -43,7 +50,16 @@ export function App() {
       </div>
 
       {/* Persistent Academic & Scientific Disclaimer Footer */}
-      <Footer onNavigate={handleNavigate} />
+      <Footer
+        onNavigate={handleNavigate}
+        onOpenDiagnostics={() => setIsDiagnosticOpen(true)}
+      />
+
+      {/* Phase 1: Database Diagnostics & Live Storage Probe Modal */}
+      <DatabaseDiagnosticModal
+        isOpen={isDiagnosticOpen}
+        onClose={() => setIsDiagnosticOpen(false)}
+      />
     </div>
   );
 }

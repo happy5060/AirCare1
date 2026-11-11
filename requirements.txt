@@ -1,0 +1,7 @@
+# AirCare Automated Data Collection Requirements
+# The core collector (scripts/collect_air_quality.py) is implemented using
+# Python standard libraries (urllib.request, json, time, datetime, os, sys)
+# to guarantee zero external dependency failures.
+#
+# Optional development and testing dependencies:
+# requests>=2.31.0

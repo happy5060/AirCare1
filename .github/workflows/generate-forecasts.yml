@@ -1,0 +1,48 @@
+name: Scheduled Machine Learning Forecast Generation
+
+on:
+  schedule:
+    # Runs daily at 05:00 UTC (10:30 AM IST)
+    - cron: '0 5 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions UI
+
+jobs:
+  forecast-generation:
+    name: Generate Multi-Horizon Predictions
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generate TimesFM Forecasts & Sync to Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          PYTHONUNBUFFERED: "1"
+        run: |
+          python scripts/generate_forecasts.py
+
+      - name: Commit & Push Updated Static Cache
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "AirCare Forecaster Bot"
+          git add frontend/public/data/forecasts.json || true
+          git diff --staged --quiet || git commit -m "chore(forecast): auto-update operational ML predictions [skip ci]"
+          git push || true
+

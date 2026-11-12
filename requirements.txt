@@ -1,7 +1,20 @@
-# AirCare Automated Data Collection Requirements
-# The core collector (scripts/collect_air_quality.py) is implemented using
-# Python standard libraries (urllib.request, json, time, datetime, os, sys)
-# to guarantee zero external dependency failures.
-#
-# Optional development and testing dependencies:
-# requests>=2.31.0
+# AirCare Core Data Pipeline & Machine Learning Dependencies
+# Standard Library dependencies are used wherever possible.
+# Pretrained Foundation Model: Google TimesFM 2.5 (200M PyTorch checkpoint)
+
+# Core HTTP & Web
+requests>=2.31.0
+
+# Scientific & Tabular Processing
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.10.0
+scikit-learn>=1.3.0
+
+# Machine Learning & Foundation Time Series Models
+torch>=2.1.0
+timesfm>=3.0.0
+xgboost>=2.0.0
+lightgbm>=4.0.0
+huggingface_hub>=0.28.0
+safetensors>=0.5.0

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export type PageId = 'today' | 'past' | 'compare';
+export type PageId = 'today' | 'past' | 'compare' | 'forecast';
 
 interface HeaderProps {
   activePage: PageId;
@@ -14,6 +14,7 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onNavigate }) => {
     { id: 'today', label: "Today's AQI", icon: 'air' },
     { id: 'past', label: 'Past Air Quality', icon: 'calendar_month' },
     { id: 'compare', label: 'Compare Cities', icon: 'compare_arrows' },
+    { id: 'forecast', label: 'Forecasting', icon: 'trending_up' },
   ];
 
   return (
@@ -68,11 +69,11 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onNavigate }) => {
 
         {/* Right Status Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Snapshot Notice (Honest Demarcation - hidden on extra small mobile to prevent header overflow) */}
+          {/* Active Platform Badge (Clean & Accurate) */}
           <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container border border-outline-variant/40 text-xs">
-            <span className="w-2 h-2 rounded-full bg-secondary shrink-0"></span>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
             <span className="text-on-surface-variant font-mono text-[11px] whitespace-nowrap">
-              Snapshot: <strong className="text-white">Oct 20, 2026</strong>
+              System: <strong className="text-white">Active</strong>
             </span>
           </div>
 
@@ -114,8 +115,8 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onNavigate }) => {
             );
           })}
           <div className="pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-mono text-outline px-1">
-            <span>Snapshot: Oct 20, 2026</span>
-            <span>CPCB 2015–2025 Archive</span>
+            <span>AirCare Platform</span>
+            <span>CPCB NAQI Standards</span>
           </div>
         </div>
       )}

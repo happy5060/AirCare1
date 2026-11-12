@@ -1,8 +1,76 @@
 // AirCare Platform TypeScript Type Definitions
 
-export type PageId = 'today' | 'past' | 'compare';
+export type PageId = 'today' | 'past' | 'compare' | 'forecast';
 
 export type CpcbCategory = 'Good' | 'Satisfactory' | 'Moderate' | 'Poor' | 'Very Poor' | 'Severe';
+
+export interface ForecastDailyItem {
+  day_index: number;
+  target_date: string;
+  predicted_aqi: number;
+  predicted_category: CpcbCategory;
+  dominant_pollutant: string;
+  uncertainty_range: [number, number];
+  change_from_latest: number;
+  direct_aqi_prediction: number;
+  predicted_pollutants: Record<string, number | null>;
+  cpcb_sub_indices: Record<string, number | null>;
+  is_cpcb_compliant: boolean;
+}
+
+export interface ForecastInsights {
+  trend_direction: string;
+  trend_sentiment: 'positive' | 'neutral' | 'negative';
+  predicted_dominant_pollutant: string;
+  highest_predicted_day: {
+    date: string;
+    aqi: number;
+    category: CpcbCategory;
+  };
+  lowest_predicted_day: {
+    date: string;
+    aqi: number;
+    category: CpcbCategory;
+  };
+  largest_pollutant_shift: {
+    pollutant: string;
+    magnitude: number;
+  };
+}
+
+export interface CityForecastData {
+  city: string;
+  latest_observation_date: string;
+  forecast_generation_time: string;
+  model_name: string;
+  model_version: string;
+  input_source: string;
+  latest_observed_aqi: number;
+  latest_observed_category: CpcbCategory;
+  latest_observed_pollutants: Record<string, number | null>;
+  predicted_pollutants_timeline: Record<string, {
+    point: number[];
+    q10: number[];
+    q90: number[];
+  } | null>;
+  daily_forecasts: ForecastDailyItem[];
+  insights: ForecastInsights;
+  chart_history: {
+    date: string;
+    aqi: number;
+    category: CpcbCategory;
+    is_forecast: boolean;
+  }[];
+  supported_horizons: string[];
+}
+
+export interface ModelBenchmarkSummary {
+  mae: number;
+  rmse: number;
+  r2: number;
+  severe_recall: number;
+  sample_count: number;
+}
 
 export interface PollutantSubIndex {
   name: string;

@@ -1,7 +1,7 @@
 # AirCare: Data Sources, Cleaning Pipeline & Calculation Methodology
-> **BCA Minor Project Technical Documentation**  
-> **Topic**: Air Quality Analysis and Visualization Using Data Analytics  
-> **Document Version**: 1.0.0 (Release Candidate)  
+> **BCA Minor Project Technical Documentation**
+> **Topic**: Air Quality Analysis and Visualization Using Data Analytics
+> **Document Version**: 1.0.0 (Release Candidate)
 
 ---
 
@@ -14,6 +14,8 @@
 6. [CPCB National Air Quality Index (NAQI) Calculation](#6-cpcb-national-air-quality-index-naqi-calculation)
 7. [Unit Conversions & Mathematical Edge Cases](#7-unit-conversions--mathematical-edge-cases)
 8. [Scientific Caveats & Limitations](#8-scientific-caveats--limitations)
+9. [Archived Atmospheric & Meteorological Backfill (Tier 4)](#9-archived-atmospheric--meteorological-backfill-tier-4)
+10. [Database Schema & Provenance Architecture](#10-database-schema--provenance-architecture)
 
 ---
 
@@ -28,15 +30,16 @@ AirCare adheres to the following principles:
 
 ---
 
-## 🏛️ 2. Data Sources & Architecture (The Three Tiers)
+## 🏛️ 2. Data Sources & Architecture (The Four Tiers)
 
-To prevent misinterpretation, AirCare organizes all data flows into three distinct tiers:
+To prevent misinterpretation, AirCare organizes all data flows into four distinct tiers:
 
 | Tier | Source / Provider | Data Type | Temporal Coverage | Measurement Mode | Purpose in AirCare |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Tier 1: Live Feed** | Open-Meteo Air Quality API (CAMS / ECMWF) | Atmospheric Model Forecast & Assimilation | Instantaneous (Current hour, updated hourly) | 1-hour numerical weather & chemical dispersion grid (~11 km resolution) | Provides immediate, real-time air quality estimates for any Indian city. |
+| **Tier 1: Live Feed** | Open-Meteo Air Quality API (CAMS Global) | Atmospheric Model Assimilation & Forecast | Instantaneous (Current hour, updated 3-hourly) | Numerical weather & chemical dispersion grid (~45 km resolution) | Provides immediate, real-time air quality estimates for tracked Indian cities. |
 | **Tier 2: Station Snapshot** | OGD Platform / CPCB CAAQMS Network | Physical Ground Station Sensors | Frozen point-in-time: **October 20, 2026, 10:00 AM IST** | Static audit of 524 physical continuous monitoring stations | Demonstrates physical sensor network density and real-time ground-station telemetry. |
 | **Tier 3: Historical Archive** | CPCB Daily 4:00 PM National Air Quality Bulletins | Certified Regulatory Ground Averages | **May 1, 2015 to December 31, 2025** (10+ years) | 24-hour diurnal averages from certified CAAQMS stations | Core analytical archive powering 10-year trend analyses, seasonal comparisons, and city rankings. |
+| **Tier 4: Atmospheric Backfill** | Open-Meteo Air Quality & Weather APIs (CAMS + ECMWF IFS) | Archived Atmospheric & Numerical Weather Forecasts | Previous 90 Days (Trailing continuous window) | Native 3-hour timesteps (00, 03, 06, 09, 12, 15, 18, 21 UTC) | Machine learning training baseline, high-resolution temporal diurnal analysis, and boundary layer dispersion modeling. |
 
 ```mermaid
 flowchart TD
@@ -189,3 +192,59 @@ To ensure transparency in academic examinations, the following limitations are e
    - Atmospheric dispersion models operate on an $\sim 11\ \text{km} \times 11\ \text{km}$ spatial grid. Hyperlocal emissions (such as street-corner traffic idling or localized construction) may differ from regional model grid estimates.
 3. **Temporal Boundary of Historical Records**:
    - The verified CPCB bulletin archive spans **May 1, 2015 to December 31, 2025**. Historical queries prior to May 1, 2015 cannot be answered because India's National AQI system was officially established in April 2015.
+
+---
+
+## 🌪️ 9. Archived Atmospheric & Meteorological Backfill (Tier 4)
+
+To bridge the gap between decade-long daily historical bulletins (Tier 3) and real-time live updates (Tier 1), AirCare introduces **Tier 4: Archived Atmospheric Model & Meteorological Backfill**.
+
+### 9.1 Data Provenance & Atmospheric Model Specifics
+1. **Chemical Transport Dataset (Pollutants)**:
+   - **Provider**: Open-Meteo Air Quality Service.
+   - **Underlying Dataset**: Copernicus Atmosphere Monitoring Service (**CAMS Global Atmospheric Composition Forecasts**), operated by ECMWF (European Centre for Medium-Range Weather Forecasts) using the IFS-COMPO model cycle.
+   - **Spatial Resolution**: Global grid of **$0.4^\circ \times 0.4^\circ$** (approximately $40\ \text{km} \times 45\ \text{km}$ over the Indian subcontinent).
+   - **Native Temporal Resolution**: **3-hourly** output cycles ($00:00$, $03:00$, $06:00$, $09:00$, $12:00$, $15:00$, $18:00$, $21:00\ \text{UTC}$).
+   - **Interpolation Status**: While API providers frequently offer 1-hour arrays via linear interpolation between model steps, AirCare explicitly samples the native 3-hourly timesteps. Intermediate interpolated hours are **never mischaracterized as independent physical observations**.
+2. **Meteorological Dataset (Weather & Boundary Layer)**:
+   - **Provider**: Open-Meteo Weather Forecast API.
+   - **Underlying Model**: ECMWF Integrated Forecasting System (**IFS Numerical Weather Prediction**).
+   - **Parameters Tracked**: Ambient 2m Temperature ($^\circ\text{C}$), 2m Relative Humidity ($\%$), 10m Wind Speed ($\text{m/s}$), and Planetary Boundary Layer Height ($\text{m}$).
+   - **Temporal Availability**: Up to 62 past days are preserved on the operational forecast archive endpoint.
+3. **Ventilation Coefficient ($V_c$)**:
+   - Atmospheric dispersion capacity is quantified via the Ventilation Coefficient:
+     $$V_c = \text{PBLH}\ (\text{m}) \times \text{Wind Speed}_{10\text{m}}\ (\text{m/s}) \quad [\text{m}^2/\text{s}]$$
+   - $V_c < 2000\ \text{m}^2/\text{s}$ indicates poor atmospheric ventilation (nocturnal thermal inversions trapping surface pollutants, common in winter Delhi).
+   - $V_c > 6000\ \text{m}^2/\text{s}$ indicates high atmospheric flushing capacity (strong daytime convective dispersion).
+4. **Classification: Archived Forecast vs. Retrospective Reanalysis**:
+   - The 90-day backfill originates from archived operational forecast runs.
+   - In AirCare, this data is strictly classified as `source_type = 'archived_forecast'`.
+   - It is distinguished from true multi-decadal retrospective climate reanalyses (such as ERA5 or CAMS EAC4), which assimilate historical observations retrospectively with a delayed quality-assurance window.
+
+### 9.2 CPCB Completeness Rules vs. Model-Derived Rolling Estimates
+- **The CPCB 16-Hour Completeness Mandate**: Official CPCB guidelines stipulate that a daily regulatory bulletin requires at least 16 valid hourly physical measurements ($16/24 \ge 66.7\%$). This rule was formulated strictly for physical Continuous Ambient Air Quality Monitoring Stations (CAAQMS) to guard against sensor calibration downtime and hardware dropouts.
+- **Scientific Boundary**: Applying CPCB's 16-valid-hour station rule to 3-hourly or interpolated numerical model grids is scientifically inappropriate. Numerical model simulations represent continuous spatial integration, not discrete sensor uptime.
+- **Model-Derived Rolling Estimates**: AirCare computes multi-hour rolling arithmetic means (24-hour retrospective windows for particulate matter and gaseous pollutants; 8-hour windows for $CO$ and $O_3$). These metrics are explicitly stored in structured columns labeled `rolling_24h_pm2_5`, `rolling_24h_pm10`, and `derived_rolling_aqi`, and are clearly documented as **model-derived estimates**, not regulatory ground-station averages.
+
+---
+
+## 🗄️ 10. Database Schema & Provenance Architecture
+
+To enforce absolute data segregation, prevent data poisoning, and ensure high query performance, the Supabase schema implements the following structural protections:
+
+### 10.1 Provenance Segregation & Unique Constraints
+- **Table**: `air_quality_readings`
+- **Unique Constraint**: `uq_city_source_observed UNIQUE (city, source, observed_at)`
+  - Live automated collection runs write with `source = 'open-meteo'` and `source_type = 'atmospheric_model'`.
+  - Historical backfill runs write with `source = 'open-meteo-historical'` and `source_type = 'archived_forecast'`.
+  - Ground-station audits write with `source = 'cpcb-ogd-snapshot'` and `source_type = 'physical_station'`.
+  - This compound key guarantees that backfill jobs can never overwrite live real-time records, even if timestamps overlap.
+
+### 10.2 Structured Storage vs. JSON Trapping
+Rather than burying analytical metrics inside unstructured JSON dictionaries, AirCare separates data into dedicated, typed SQL columns:
+- **Raw Instantaneous Fields**: `pm2_5`, `pm10`, `no2`, `so2`, `co`, `o3` ($\mu\text{g/m}^3$, with $CO$ in $\text{mg/m}^3$).
+- **Instantaneous AQI**: `estimated_aqi`, `aqi_category`, `dominant_pollutant`.
+- **Structured Rolling Averages**: `rolling_24h_pm2_5`, `rolling_24h_pm10`, `rolling_24h_no2`, `rolling_24h_so2`, `rolling_8h_co`, `rolling_8h_o3`.
+- **Derived Rolling AQI**: `derived_rolling_aqi`, `derived_rolling_category`.
+- **Structured Meteorology**: `temperature_c`, `relative_humidity_pct`, `wind_speed_10m_ms`, `boundary_layer_height_m`, `ventilation_coefficient_m2s`.
+- **Deep Provenance (JSONB)**: `model_or_source_metadata` preserves upstream provider headers, grid coordinates, downsampling flags, and sub-index calculation breakdowns.

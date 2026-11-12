@@ -177,8 +177,10 @@ Every functional and mathematical component of AirCare was verified using compre
 1. **Model Estimates vs. Physical Measurements**:
    * Open-Meteo atmospheric readings are 1-hour instantaneous numerical simulations from global atmospheric models (CAMS/ECMWF), not physical continuous CAAQMS ground station averages.
    * Official CPCB daily bulletins represent 24-hour diurnal averages from physical ground monitors published at 4:00 PM daily.
-2. **No Machine Learning Forecasting Model**:
-   * AirCare does **not** claim to possess a trained neural network or predictive machine learning model. All calculations are exact deterministic implementations of official CPCB NAQI guidelines.
+2. **Machine Learning Forecasting Integration**:
+   * AirCare integrates **Google TimesFM 2.5** (200M parameter PyTorch foundation model) to predict future mass concentrations across 6 criteria pollutants (PM2.5, PM10, NO2, SO2, CO, O3).
+   * Predicted concentrations are passed directly into official Central Pollution Control Board (CPCB) NAQI 2014 piecewise linear formulas to derive mathematically consistent composite AQI forecasts.
+   * Generalization performance is validated through rigorous chronological rolling-origin backtesting against Persistence and XGBoost baselines (achieving 1-day AQI RMSE of 15.46 and R² = 0.770).
 3. **Missing Data Handling**:
    * In compliance with academic data analytics guidelines, missing observations in historical archives are preserved as `null`. AirCare never invents synthetic readings or treats missing air quality as zero.
 4. **Government Discretionary Overrides**:
@@ -191,8 +193,10 @@ Every functional and mathematical component of AirCare was verified using compre
 * **Frontend Framework**: React 19, TypeScript
 * **Build System & Bundler**: Vite 8.3
 * **Styling & UI Components**: Tailwind CSS, Material Symbols Outlined, Space Grotesk & Inter typography
-* **Testing & Automation**: Python 3.13, Node.js v24, Chrome DevTools Protocol (CDP), Oxlint
-* **Data Sources**: Central Pollution Control Board (CPCB), Open-Meteo Air Quality API
+* **Machine Learning & Time Series**: Google TimesFM 2.5 (200M PyTorch Checkpoint), XGBoost Regressor, Scikit-Learn
+* **Database & Cloud Storage**: Supabase PostgreSQL (`air_quality_readings`, `aqi_predictions`, `prediction_evaluations`)
+* **Testing & Automation**: Python 3.13, Node.js v24, GitHub Actions Cron Pipelines, Oxlint
+* **Data Sources**: Central Pollution Control Board (CPCB), Open-Meteo Atmospheric Services (CAMS Global / ECMWF IFS)
 
 ---
 

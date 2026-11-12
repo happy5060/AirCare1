@@ -232,20 +232,40 @@ Where $N$ is the number of recorded days. Missing days are excluded from the den
 **Answer**:  
 "Manual stations (NAMP) collect samples on filter paper over 24 hours, which are manually weighed in a chemical laboratory twice a week. CAAQMS (Continuous Ambient Air Quality Monitoring Stations) use automated beta-attenuation monitors and UV/chemiluminescence analyzers to report continuous real-time data."
 
-### Question 19: What future enhancements could be added to AirCare?
+### Question 19: How does AirCare forecast future air quality?
 **Answer**:  
-"Future enhancements could include:
-1. Machine learning time-series forecasting (e.g., LSTM or XGBoost) for 48-hour AQI predictions.
-2. User geolocation to automatically detect the nearest monitoring station.
-3. Push notification health alerts when AQI crosses the `Poor` threshold."
+"AirCare integrates **Google TimesFM 2.5** (a 200-million parameter time-series foundation model developed by Google Research) to forecast multi-day trajectories for 6 criteria pollutants: PM2.5, PM10, NO2, SO2, CO, and O3. These predicted chemical concentrations are then deterministically passed into the Central Pollution Control Board's official 2014 piecewise linear breakpoint equations to derive future AQI with mathematical consistency. The system was validated using chronological rolling-origin backtesting against Persistence and XGBoost baselines."
 
 ### Question 20: What is your personal contribution to this project?
 **Answer**:  
-"I conducted the dataset audits, wrote the Python cleaning and partitioning pipeline, implemented the CPCB mathematical sub-index calculation engine with unit conversions, built the React 19 / TypeScript user interface for all 3 core features, and established the automated testing suite."
+"I conducted the dataset audits, wrote the Python cleaning and partitioning pipeline, implemented the CPCB mathematical sub-index calculation engine with unit conversions, integrated the Google TimesFM 2.5 machine-learning forecasting pipeline, built the React 19 / TypeScript user interface for all 4 core features (Today's AQI, Past Air Quality, Compare Cities, and Forecasting), connected Supabase cloud storage, and established the automated testing suite."
 
 ---
 
-## ⚡ 9. Rapid Fact Sheet (Memorize Before Entering the Room!)
+## 🤖 9. Machine Learning & Forecasting Viva Special (TimesFM 2.5)
+
+### Q1: Why did you choose Google TimesFM 2.5 instead of training an LSTM from scratch?
+**Model Answer**:  
+"TimesFM 2.5 is a **decoder-only patched transformer foundation model** trained on over 100 billion real-world time-series data points. Training an LSTM from scratch on limited urban sensor records is vulnerable to severe overfitting, seasonal catastrophic forgetting, and requires extensive GPU hardware. TimesFM 2.5 executes efficiently on CPU (<150 ms per series on an Intel Core i5), supports native physical non-negativity (`infer_is_positive=True`), and outputs calibrated 10th-to-90th percentile quantile prediction bounds."
+
+### Q2: Did you predict AQI directly or derive it from pollutants?
+**Model Answer**:  
+"We predict **individual criteria pollutant concentrations first** ($\text{PM}_{2.5}, \text{PM}_{10}, \text{NO}_2, \text{SO}_2, \text{CO}, \text{O}_3$), and then calculate the composite forecast AQI using official CPCB 2014 NAQI formulas. This ensures **chemical and mathematical consistency**: if the model predicts high $\text{PM}_{2.5}$, the resulting forecast AQI mathematically reflects that dominant particulate sub-index rather than an unexplainable black-box integer."
+
+### Q3: How did you prevent data leakage during model evaluation?
+**Model Answer**:  
+"Time-series cross-validation cannot use random shuffling because shuffling leaks future weather patterns into training states. We enforced **strict chronological rolling-origin backtesting**: for any test origin date $t$, the model only receives observations up to day $t$ as its historical context, and predicts forward for $t+1, t+3, t+7$. Future actual values were strictly quarantined until prediction generation concluded."
+
+### Q4: How did TimesFM 2.5 perform compared to standard baselines?
+**Model Answer**:  
+"In rigorous chronological backtesting across multi-year holdout records in major Indian cities:
+- For **1-day ahead forecasts (Tomorrow)**, TimesFM achieved an **RMSE of 15.46 AQI points** ($R^2 = 0.770$), outperforming both Persistence (RMSE 17.30) and tabular XGBoost (RMSE 17.47).
+- For **3-day ahead forecasts**, TimesFM maintained an **MAE of 17.51 AQI points** (while Persistence degraded to 18.63 with $R^2 \approx 0.0$).
+- Across all test horizons, TimesFM maintained a **100% recall on severe smog events** ($\text{AQI} \ge 401$), fulfilling critical public health warning standards."
+
+---
+
+## ⚡ 10. Rapid Fact Sheet (Memorize Before Entering the Room!)
 
 - **Total Historical Records**: 471,015 daily bulletins
 - **Total Historical Cities**: 297 Indian cities

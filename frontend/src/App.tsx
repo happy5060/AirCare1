@@ -5,9 +5,10 @@ import { Footer } from './components/Footer';
 import { TodaysAqi } from './pages/TodaysAqi';
 import { PastAqi } from './pages/PastAqi';
 import { CompareCities } from './pages/CompareCities';
+import { ForecastAqi } from './pages/ForecastAqi';
 import { DatabaseDiagnosticModal } from './pages/DatabaseDiagnostic';
 
-const VALID_PAGES: PageId[] = ['today', 'past', 'compare'];
+const VALID_PAGES: PageId[] = ['today', 'past', 'compare', 'forecast'];
 
 function getPageFromHash(): PageId {
   const hash = window.location.hash.replace('#', '') as PageId;
@@ -47,6 +48,7 @@ export function App() {
         {currentPage === 'today' && <TodaysAqi onNavigate={handleNavigate} />}
         {currentPage === 'past' && <PastAqi onNavigate={handleNavigate} />}
         {currentPage === 'compare' && <CompareCities onNavigate={handleNavigate} />}
+        {currentPage === 'forecast' && <ForecastAqi onNavigate={handleNavigate} />}
       </div>
 
       {/* Persistent Academic & Scientific Disclaimer Footer */}

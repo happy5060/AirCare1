@@ -25,3 +25,13 @@ yarn-debug.log*
 !.vscode/extensions.json
 .idea/
 .DS_Store
+
+# Machine Learning Models & Heavy Checkpoints (Exceeds GitHub 100MB limit)
+models/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+*.pkl
+*.joblib

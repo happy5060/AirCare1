@@ -1,0 +1,242 @@
+{
+  "timestamp": "2026-11-12T17:37:46.669362Z",
+  "evaluation_period": "Historical Rolling Holdout Evaluation (CPCB City-Day Archive)",
+  "evaluation_cities": [
+    "Delhi",
+    "Bengaluru",
+    "Lucknow"
+  ],
+  "model_benchmarks": {},
+  "pollutant_benchmarks": {
+    "pm2_5": {
+      "1_day": {
+        "mae": 6.96,
+        "rmse": 9.14,
+        "r2": 0.5505,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "3_day": {
+        "mae": 9.28,
+        "rmse": 11.77,
+        "r2": -0.2571,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "7_day": {
+        "mae": 8.17,
+        "rmse": 10.79,
+        "r2": 0.2576,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      }
+    },
+    "pm10": {
+      "1_day": {
+        "mae": 19.83,
+        "rmse": 29.03,
+        "r2": 0.5669,
+        "severe_recall": 1.0,
+        "sample_count": 20
+      },
+      "3_day": {
+        "mae": 23.43,
+        "rmse": 32.79,
+        "r2": 0.2896,
+        "severe_recall": 1.0,
+        "sample_count": 20
+      },
+      "7_day": {
+        "mae": 33.78,
+        "rmse": 52.96,
+        "r2": 0.3908,
+        "severe_recall": 1.0,
+        "sample_count": 20
+      }
+    },
+    "no2": {
+      "1_day": {
+        "mae": 1.79,
+        "rmse": 2.43,
+        "r2": 0.815,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "3_day": {
+        "mae": 3.22,
+        "rmse": 4.58,
+        "r2": 0.1689,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "7_day": {
+        "mae": 4.12,
+        "rmse": 5.88,
+        "r2": -0.2436,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      }
+    },
+    "so2": {
+      "1_day": {
+        "mae": 0.64,
+        "rmse": 0.86,
+        "r2": 0.8879,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "3_day": {
+        "mae": 0.78,
+        "rmse": 0.98,
+        "r2": 0.8499,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "7_day": {
+        "mae": 0.97,
+        "rmse": 1.18,
+        "r2": 0.815,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      }
+    },
+    "co": {
+      "1_day": {
+        "mae": 0.06,
+        "rmse": 0.07,
+        "r2": 0.8705,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "3_day": {
+        "mae": 0.06,
+        "rmse": 0.08,
+        "r2": 0.8535,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "7_day": {
+        "mae": 0.08,
+        "rmse": 0.1,
+        "r2": 0.6935,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      }
+    },
+    "o3": {
+      "1_day": {
+        "mae": 3.61,
+        "rmse": 4.86,
+        "r2": 0.9043,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "3_day": {
+        "mae": 5.42,
+        "rmse": 7.37,
+        "r2": 0.7774,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "7_day": {
+        "mae": 9.75,
+        "rmse": 12.72,
+        "r2": 0.2729,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      }
+    }
+  },
+  "horizon_summaries": {
+    "1_day": {
+      "timesfm": {
+        "mae": 12.29,
+        "rmse": 15.46,
+        "r2": 0.7696,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "persistence": {
+        "mae": 11.33,
+        "rmse": 17.3,
+        "r2": 0.7114,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "seasonal_naive": {
+        "mae": 29.67,
+        "rmse": 42.69,
+        "r2": -0.7571,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "xgboost": {
+        "mae": 12.14,
+        "rmse": 17.47,
+        "r2": 0.7058,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      }
+    },
+    "3_day": {
+      "timesfm": {
+        "mae": 17.51,
+        "rmse": 23.71,
+        "r2": 0.2621,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "persistence": {
+        "mae": 18.63,
+        "rmse": 27.81,
+        "r2": -0.0147,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "seasonal_naive": {
+        "mae": 28.67,
+        "rmse": 42.38,
+        "r2": -1.3573,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "xgboost": {
+        "mae": 19.45,
+        "rmse": 27.26,
+        "r2": 0.0247,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      }
+    },
+    "7_day": {
+      "timesfm": {
+        "mae": 20.45,
+        "rmse": 27.64,
+        "r2": 0.2845,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "persistence": {
+        "mae": 23.0,
+        "rmse": 32.84,
+        "r2": -0.01,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "seasonal_naive": {
+        "mae": 23.0,
+        "rmse": 32.84,
+        "r2": -0.01,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      },
+      "xgboost": {
+        "mae": 19.32,
+        "rmse": 28.48,
+        "r2": 0.2407,
+        "severe_recall": 1.0,
+        "sample_count": 30
+      }
+    }
+  }
+}

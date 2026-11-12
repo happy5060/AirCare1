@@ -43,6 +43,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenDiagnostics })
             >
               Compare Cities
             </button>
+            <span className="text-outline-variant">•</span>
+            <button
+              onClick={() => onNavigate('forecast')}
+              className="hover:text-primary transition-colors cursor-pointer text-primary font-medium"
+            >
+              Forecasting
+            </button>
             {onOpenDiagnostics && (
               <>
                 <span className="text-outline-variant">•</span>
@@ -61,10 +68,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenDiagnostics })
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-4 text-[11px] text-outline font-label text-center sm:text-left">
           <span>
-            © 2026 AirCare Platform • Evaluates authentic CPCB standard data (0–500 index scale).
+            © 2026 AirCare Platform • Evaluates authentic CPCB standard data (0–500 index scale) with Google TimesFM 2.5 Forecasting.
           </span>
           <span className="text-tertiary">
-            Data Notice: Static CAAQMS station snapshot dated Oct 20, 2026. Strictly NO black-box AI/ML or speculative forecasting.
+            Data Notice: Multi-tier environmental analytics platform combining historical CPCB bulletins, live atmospheric feeds, and machine-learning predictions.
           </span>
         </div>
       </div>

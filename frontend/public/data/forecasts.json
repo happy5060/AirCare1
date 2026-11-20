@@ -3,7 +3,7 @@
     "pipeline": "aircare_timesfm_forecasting",
     "model_name": "Google TimesFM 2.5 (200M Foundation Model)",
     "model_version": "2.5-200m-pytorch",
-    "generated_at": "2026-11-19T14:14:53.006883Z",
+    "generated_at": "2026-11-20T13:52:55.303364Z",
     "supported_cities": [
       "Delhi",
       "Mumbai",
@@ -27,426 +27,426 @@
   "forecasts": {
     "Delhi": {
       "city": "Delhi",
-      "latest_observation_date": "2026-11-19",
-      "forecast_generation_time": "2026-11-19T14:14:37.179378Z",
+      "latest_observation_date": "2026-11-20",
+      "forecast_generation_time": "2026-11-20T13:52:38.868464Z",
       "model_name": "Google TimesFM 2.5 (200M Foundation Model)",
       "model_version": "2.5-200m-pytorch",
       "input_source": "supabase_recent_atmospheric",
-      "latest_observed_aqi": 172,
-      "latest_observed_category": "Moderate",
+      "latest_observed_aqi": 261,
+      "latest_observed_category": "Poor",
       "latest_observed_pollutants": {
-        "pm2_5": 81.15,
-        "pm10": 82.0,
-        "no2": 52.1,
-        "so2": 34.05,
-        "co": 2.12,
+        "pm2_5": 131.1,
+        "pm10": 132.0,
+        "no2": 62.45,
+        "so2": 43.6,
+        "co": 2.65,
         "o3": 69.5
       },
       "predicted_pollutants_timeline": {
         "pm2_5": {
           "point": [
-            80.5,
-            84.03,
-            86.86,
-            88.24,
-            91.07,
-            89.79,
-            83.63
+            120.42,
+            126.91,
+            120.77,
+            116.38,
+            112.15,
+            99.78,
+            97.34
           ],
           "q10": [
-            48.74,
-            45.76,
-            44.59,
-            41.9,
-            41.38,
-            41.69,
-            36.81
+            77.55,
+            73.85,
+            61.64,
+            54.39,
+            46.96,
+            36.08,
+            34.24
           ],
           "q90": [
-            121.71,
-            134.7,
-            144.6,
-            148.64,
-            157.53,
-            155.62,
-            148.24
+            165.16,
+            180.59,
+            182.01,
+            182.03,
+            183.13,
+            171.62,
+            170.22
           ]
         },
         "pm10": {
           "point": [
-            83.39,
-            88.78,
-            91.35,
-            91.9,
-            95.34,
-            95.4,
-            90.31
+            128.07,
+            135.2,
+            133.61,
+            132.21,
+            127.56,
+            112.26,
+            109.63
           ],
           "q10": [
-            50.62,
-            47.72,
-            45.45,
-            39.96,
-            38.49,
-            39.46,
-            35.98
+            82.21,
+            78.5,
+            70.1,
+            64.79,
+            56.27,
+            41.8,
+            37.84
           ],
           "q90": [
-            132.36,
-            150.81,
-            163.0,
-            167.8,
-            180.79,
-            181.77,
-            175.89
+            172.52,
+            188.38,
+            193.92,
+            197.76,
+            198.27,
+            185.49,
+            184.28
           ]
         },
         "no2": {
           "point": [
-            50.44,
-            50.35,
-            51.1,
-            50.42,
-            51.69,
-            50.88,
-            49.55
+            56.93,
+            56.95,
+            55.9,
+            56.06,
+            54.99,
+            52.57,
+            52.31
           ],
           "q10": [
-            31.38,
-            29.09,
-            28.43,
-            27.05,
-            27.55,
-            26.55,
-            24.35
+            36.78,
+            35.02,
+            32.9,
+            32.59,
+            30.51,
+            27.34,
+            26.37
           ],
           "q90": [
-            66.89,
-            68.31,
-            70.28,
-            70.36,
-            72.47,
-            72.05,
-            71.29
+            71.88,
+            73.16,
+            73.12,
+            73.8,
+            74.3,
+            72.97,
+            73.78
           ]
         },
         "so2": {
           "point": [
-            32.06,
-            32.47,
-            32.66,
-            32.31,
-            32.78,
-            32.63,
-            31.7
+            37.23,
+            37.12,
+            36.36,
+            36.98,
+            36.45,
+            35.27,
+            35.14
           ],
           "q10": [
-            17.05,
-            16.32,
-            15.61,
-            14.52,
-            14.28,
-            14.0,
-            12.75
+            21.76,
+            20.8,
+            19.51,
+            19.76,
+            18.84,
+            17.61,
+            17.19
           ],
           "q90": [
-            47.21,
-            48.79,
-            49.94,
-            50.26,
-            51.59,
-            51.64,
-            50.95
+            52.24,
+            53.22,
+            53.12,
+            54.05,
+            54.28,
+            53.37,
+            53.51
           ]
         },
         "co": {
           "point": [
-            1.67,
-            1.52,
-            1.49,
-            1.48,
-            1.51,
-            1.56,
-            1.49
+            1.99,
+            1.88,
+            1.77,
+            1.76,
+            1.79,
+            1.77,
+            1.76
           ],
           "q10": [
-            0.91,
+            1.09,
+            0.93,
+            0.79,
+            0.75,
             0.74,
-            0.68,
-            0.67,
-            0.67,
-            0.71,
-            0.63
+            0.7,
+            0.67
           ],
           "q90": [
-            2.46,
-            2.37,
-            2.38,
-            2.39,
-            2.45,
-            2.51,
-            2.47
+            2.91,
+            2.89,
+            2.83,
+            2.87,
+            2.95,
+            2.95,
+            2.96
           ]
         },
         "o3": {
           "point": [
-            65.07,
-            64.18,
-            65.3,
-            65.55,
-            64.91,
-            64.18,
-            64.22
+            62.26,
+            62.41,
+            63.69,
+            62.69,
+            62.04,
+            62.26,
+            61.51
           ],
           "q10": [
-            47.67,
-            46.01,
-            46.7,
-            46.76,
-            45.61,
-            44.76,
-            44.44
+            46.03,
+            45.35,
+            46.08,
+            44.79,
+            43.6,
+            43.67,
+            42.69
           ],
           "q90": [
-            81.11,
-            80.9,
-            82.41,
-            83.0,
-            83.08,
-            82.64,
-            82.94
+            79.99,
+            81.21,
+            83.07,
+            82.31,
+            82.17,
+            82.37,
+            81.96
           ]
         }
       },
       "daily_forecasts": [
         {
           "day_index": 1,
-          "target_date": "2026-11-20",
-          "predicted_aqi": 168,
-          "predicted_category": "Moderate",
+          "target_date": "2026-11-21",
+          "predicted_aqi": 300,
+          "predicted_category": "Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            120,
-            254
+            171,
+            312
           ],
-          "change_from_latest": -4,
-          "direct_aqi_prediction": 180,
+          "change_from_latest": 39,
+          "direct_aqi_prediction": 245,
           "predicted_pollutants": {
-            "pm2_5": 80.5,
-            "pm10": 83.39,
-            "no2": 50.44,
-            "so2": 32.06,
-            "co": 1.67,
-            "o3": 65.07
+            "pm2_5": 120.42,
+            "pm10": 128.07,
+            "no2": 56.93,
+            "so2": 37.23,
+            "co": 1.99,
+            "o3": 62.26
           },
           "cpcb_sub_indices": {
-            "pm2_5": 168,
-            "pm10": 83,
-            "no2": 63,
-            "so2": 40,
-            "co": 84,
-            "o3": 65
+            "pm2_5": 300,
+            "pm10": 119,
+            "no2": 71,
+            "so2": 47,
+            "co": 100,
+            "o3": 62
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 2,
-          "target_date": "2026-11-21",
-          "predicted_aqi": 180,
-          "predicted_category": "Moderate",
+          "target_date": "2026-11-22",
+          "predicted_aqi": 305,
+          "predicted_category": "Very Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            109,
-            282
+            160,
+            331
           ],
-          "change_from_latest": 8,
-          "direct_aqi_prediction": 188,
+          "change_from_latest": 44,
+          "direct_aqi_prediction": 249,
           "predicted_pollutants": {
-            "pm2_5": 84.03,
-            "pm10": 88.78,
-            "no2": 50.35,
-            "so2": 32.47,
-            "co": 1.52,
-            "o3": 64.18
+            "pm2_5": 126.91,
+            "pm10": 135.2,
+            "no2": 56.95,
+            "so2": 37.12,
+            "co": 1.88,
+            "o3": 62.41
           },
           "cpcb_sub_indices": {
-            "pm2_5": 180,
-            "pm10": 89,
-            "no2": 63,
-            "so2": 41,
-            "co": 76,
-            "o3": 64
+            "pm2_5": 305,
+            "pm10": 123,
+            "no2": 71,
+            "so2": 46,
+            "co": 94,
+            "o3": 62
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 3,
-          "target_date": "2026-11-22",
-          "predicted_aqi": 190,
-          "predicted_category": "Moderate",
+          "target_date": "2026-11-23",
+          "predicted_aqi": 301,
+          "predicted_category": "Very Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            106,
-            299
+            151,
+            335
           ],
-          "change_from_latest": 18,
-          "direct_aqi_prediction": 194,
+          "change_from_latest": 40,
+          "direct_aqi_prediction": 246,
           "predicted_pollutants": {
-            "pm2_5": 86.86,
-            "pm10": 91.35,
-            "no2": 51.1,
-            "so2": 32.66,
-            "co": 1.49,
-            "o3": 65.3
+            "pm2_5": 120.77,
+            "pm10": 133.61,
+            "no2": 55.9,
+            "so2": 36.36,
+            "co": 1.77,
+            "o3": 63.69
           },
           "cpcb_sub_indices": {
-            "pm2_5": 190,
-            "pm10": 91,
-            "no2": 64,
-            "so2": 41,
-            "co": 74,
-            "o3": 65
+            "pm2_5": 301,
+            "pm10": 122,
+            "no2": 70,
+            "so2": 45,
+            "co": 88,
+            "o3": 64
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 4,
-          "target_date": "2026-11-23",
-          "predicted_aqi": 194,
-          "predicted_category": "Moderate",
+          "target_date": "2026-11-24",
+          "predicted_aqi": 288,
+          "predicted_category": "Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            104,
-            310
+            145,
+            339
           ],
-          "change_from_latest": 22,
-          "direct_aqi_prediction": 198,
+          "change_from_latest": 27,
+          "direct_aqi_prediction": 245,
           "predicted_pollutants": {
-            "pm2_5": 88.24,
-            "pm10": 91.9,
-            "no2": 50.42,
-            "so2": 32.31,
-            "co": 1.48,
-            "o3": 65.55
+            "pm2_5": 116.38,
+            "pm10": 132.21,
+            "no2": 56.06,
+            "so2": 36.98,
+            "co": 1.76,
+            "o3": 62.69
           },
           "cpcb_sub_indices": {
-            "pm2_5": 194,
-            "pm10": 92,
-            "no2": 63,
-            "so2": 40,
-            "co": 74,
-            "o3": 66
+            "pm2_5": 288,
+            "pm10": 121,
+            "no2": 70,
+            "so2": 46,
+            "co": 88,
+            "o3": 63
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 5,
-          "target_date": "2026-11-24",
-          "predicted_aqi": 204,
+          "target_date": "2026-11-25",
+          "predicted_aqi": 274,
           "predicted_category": "Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            100,
-            316
+            134,
+            347
           ],
-          "change_from_latest": 32,
-          "direct_aqi_prediction": 199,
+          "change_from_latest": 13,
+          "direct_aqi_prediction": 241,
           "predicted_pollutants": {
-            "pm2_5": 91.07,
-            "pm10": 95.34,
-            "no2": 51.69,
-            "so2": 32.78,
-            "co": 1.51,
-            "o3": 64.91
+            "pm2_5": 112.15,
+            "pm10": 127.56,
+            "no2": 54.99,
+            "so2": 36.45,
+            "co": 1.79,
+            "o3": 62.04
           },
           "cpcb_sub_indices": {
-            "pm2_5": 204,
-            "pm10": 95,
-            "no2": 65,
-            "so2": 41,
-            "co": 76,
-            "o3": 65
+            "pm2_5": 274,
+            "pm10": 118,
+            "no2": 69,
+            "so2": 46,
+            "co": 90,
+            "o3": 62
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 6,
-          "target_date": "2026-11-25",
-          "predicted_aqi": 199,
-          "predicted_category": "Moderate",
+          "target_date": "2026-11-26",
+          "predicted_aqi": 233,
+          "predicted_category": "Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            95,
-            314
+            117,
+            338
           ],
-          "change_from_latest": 27,
-          "direct_aqi_prediction": 194,
+          "change_from_latest": -28,
+          "direct_aqi_prediction": 229,
           "predicted_pollutants": {
-            "pm2_5": 89.79,
-            "pm10": 95.4,
-            "no2": 50.88,
-            "so2": 32.63,
-            "co": 1.56,
-            "o3": 64.18
+            "pm2_5": 99.78,
+            "pm10": 112.26,
+            "no2": 52.57,
+            "so2": 35.27,
+            "co": 1.77,
+            "o3": 62.26
           },
           "cpcb_sub_indices": {
-            "pm2_5": 199,
-            "pm10": 95,
-            "no2": 64,
-            "so2": 41,
-            "co": 78,
-            "o3": 64
+            "pm2_5": 233,
+            "pm10": 108,
+            "no2": 66,
+            "so2": 44,
+            "co": 88,
+            "o3": 62
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 7,
-          "target_date": "2026-11-26",
-          "predicted_aqi": 179,
-          "predicted_category": "Moderate",
+          "target_date": "2026-11-27",
+          "predicted_aqi": 224,
+          "predicted_category": "Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            87,
-            306
+            116,
+            337
           ],
-          "change_from_latest": 7,
-          "direct_aqi_prediction": 186,
+          "change_from_latest": -37,
+          "direct_aqi_prediction": 225,
           "predicted_pollutants": {
-            "pm2_5": 83.63,
-            "pm10": 90.31,
-            "no2": 49.55,
-            "so2": 31.7,
-            "co": 1.49,
-            "o3": 64.22
+            "pm2_5": 97.34,
+            "pm10": 109.63,
+            "no2": 52.31,
+            "so2": 35.14,
+            "co": 1.76,
+            "o3": 61.51
           },
           "cpcb_sub_indices": {
-            "pm2_5": 179,
-            "pm10": 90,
-            "no2": 62,
-            "so2": 40,
-            "co": 74,
-            "o3": 64
+            "pm2_5": 224,
+            "pm10": 106,
+            "no2": 65,
+            "so2": 44,
+            "co": 88,
+            "o3": 62
           },
           "is_cpcb_compliant": true
         }
       ],
       "insights": {
-        "trend_direction": "Relatively Stable Air Quality",
-        "trend_sentiment": "neutral",
+        "trend_direction": "Noticeable Increase in AQI",
+        "trend_sentiment": "negative",
         "predicted_dominant_pollutant": "PM2.5",
         "highest_predicted_day": {
-          "date": "2026-11-24",
-          "aqi": 204,
-          "category": "Poor"
+          "date": "2026-11-22",
+          "aqi": 305,
+          "category": "Very Poor"
         },
         "lowest_predicted_day": {
-          "date": "2026-11-20",
-          "aqi": 168,
-          "category": "Moderate"
+          "date": "2026-11-27",
+          "aqi": 224,
+          "category": "Poor"
         },
         "largest_pollutant_shift": {
-          "pollutant": "O3",
-          "magnitude": 4.43
+          "pollutant": "PM2.5",
+          "magnitude": 10.68
         }
       },
       "chart_history": [
@@ -512,8 +512,14 @@
         },
         {
           "date": "2026-11-19",
-          "aqi": 172,
-          "category": "Moderate",
+          "aqi": 218,
+          "category": "Poor",
+          "is_forecast": false
+        },
+        {
+          "date": "2026-11-20",
+          "aqi": 261,
+          "category": "Poor",
           "is_forecast": false
         }
       ],
@@ -525,156 +531,156 @@
     },
     "Mumbai": {
       "city": "Mumbai",
-      "latest_observation_date": "2026-11-19",
-      "forecast_generation_time": "2026-11-19T14:14:39.395082Z",
+      "latest_observation_date": "2026-11-20",
+      "forecast_generation_time": "2026-11-20T13:52:40.963100Z",
       "model_name": "Google TimesFM 2.5 (200M Foundation Model)",
       "model_version": "2.5-200m-pytorch",
       "input_source": "supabase_recent_atmospheric",
-      "latest_observed_aqi": 182,
+      "latest_observed_aqi": 196,
       "latest_observed_category": "Moderate",
       "latest_observed_pollutants": {
-        "pm2_5": 62.25,
-        "pm10": 68.45,
-        "no2": 26.25,
-        "so2": 22.05,
-        "co": 0.41,
-        "o3": 122.5
+        "pm2_5": 60.85,
+        "pm10": 64.4,
+        "no2": 23.05,
+        "so2": 24.65,
+        "co": 0.47,
+        "o3": 141.0
       },
       "predicted_pollutants_timeline": {
         "pm2_5": {
           "point": [
-            62.76,
-            61.82,
-            61.13,
-            59.72,
-            59.81,
-            62.86,
-            65.25
+            60.96,
+            57.86,
+            58.62,
+            60.74,
+            61.79,
+            62.72,
+            64.58
           ],
           "q10": [
-            49.13,
-            45.9,
-            43.13,
-            40.81,
-            39.5,
-            41.79,
-            43.38
+            47.48,
+            42.32,
+            41.19,
+            42.36,
+            42.07,
+            42.06,
+            43.31
           ],
           "q90": [
-            78.12,
-            80.0,
-            81.23,
-            80.77,
-            81.5,
-            84.09,
-            86.73
+            76.83,
+            76.33,
+            78.74,
+            81.32,
+            83.63,
+            84.58,
+            86.48
           ]
         },
         "pm10": {
           "point": [
-            68.76,
-            67.25,
-            66.04,
-            63.76,
-            63.08,
-            67.04,
-            70.97
+            63.5,
+            60.32,
+            65.52,
+            70.41,
+            71.06,
+            71.86,
+            73.43
           ],
           "q10": [
-            54.65,
-            50.98,
-            47.54,
-            44.41,
-            42.27,
-            45.15,
-            48.24
+            49.22,
+            43.49,
+            45.84,
+            50.18,
+            48.88,
+            48.33,
+            48.17
           ],
           "q90": [
-            84.79,
-            86.36,
-            87.3,
-            86.27,
-            86.46,
-            90.1,
-            94.46
+            81.55,
+            81.43,
+            89.9,
+            95.17,
+            97.74,
+            99.14,
+            101.06
           ]
         },
         "no2": {
           "point": [
-            26.29,
-            27.29,
-            26.89,
-            26.13,
-            25.91,
-            25.8,
-            25.18
+            24.55,
+            24.62,
+            24.34,
+            23.49,
+            23.26,
+            22.93,
+            22.08
           ],
           "q10": [
-            15.78,
-            15.47,
-            14.23,
-            13.02,
-            11.93,
-            11.52,
-            10.27
+            15.7,
+            14.83,
+            13.56,
+            12.18,
+            11.25,
+            10.92,
+            9.45
           ],
           "q90": [
-            36.97,
-            39.35,
-            40.03,
-            40.25,
-            40.71,
-            41.31,
-            41.54
+            34.33,
+            35.76,
+            36.78,
+            36.53,
+            37.41,
+            37.14,
+            36.75
           ]
         },
         "so2": {
           "point": [
-            24.81,
-            25.75,
-            25.6,
-            25.15,
-            26.03,
-            25.75,
-            25.73
+            25.74,
+            25.56,
+            25.37,
+            25.9,
+            25.92,
+            25.69,
+            25.31
           ],
           "q10": [
-            21.07,
-            21.5,
-            21.15,
-            20.5,
-            20.95,
-            20.53,
-            20.4
+            20.31,
+            19.72,
+            19.35,
+            19.83,
+            19.64,
+            19.36,
+            18.92
           ],
           "q90": [
-            30.08,
-            31.7,
-            31.8,
-            31.45,
-            32.75,
-            32.58,
-            32.49
+            31.51,
+            31.64,
+            31.59,
+            32.23,
+            32.39,
+            32.11,
+            31.84
           ]
         },
         "co": {
           "point": [
             0.47,
-            0.46,
+            0.47,
             0.47,
             0.48,
-            0.47,
             0.48,
-            0.49
+            0.49,
+            0.48
           ],
           "q10": [
-            0.38,
-            0.37,
-            0.37,
-            0.37,
             0.36,
-            0.36,
-            0.36
+            0.35,
+            0.35,
+            0.34,
+            0.34,
+            0.34,
+            0.33
           ],
           "q90": [
             0.62,
@@ -682,125 +688,95 @@
             0.65,
             0.66,
             0.67,
-            0.67,
-            0.69
+            0.68,
+            0.68
           ]
         },
         "o3": {
           "point": [
-            151.67,
-            154.79,
-            158.05,
-            158.56,
-            161.47,
-            162.17,
-            163.61
+            152.6,
+            157.74,
+            158.54,
+            161.2,
+            162.59,
+            164.34,
+            162.6
           ],
           "q10": [
-            114.72,
-            114.16,
-            115.71,
-            114.88,
-            115.74,
+            114.73,
+            115.73,
+            114.0,
             116.1,
-            116.95
+            116.1,
+            117.99,
+            115.86
           ],
           "q90": [
-            186.46,
-            189.74,
-            193.41,
-            194.4,
-            198.03,
-            198.61,
-            200.19
+            181.84,
+            187.93,
+            189.77,
+            192.85,
+            195.08,
+            197.19,
+            196.35
           ]
         }
       },
       "daily_forecasts": [
         {
           "day_index": 1,
-          "target_date": "2026-11-20",
-          "predicted_aqi": 176,
+          "target_date": "2026-11-21",
+          "predicted_aqi": 177,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            164,
-            219
+            159,
+            231
           ],
-          "change_from_latest": -6,
-          "direct_aqi_prediction": 190,
+          "change_from_latest": -19,
+          "direct_aqi_prediction": 196,
           "predicted_pollutants": {
-            "pm2_5": 62.76,
-            "pm10": 68.76,
-            "no2": 26.29,
-            "so2": 24.81,
+            "pm2_5": 60.96,
+            "pm10": 63.5,
+            "no2": 24.55,
+            "so2": 25.74,
             "co": 0.47,
-            "o3": 151.67
+            "o3": 152.6
           },
           "cpcb_sub_indices": {
-            "pm2_5": 109,
-            "pm10": 69,
-            "no2": 33,
-            "so2": 31,
+            "pm2_5": 103,
+            "pm10": 64,
+            "no2": 31,
+            "so2": 32,
             "co": 24,
-            "o3": 176
+            "o3": 177
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 2,
-          "target_date": "2026-11-21",
-          "predicted_aqi": 181,
-          "predicted_category": "Moderate",
-          "dominant_pollutant": "O3",
-          "uncertainty_range": [
-            164,
-            226
-          ],
-          "change_from_latest": -1,
-          "direct_aqi_prediction": 194,
-          "predicted_pollutants": {
-            "pm2_5": 61.82,
-            "pm10": 67.25,
-            "no2": 27.29,
-            "so2": 25.75,
-            "co": 0.46,
-            "o3": 154.79
-          },
-          "cpcb_sub_indices": {
-            "pm2_5": 106,
-            "pm10": 67,
-            "no2": 34,
-            "so2": 32,
-            "co": 23,
-            "o3": 181
-          },
-          "is_cpcb_compliant": true
-        },
-        {
-          "day_index": 3,
           "target_date": "2026-11-22",
           "predicted_aqi": 185,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            164,
-            230
+            156,
+            232
           ],
-          "change_from_latest": 3,
-          "direct_aqi_prediction": 196,
+          "change_from_latest": -11,
+          "direct_aqi_prediction": 195,
           "predicted_pollutants": {
-            "pm2_5": 61.13,
-            "pm10": 66.04,
-            "no2": 26.89,
-            "so2": 25.6,
+            "pm2_5": 57.86,
+            "pm10": 60.32,
+            "no2": 24.62,
+            "so2": 25.56,
             "co": 0.47,
-            "o3": 158.05
+            "o3": 157.74
           },
           "cpcb_sub_indices": {
-            "pm2_5": 104,
-            "pm10": 66,
-            "no2": 34,
+            "pm2_5": 96,
+            "pm10": 60,
+            "no2": 31,
             "so2": 32,
             "co": 24,
             "o3": 185
@@ -808,143 +784,173 @@
           "is_cpcb_compliant": true
         },
         {
-          "day_index": 4,
+          "day_index": 3,
           "target_date": "2026-11-23",
           "predicted_aqi": 186,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            161,
-            229
+            153,
+            233
           ],
-          "change_from_latest": 4,
+          "change_from_latest": -10,
           "direct_aqi_prediction": 194,
           "predicted_pollutants": {
-            "pm2_5": 59.72,
-            "pm10": 63.76,
-            "no2": 26.13,
-            "so2": 25.15,
-            "co": 0.48,
-            "o3": 158.56
+            "pm2_5": 58.62,
+            "pm10": 65.52,
+            "no2": 24.34,
+            "so2": 25.37,
+            "co": 0.47,
+            "o3": 158.54
           },
           "cpcb_sub_indices": {
-            "pm2_5": 100,
-            "pm10": 64,
-            "no2": 33,
-            "so2": 31,
+            "pm2_5": 98,
+            "pm10": 66,
+            "no2": 30,
+            "so2": 32,
             "co": 24,
             "o3": 186
           },
           "is_cpcb_compliant": true
         },
         {
-          "day_index": 5,
+          "day_index": 4,
           "target_date": "2026-11-24",
           "predicted_aqi": 190,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            158,
-            229
+            152,
+            234
           ],
-          "change_from_latest": 8,
-          "direct_aqi_prediction": 193,
+          "change_from_latest": -6,
+          "direct_aqi_prediction": 194,
           "predicted_pollutants": {
-            "pm2_5": 59.81,
-            "pm10": 63.08,
-            "no2": 25.91,
-            "so2": 26.03,
-            "co": 0.47,
-            "o3": 161.47
+            "pm2_5": 60.74,
+            "pm10": 70.41,
+            "no2": 23.49,
+            "so2": 25.9,
+            "co": 0.48,
+            "o3": 161.2
           },
           "cpcb_sub_indices": {
-            "pm2_5": 100,
-            "pm10": 63,
-            "no2": 32,
-            "so2": 33,
+            "pm2_5": 102,
+            "pm10": 70,
+            "no2": 29,
+            "so2": 32,
             "co": 24,
             "o3": 190
           },
           "is_cpcb_compliant": true
         },
         {
-          "day_index": 6,
+          "day_index": 5,
           "target_date": "2026-11-25",
-          "predicted_aqi": 191,
+          "predicted_aqi": 192,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            156,
-            228
+            147,
+            232
           ],
-          "change_from_latest": 9,
-          "direct_aqi_prediction": 191,
+          "change_from_latest": -4,
+          "direct_aqi_prediction": 190,
           "predicted_pollutants": {
-            "pm2_5": 62.86,
-            "pm10": 67.04,
-            "no2": 25.8,
-            "so2": 25.75,
+            "pm2_5": 61.79,
+            "pm10": 71.06,
+            "no2": 23.26,
+            "so2": 25.92,
             "co": 0.48,
-            "o3": 162.17
+            "o3": 162.59
           },
           "cpcb_sub_indices": {
-            "pm2_5": 110,
-            "pm10": 67,
-            "no2": 32,
+            "pm2_5": 106,
+            "pm10": 71,
+            "no2": 29,
             "so2": 32,
             "co": 24,
-            "o3": 191
+            "o3": 192
+          },
+          "is_cpcb_compliant": true
+        },
+        {
+          "day_index": 6,
+          "target_date": "2026-11-26",
+          "predicted_aqi": 195,
+          "predicted_category": "Moderate",
+          "dominant_pollutant": "O3",
+          "uncertainty_range": [
+            148,
+            233
+          ],
+          "change_from_latest": -1,
+          "direct_aqi_prediction": 191,
+          "predicted_pollutants": {
+            "pm2_5": 62.72,
+            "pm10": 71.86,
+            "no2": 22.93,
+            "so2": 25.69,
+            "co": 0.49,
+            "o3": 164.34
+          },
+          "cpcb_sub_indices": {
+            "pm2_5": 109,
+            "pm10": 72,
+            "no2": 29,
+            "so2": 32,
+            "co": 24,
+            "o3": 195
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 7,
-          "target_date": "2026-11-26",
-          "predicted_aqi": 194,
+          "target_date": "2026-11-27",
+          "predicted_aqi": 192,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            157,
-            233
+            150,
+            237
           ],
-          "change_from_latest": 12,
+          "change_from_latest": -4,
           "direct_aqi_prediction": 194,
           "predicted_pollutants": {
-            "pm2_5": 65.25,
-            "pm10": 70.97,
-            "no2": 25.18,
-            "so2": 25.73,
-            "co": 0.49,
-            "o3": 163.61
+            "pm2_5": 64.58,
+            "pm10": 73.43,
+            "no2": 22.08,
+            "so2": 25.31,
+            "co": 0.48,
+            "o3": 162.6
           },
           "cpcb_sub_indices": {
-            "pm2_5": 118,
-            "pm10": 71,
-            "no2": 31,
+            "pm2_5": 115,
+            "pm10": 73,
+            "no2": 28,
             "so2": 32,
             "co": 24,
-            "o3": 194
+            "o3": 192
           },
           "is_cpcb_compliant": true
         }
       ],
       "insights": {
-        "trend_direction": "Relatively Stable Air Quality",
-        "trend_sentiment": "neutral",
+        "trend_direction": "Modest Improvement Expected",
+        "trend_sentiment": "positive",
         "predicted_dominant_pollutant": "O3",
         "highest_predicted_day": {
           "date": "2026-11-26",
-          "aqi": 194,
+          "aqi": 195,
           "category": "Moderate"
         },
         "lowest_predicted_day": {
-          "date": "2026-11-20",
-          "aqi": 176,
+          "date": "2026-11-21",
+          "aqi": 177,
           "category": "Moderate"
         },
         "largest_pollutant_shift": {
           "pollutant": "O3",
-          "magnitude": 29.17
+          "magnitude": 11.6
         }
       },
       "chart_history": [
@@ -1010,7 +1016,13 @@
         },
         {
           "date": "2026-11-19",
-          "aqi": 182,
+          "aqi": 149,
+          "category": "Moderate",
+          "is_forecast": false
+        },
+        {
+          "date": "2026-11-20",
+          "aqi": 196,
           "category": "Moderate",
           "is_forecast": false
         }
@@ -1023,343 +1035,343 @@
     },
     "Bengaluru": {
       "city": "Bengaluru",
-      "latest_observation_date": "2026-11-19",
-      "forecast_generation_time": "2026-11-19T14:14:41.216486Z",
+      "latest_observation_date": "2026-11-20",
+      "forecast_generation_time": "2026-11-20T13:52:42.784555Z",
       "model_name": "Google TimesFM 2.5 (200M Foundation Model)",
       "model_version": "2.5-200m-pytorch",
       "input_source": "supabase_recent_atmospheric",
-      "latest_observed_aqi": 132,
+      "latest_observed_aqi": 110,
       "latest_observed_category": "Moderate",
       "latest_observed_pollutants": {
-        "pm2_5": 59.15,
-        "pm10": 62.75,
-        "no2": 30.75,
-        "so2": 18.45,
-        "co": 0.61,
-        "o3": 106.5
+        "pm2_5": 37.5,
+        "pm10": 38.8,
+        "no2": 34.65,
+        "so2": 15.9,
+        "co": 0.67,
+        "o3": 102.0
       },
       "predicted_pollutants_timeline": {
         "pm2_5": {
           "point": [
-            51.56,
-            47.79,
-            44.69,
-            48.0,
-            43.23,
-            40.46,
-            38.34
+            35.78,
+            37.48,
+            43.6,
+            39.01,
+            35.69,
+            37.7,
+            45.33
           ],
           "q10": [
-            38.56,
-            33.79,
-            29.82,
-            32.84,
-            27.03,
-            24.47,
-            21.67
+            25.33,
+            26.33,
+            32.02,
+            27.59,
+            24.01,
+            25.49,
+            33.26
           ],
           "q90": [
-            63.31,
-            62.64,
-            61.56,
-            65.65,
-            62.73,
-            60.1,
-            58.94
+            47.08,
+            49.07,
+            55.99,
+            51.84,
+            48.8,
+            50.54,
+            58.84
           ]
         },
         "pm10": {
           "point": [
-            58.69,
-            57.07,
-            51.69,
-            51.24,
-            47.36,
-            47.0,
-            44.95
+            41.37,
+            42.57,
+            48.2,
+            40.41,
+            39.57,
+            39.25,
+            45.59
           ],
           "q10": [
-            45.78,
-            41.89,
-            35.33,
-            34.43,
-            29.35,
-            29.16,
-            26.64
+            31.56,
+            32.59,
+            37.76,
+            30.14,
+            28.83,
+            28.29,
+            34.49
           ],
           "q90": [
-            70.7,
-            72.58,
-            69.4,
-            70.23,
-            67.53,
-            67.64,
-            66.46
+            52.42,
+            53.82,
+            60.19,
+            52.73,
+            52.08,
+            51.57,
+            58.82
           ]
         },
         "no2": {
           "point": [
-            26.94,
-            25.92,
-            27.18,
-            29.33,
-            25.73,
-            24.41,
-            26.14
+            31.23,
+            30.58,
+            32.3,
+            29.43,
+            27.04,
+            27.01,
+            29.76
           ],
           "q10": [
-            11.42,
-            8.96,
-            8.98,
-            10.8,
-            6.85,
-            5.71,
-            7.04
+            16.7,
+            14.07,
+            14.12,
+            11.31,
+            9.16,
+            8.89,
+            10.44
           ],
           "q90": [
-            45.54,
-            46.4,
-            49.26,
-            52.32,
-            49.08,
-            47.68,
-            50.43
+            50.08,
+            53.35,
+            57.6,
+            54.0,
+            52.28,
+            52.4,
+            56.26
           ]
         },
         "so2": {
           "point": [
-            17.44,
-            15.31,
-            14.17,
-            16.25,
-            14.7,
-            13.2,
-            13.25
+            14.67,
+            14.5,
+            15.99,
+            14.68,
+            13.72,
+            13.71,
+            16.02
           ],
           "q10": [
-            12.91,
-            9.76,
-            8.29,
-            10.52,
-            8.41,
-            6.49,
-            6.6
+            9.48,
+            8.69,
+            10.32,
+            8.72,
+            7.07,
+            7.11,
+            9.92
           ],
           "q90": [
-            21.14,
-            20.07,
-            19.4,
-            21.44,
-            20.64,
-            19.47,
-            19.55
+            18.92,
+            19.16,
+            20.54,
+            19.65,
+            19.46,
+            19.33,
+            21.26
           ]
         },
         "co": {
           "point": [
-            0.56,
-            0.53,
-            0.54,
+            0.58,
+            0.55,
             0.55,
             0.52,
             0.51,
-            0.51
+            0.5,
+            0.5
           ],
           "q10": [
-            0.42,
+            0.43,
+            0.41,
+            0.41,
             0.38,
-            0.37,
             0.38,
-            0.36,
-            0.35,
-            0.35
+            0.38,
+            0.38
           ],
           "q90": [
-            0.76,
-            0.78,
-            0.81,
             0.85,
+            0.86,
+            0.87,
+            0.83,
             0.82,
             0.81,
-            0.82
+            0.81
           ]
         },
         "o3": {
           "point": [
-            93.22,
-            89.85,
-            88.55,
-            87.35,
-            88.52,
-            88.93,
-            86.55
+            92.39,
+            93.58,
+            81.43,
+            86.53,
+            88.64,
+            82.34,
+            82.75
           ],
           "q10": [
-            50.71,
-            43.17,
-            40.52,
-            38.31,
-            37.09,
-            36.72,
-            33.55
+            54.64,
+            52.36,
+            37.27,
+            40.77,
+            39.8,
+            30.55,
+            28.51
           ],
           "q90": [
-            135.91,
-            136.58,
-            137.59,
-            137.97,
-            142.03,
-            141.74,
-            140.49
+            125.34,
+            130.47,
+            121.29,
+            128.76,
+            133.37,
+            128.36,
+            130.26
           ]
         }
       },
       "daily_forecasts": [
         {
           "day_index": 1,
-          "target_date": "2026-11-20",
-          "predicted_aqi": 93,
+          "target_date": "2026-11-21",
+          "predicted_aqi": 92,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
             81,
-            153
+            140
           ],
-          "change_from_latest": -39,
-          "direct_aqi_prediction": 112,
+          "change_from_latest": -18,
+          "direct_aqi_prediction": 106,
           "predicted_pollutants": {
-            "pm2_5": 51.56,
-            "pm10": 58.69,
-            "no2": 26.94,
-            "so2": 17.44,
-            "co": 0.56,
-            "o3": 93.22
+            "pm2_5": 35.78,
+            "pm10": 41.37,
+            "no2": 31.23,
+            "so2": 14.67,
+            "co": 0.58,
+            "o3": 92.39
           },
           "cpcb_sub_indices": {
-            "pm2_5": 86,
-            "pm10": 59,
-            "no2": 34,
-            "so2": 22,
-            "co": 28,
-            "o3": 93
+            "pm2_5": 60,
+            "pm10": 41,
+            "no2": 39,
+            "so2": 18,
+            "co": 29,
+            "o3": 92
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 2,
-          "target_date": "2026-11-21",
-          "predicted_aqi": 90,
+          "target_date": "2026-11-22",
+          "predicted_aqi": 94,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            75,
-            154
+            78,
+            143
           ],
-          "change_from_latest": -42,
-          "direct_aqi_prediction": 108,
+          "change_from_latest": -16,
+          "direct_aqi_prediction": 106,
           "predicted_pollutants": {
-            "pm2_5": 47.79,
-            "pm10": 57.07,
-            "no2": 25.92,
-            "so2": 15.31,
-            "co": 0.53,
-            "o3": 89.85
+            "pm2_5": 37.48,
+            "pm10": 42.57,
+            "no2": 30.58,
+            "so2": 14.5,
+            "co": 0.55,
+            "o3": 93.58
           },
           "cpcb_sub_indices": {
-            "pm2_5": 80,
-            "pm10": 57,
-            "no2": 32,
-            "so2": 19,
-            "co": 26,
-            "o3": 90
+            "pm2_5": 62,
+            "pm10": 43,
+            "no2": 38,
+            "so2": 18,
+            "co": 28,
+            "o3": 94
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 3,
-          "target_date": "2026-11-22",
-          "predicted_aqi": 89,
+          "target_date": "2026-11-23",
+          "predicted_aqi": 81,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            73,
-            157
+            74,
+            143
           ],
-          "change_from_latest": -43,
-          "direct_aqi_prediction": 108,
+          "change_from_latest": -29,
+          "direct_aqi_prediction": 103,
           "predicted_pollutants": {
-            "pm2_5": 44.69,
-            "pm10": 51.69,
-            "no2": 27.18,
-            "so2": 14.17,
-            "co": 0.54,
-            "o3": 88.55
+            "pm2_5": 43.6,
+            "pm10": 48.2,
+            "no2": 32.3,
+            "so2": 15.99,
+            "co": 0.55,
+            "o3": 81.43
           },
           "cpcb_sub_indices": {
-            "pm2_5": 74,
-            "pm10": 52,
-            "no2": 34,
-            "so2": 18,
-            "co": 27,
-            "o3": 89
+            "pm2_5": 73,
+            "pm10": 48,
+            "no2": 40,
+            "so2": 20,
+            "co": 28,
+            "o3": 81
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 4,
-          "target_date": "2026-11-23",
+          "target_date": "2026-11-24",
           "predicted_aqi": 87,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            71,
-            158
+            74,
+            146
           ],
-          "change_from_latest": -45,
-          "direct_aqi_prediction": 107,
+          "change_from_latest": -23,
+          "direct_aqi_prediction": 105,
           "predicted_pollutants": {
-            "pm2_5": 48.0,
-            "pm10": 51.24,
-            "no2": 29.33,
-            "so2": 16.25,
-            "co": 0.55,
-            "o3": 87.35
+            "pm2_5": 39.01,
+            "pm10": 40.41,
+            "no2": 29.43,
+            "so2": 14.68,
+            "co": 0.52,
+            "o3": 86.53
           },
           "cpcb_sub_indices": {
-            "pm2_5": 80,
-            "pm10": 51,
+            "pm2_5": 65,
+            "pm10": 40,
             "no2": 37,
-            "so2": 20,
-            "co": 28,
+            "so2": 18,
+            "co": 26,
             "o3": 87
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 5,
-          "target_date": "2026-11-24",
+          "target_date": "2026-11-25",
           "predicted_aqi": 89,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            69,
-            160
+            72,
+            146
           ],
-          "change_from_latest": -43,
-          "direct_aqi_prediction": 106,
+          "change_from_latest": -21,
+          "direct_aqi_prediction": 104,
           "predicted_pollutants": {
-            "pm2_5": 43.23,
-            "pm10": 47.36,
-            "no2": 25.73,
-            "so2": 14.7,
-            "co": 0.52,
-            "o3": 88.52
+            "pm2_5": 35.69,
+            "pm10": 39.57,
+            "no2": 27.04,
+            "so2": 13.72,
+            "co": 0.51,
+            "o3": 88.64
           },
           "cpcb_sub_indices": {
-            "pm2_5": 72,
-            "pm10": 47,
-            "no2": 32,
-            "so2": 18,
+            "pm2_5": 59,
+            "pm10": 40,
+            "no2": 34,
+            "so2": 17,
             "co": 26,
             "o3": 89
           },
@@ -1367,82 +1379,82 @@
         },
         {
           "day_index": 6,
-          "target_date": "2026-11-25",
-          "predicted_aqi": 89,
+          "target_date": "2026-11-26",
+          "predicted_aqi": 82,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            68,
-            160
+            72,
+            144
           ],
-          "change_from_latest": -43,
-          "direct_aqi_prediction": 106,
+          "change_from_latest": -28,
+          "direct_aqi_prediction": 102,
           "predicted_pollutants": {
-            "pm2_5": 40.46,
-            "pm10": 47.0,
-            "no2": 24.41,
-            "so2": 13.2,
-            "co": 0.51,
-            "o3": 88.93
+            "pm2_5": 37.7,
+            "pm10": 39.25,
+            "no2": 27.01,
+            "so2": 13.71,
+            "co": 0.5,
+            "o3": 82.34
           },
           "cpcb_sub_indices": {
-            "pm2_5": 67,
-            "pm10": 47,
-            "no2": 31,
-            "so2": 16,
-            "co": 26,
-            "o3": 89
+            "pm2_5": 63,
+            "pm10": 39,
+            "no2": 34,
+            "so2": 17,
+            "co": 25,
+            "o3": 82
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 7,
-          "target_date": "2026-11-26",
-          "predicted_aqi": 87,
+          "target_date": "2026-11-27",
+          "predicted_aqi": 83,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            67,
-            159
+            72,
+            146
           ],
-          "change_from_latest": -45,
-          "direct_aqi_prediction": 104,
+          "change_from_latest": -27,
+          "direct_aqi_prediction": 103,
           "predicted_pollutants": {
-            "pm2_5": 38.34,
-            "pm10": 44.95,
-            "no2": 26.14,
-            "so2": 13.25,
-            "co": 0.51,
-            "o3": 86.55
+            "pm2_5": 45.33,
+            "pm10": 45.59,
+            "no2": 29.76,
+            "so2": 16.02,
+            "co": 0.5,
+            "o3": 82.75
           },
           "cpcb_sub_indices": {
-            "pm2_5": 64,
-            "pm10": 45,
-            "no2": 33,
-            "so2": 17,
-            "co": 26,
-            "o3": 87
+            "pm2_5": 76,
+            "pm10": 46,
+            "no2": 37,
+            "so2": 20,
+            "co": 25,
+            "o3": 83
           },
           "is_cpcb_compliant": true
         }
       ],
       "insights": {
-        "trend_direction": "Noticeable Improvement Expected",
+        "trend_direction": "Modest Improvement Expected",
         "trend_sentiment": "positive",
         "predicted_dominant_pollutant": "O3",
         "highest_predicted_day": {
-          "date": "2026-11-20",
-          "aqi": 93,
+          "date": "2026-11-22",
+          "aqi": 94,
           "category": "Satisfactory"
         },
         "lowest_predicted_day": {
           "date": "2026-11-23",
-          "aqi": 87,
+          "aqi": 81,
           "category": "Satisfactory"
         },
         "largest_pollutant_shift": {
           "pollutant": "O3",
-          "magnitude": 13.28
+          "magnitude": 9.61
         }
       },
       "chart_history": [
@@ -1496,7 +1508,13 @@
         },
         {
           "date": "2026-11-19",
-          "aqi": 132,
+          "aqi": 118,
+          "category": "Moderate",
+          "is_forecast": false
+        },
+        {
+          "date": "2026-11-20",
+          "aqi": 110,
           "category": "Moderate",
           "is_forecast": false
         }
@@ -1509,426 +1527,426 @@
     },
     "Kolkata": {
       "city": "Kolkata",
-      "latest_observation_date": "2026-11-19",
-      "forecast_generation_time": "2026-11-19T14:14:43.093280Z",
+      "latest_observation_date": "2026-11-20",
+      "forecast_generation_time": "2026-11-20T13:52:44.585062Z",
       "model_name": "Google TimesFM 2.5 (200M Foundation Model)",
       "model_version": "2.5-200m-pytorch",
       "input_source": "supabase_recent_atmospheric",
-      "latest_observed_aqi": 112,
-      "latest_observed_category": "Moderate",
+      "latest_observed_aqi": 41,
+      "latest_observed_category": "Good",
       "latest_observed_pollutants": {
-        "pm2_5": 59.9,
-        "pm10": 61.45,
-        "no2": 19.75,
-        "so2": 11.1,
-        "co": 1.04,
-        "o3": 59.0
+        "pm2_5": 12.5,
+        "pm10": 12.7,
+        "no2": 21.75,
+        "so2": 6.85,
+        "co": 0.47,
+        "o3": 30.0
       },
       "predicted_pollutants_timeline": {
         "pm2_5": {
           "point": [
-            79.01,
-            78.35,
-            85.12,
-            86.06,
-            84.58,
-            88.64,
-            94.0
+            25.75,
+            36.15,
+            52.24,
+            68.41,
+            92.15,
+            106.34,
+            97.54
           ],
           "q10": [
-            27.8,
-            15.22,
-            14.78,
-            13.37,
-            5.42,
-            6.98,
-            5.23
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.53,
+            0.0
           ],
           "q90": [
-            148.59,
-            156.16,
-            168.15,
-            170.84,
-            174.88,
-            178.47,
-            187.08
+            99.63,
+            118.21,
+            136.01,
+            152.98,
+            184.93,
+            204.03,
+            197.83
           ]
         },
         "pm10": {
           "point": [
-            76.5,
-            77.0,
-            89.46,
-            94.4,
-            95.33,
-            100.44,
-            109.55
+            25.95,
+            38.76,
+            58.04,
+            80.18,
+            111.47,
+            126.17,
+            110.36
           ],
           "q10": [
-            15.56,
-            3.43,
-            7.04,
-            9.65,
-            3.42,
-            6.28,
-            8.1
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            8.39,
+            15.58,
+            0.0
           ],
           "q90": [
-            158.28,
-            166.21,
-            184.55,
-            191.71,
-            197.99,
-            202.31,
-            214.19
+            106.91,
+            129.1,
+            150.27,
+            170.58,
+            213.25,
+            232.34,
+            219.09
           ]
         },
         "no2": {
           "point": [
-            22.78,
-            23.07,
-            23.23,
-            23.33,
-            23.64,
-            23.61,
-            23.96
+            22.55,
+            23.01,
+            22.87,
+            23.14,
+            23.24,
+            23.63,
+            23.28
           ],
           "q10": [
-            10.9,
-            9.95,
-            9.49,
-            9.05,
-            8.73,
-            8.45,
-            8.55
+            11.69,
+            11.2,
+            10.49,
+            10.46,
+            10.07,
+            10.33,
+            9.69
           ],
           "q90": [
-            34.11,
-            35.05,
-            35.76,
-            36.28,
-            37.21,
-            37.39,
-            37.94
+            33.42,
+            34.71,
+            35.03,
+            35.57,
+            36.05,
+            36.52,
+            36.28
           ]
         },
         "so2": {
           "point": [
-            14.44,
-            16.6,
-            18.93,
-            20.35,
-            24.34,
-            27.54,
-            27.51
+            8.67,
+            13.98,
+            17.34,
+            21.67,
+            25.01,
+            27.14,
+            23.5
           ],
           "q10": [
-            4.24,
-            3.78,
-            3.79,
-            4.24,
-            7.0,
-            9.93,
-            8.87
+            0.0,
+            1.55,
+            2.33,
+            5.34,
+            6.62,
+            8.3,
+            4.56
           ],
           "q90": [
-            26.6,
-            30.88,
-            34.28,
-            35.67,
-            40.41,
-            43.39,
-            43.3
+            20.45,
+            28.15,
+            32.0,
+            36.75,
+            42.08,
+            45.86,
+            42.64
           ]
         },
         "co": {
           "point": [
-            1.01,
-            0.99,
-            0.99,
-            1.03,
-            0.98,
-            0.97,
-            1.0
+            0.72,
+            0.79,
+            0.85,
+            0.78,
+            0.77,
+            0.82,
+            0.85
           ],
           "q10": [
-            0.61,
-            0.55,
-            0.54,
-            0.55,
-            0.49,
-            0.47,
-            0.49
+            0.29,
+            0.32,
+            0.33,
+            0.24,
+            0.2,
+            0.25,
+            0.26
           ],
           "q90": [
-            1.38,
+            1.21,
+            1.34,
             1.41,
+            1.35,
+            1.37,
             1.44,
-            1.49,
-            1.47,
-            1.46,
-            1.5
+            1.47
           ]
         },
         "o3": {
           "point": [
-            73.04,
-            70.22,
-            68.93,
-            66.05,
-            66.29,
-            67.79,
-            67.98
+            50.06,
+            56.04,
+            57.95,
+            61.91,
+            65.44,
+            66.67,
+            69.01
           ],
           "q10": [
-            35.27,
-            28.61,
-            24.96,
-            20.14,
-            16.92,
-            16.84,
-            14.7
+            1.76,
+            1.13,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
           ],
           "q90": [
-            119.19,
-            120.85,
-            121.9,
-            120.97,
-            123.7,
-            126.11,
-            127.48
+            106.68,
+            116.45,
+            121.4,
+            126.45,
+            132.3,
+            133.79,
+            136.96
           ]
         }
       },
       "daily_forecasts": [
         {
           "day_index": 1,
-          "target_date": "2026-11-20",
-          "predicted_aqi": 163,
-          "predicted_category": "Moderate",
-          "dominant_pollutant": "PM2.5",
+          "target_date": "2026-11-21",
+          "predicted_aqi": 50,
+          "predicted_category": "Good",
+          "dominant_pollutant": "O3",
           "uncertainty_range": [
             0,
-            277
+            191
           ],
-          "change_from_latest": 51,
-          "direct_aqi_prediction": 145,
+          "change_from_latest": 9,
+          "direct_aqi_prediction": 83,
           "predicted_pollutants": {
-            "pm2_5": 79.01,
-            "pm10": 76.5,
-            "no2": 22.78,
-            "so2": 14.44,
-            "co": 1.01,
-            "o3": 73.04
+            "pm2_5": 25.75,
+            "pm10": 25.95,
+            "no2": 22.55,
+            "so2": 8.67,
+            "co": 0.72,
+            "o3": 50.06
           },
           "cpcb_sub_indices": {
-            "pm2_5": 163,
-            "pm10": 76,
+            "pm2_5": 43,
+            "pm10": 26,
             "no2": 28,
-            "so2": 18,
-            "co": 50,
-            "o3": 73
+            "so2": 11,
+            "co": 36,
+            "o3": 50
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 2,
-          "target_date": "2026-11-21",
-          "predicted_aqi": 161,
-          "predicted_category": "Moderate",
+          "target_date": "2026-11-22",
+          "predicted_aqi": 60,
+          "predicted_category": "Satisfactory",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
             0,
-            294
+            250
           ],
-          "change_from_latest": 49,
-          "direct_aqi_prediction": 158,
+          "change_from_latest": 19,
+          "direct_aqi_prediction": 127,
           "predicted_pollutants": {
-            "pm2_5": 78.35,
-            "pm10": 77.0,
-            "no2": 23.07,
-            "so2": 16.6,
-            "co": 0.99,
-            "o3": 70.22
+            "pm2_5": 36.15,
+            "pm10": 38.76,
+            "no2": 23.01,
+            "so2": 13.98,
+            "co": 0.79,
+            "o3": 56.04
           },
           "cpcb_sub_indices": {
-            "pm2_5": 161,
-            "pm10": 77,
+            "pm2_5": 60,
+            "pm10": 39,
             "no2": 29,
-            "so2": 21,
-            "co": 50,
-            "o3": 70
+            "so2": 17,
+            "co": 40,
+            "o3": 56
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 3,
-          "target_date": "2026-11-22",
-          "predicted_aqi": 184,
-          "predicted_category": "Moderate",
+          "target_date": "2026-11-23",
+          "predicted_aqi": 87,
+          "predicted_category": "Satisfactory",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
             0,
-            314
+            281
           ],
-          "change_from_latest": 72,
-          "direct_aqi_prediction": 180,
+          "change_from_latest": 46,
+          "direct_aqi_prediction": 151,
           "predicted_pollutants": {
-            "pm2_5": 85.12,
-            "pm10": 89.46,
-            "no2": 23.23,
-            "so2": 18.93,
-            "co": 0.99,
-            "o3": 68.93
+            "pm2_5": 52.24,
+            "pm10": 58.04,
+            "no2": 22.87,
+            "so2": 17.34,
+            "co": 0.85,
+            "o3": 57.95
           },
           "cpcb_sub_indices": {
-            "pm2_5": 184,
-            "pm10": 89,
+            "pm2_5": 87,
+            "pm10": 58,
             "no2": 29,
-            "so2": 24,
-            "co": 50,
-            "o3": 69
+            "so2": 22,
+            "co": 42,
+            "o3": 58
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 4,
-          "target_date": "2026-11-23",
-          "predicted_aqi": 187,
-          "predicted_category": "Moderate",
-          "dominant_pollutant": "PM2.5",
-          "uncertainty_range": [
-            0,
-            313
-          ],
-          "change_from_latest": 75,
-          "direct_aqi_prediction": 186,
-          "predicted_pollutants": {
-            "pm2_5": 86.06,
-            "pm10": 94.4,
-            "no2": 23.33,
-            "so2": 20.35,
-            "co": 1.03,
-            "o3": 66.05
-          },
-          "cpcb_sub_indices": {
-            "pm2_5": 187,
-            "pm10": 94,
-            "no2": 29,
-            "so2": 25,
-            "co": 52,
-            "o3": 66
-          },
-          "is_cpcb_compliant": true
-        },
-        {
-          "day_index": 5,
           "target_date": "2026-11-24",
-          "predicted_aqi": 182,
+          "predicted_aqi": 128,
           "predicted_category": "Moderate",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
             0,
             337
           ],
-          "change_from_latest": 70,
-          "direct_aqi_prediction": 207,
+          "change_from_latest": 87,
+          "direct_aqi_prediction": 208,
           "predicted_pollutants": {
-            "pm2_5": 84.58,
-            "pm10": 95.33,
-            "no2": 23.64,
-            "so2": 24.34,
-            "co": 0.98,
-            "o3": 66.29
+            "pm2_5": 68.41,
+            "pm10": 80.18,
+            "no2": 23.14,
+            "so2": 21.67,
+            "co": 0.78,
+            "o3": 61.91
           },
           "cpcb_sub_indices": {
-            "pm2_5": 182,
-            "pm10": 95,
-            "no2": 30,
-            "so2": 30,
-            "co": 49,
-            "o3": 66
+            "pm2_5": 128,
+            "pm10": 80,
+            "no2": 29,
+            "so2": 27,
+            "co": 39,
+            "o3": 62
+          },
+          "is_cpcb_compliant": true
+        },
+        {
+          "day_index": 5,
+          "target_date": "2026-11-25",
+          "predicted_aqi": 207,
+          "predicted_category": "Poor",
+          "dominant_pollutant": "PM2.5",
+          "uncertainty_range": [
+            20,
+            368
+          ],
+          "change_from_latest": 166,
+          "direct_aqi_prediction": 246,
+          "predicted_pollutants": {
+            "pm2_5": 92.15,
+            "pm10": 111.47,
+            "no2": 23.24,
+            "so2": 25.01,
+            "co": 0.77,
+            "o3": 65.44
+          },
+          "cpcb_sub_indices": {
+            "pm2_5": 207,
+            "pm10": 108,
+            "no2": 29,
+            "so2": 31,
+            "co": 38,
+            "o3": 65
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 6,
-          "target_date": "2026-11-25",
-          "predicted_aqi": 195,
-          "predicted_category": "Moderate",
+          "target_date": "2026-11-26",
+          "predicted_aqi": 254,
+          "predicted_category": "Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            0,
-            349
+            40,
+            382
           ],
-          "change_from_latest": 83,
-          "direct_aqi_prediction": 234,
+          "change_from_latest": 213,
+          "direct_aqi_prediction": 264,
           "predicted_pollutants": {
-            "pm2_5": 88.64,
-            "pm10": 100.44,
-            "no2": 23.61,
-            "so2": 27.54,
-            "co": 0.97,
-            "o3": 67.79
+            "pm2_5": 106.34,
+            "pm10": 126.17,
+            "no2": 23.63,
+            "so2": 27.14,
+            "co": 0.82,
+            "o3": 66.67
           },
           "cpcb_sub_indices": {
-            "pm2_5": 195,
-            "pm10": 100,
+            "pm2_5": 254,
+            "pm10": 117,
             "no2": 30,
             "so2": 34,
-            "co": 48,
-            "o3": 68
+            "co": 41,
+            "o3": 67
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 7,
-          "target_date": "2026-11-26",
-          "predicted_aqi": 213,
+          "target_date": "2026-11-27",
+          "predicted_aqi": 225,
           "predicted_category": "Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            0,
-            360
+            19,
+            361
           ],
-          "change_from_latest": 101,
-          "direct_aqi_prediction": 259,
+          "change_from_latest": 184,
+          "direct_aqi_prediction": 244,
           "predicted_pollutants": {
-            "pm2_5": 94.0,
-            "pm10": 109.55,
-            "no2": 23.96,
-            "so2": 27.51,
-            "co": 1.0,
-            "o3": 67.98
+            "pm2_5": 97.54,
+            "pm10": 110.36,
+            "no2": 23.28,
+            "so2": 23.5,
+            "co": 0.85,
+            "o3": 69.01
           },
           "cpcb_sub_indices": {
-            "pm2_5": 213,
-            "pm10": 106,
-            "no2": 30,
-            "so2": 34,
-            "co": 50,
-            "o3": 68
+            "pm2_5": 225,
+            "pm10": 107,
+            "no2": 29,
+            "so2": 29,
+            "co": 42,
+            "o3": 69
           },
           "is_cpcb_compliant": true
         }
       ],
       "insights": {
-        "trend_direction": "Noticeable Increase in AQI",
-        "trend_sentiment": "negative",
-        "predicted_dominant_pollutant": "PM2.5",
+        "trend_direction": "Relatively Stable Air Quality",
+        "trend_sentiment": "neutral",
+        "predicted_dominant_pollutant": "O3",
         "highest_predicted_day": {
           "date": "2026-11-26",
-          "aqi": 213,
+          "aqi": 254,
           "category": "Poor"
         },
         "lowest_predicted_day": {
           "date": "2026-11-21",
-          "aqi": 161,
-          "category": "Moderate"
+          "aqi": 50,
+          "category": "Good"
         },
         "largest_pollutant_shift": {
-          "pollutant": "PM2.5",
-          "magnitude": 19.11
+          "pollutant": "O3",
+          "magnitude": 20.06
         }
       },
       "chart_history": [
@@ -1982,8 +2000,14 @@
         },
         {
           "date": "2026-11-19",
-          "aqi": 112,
-          "category": "Moderate",
+          "aqi": 85,
+          "category": "Satisfactory",
+          "is_forecast": false
+        },
+        {
+          "date": "2026-11-20",
+          "aqi": 41,
+          "category": "Good",
           "is_forecast": false
         }
       ],
@@ -1995,405 +2019,405 @@
     },
     "Chennai": {
       "city": "Chennai",
-      "latest_observation_date": "2026-11-19",
-      "forecast_generation_time": "2026-11-19T14:14:44.666893Z",
+      "latest_observation_date": "2026-11-20",
+      "forecast_generation_time": "2026-11-20T13:52:46.556177Z",
       "model_name": "Google TimesFM 2.5 (200M Foundation Model)",
       "model_version": "2.5-200m-pytorch",
       "input_source": "supabase_recent_atmospheric",
-      "latest_observed_aqi": 164,
+      "latest_observed_aqi": 170,
       "latest_observed_category": "Moderate",
       "latest_observed_pollutants": {
-        "pm2_5": 68.9,
-        "pm10": 74.75,
-        "no2": 10.95,
-        "so2": 15.3,
-        "co": 0.35,
-        "o3": 138.5
+        "pm2_5": 57.8,
+        "pm10": 61.25,
+        "no2": 13.5,
+        "so2": 17.95,
+        "co": 0.55,
+        "o3": 139.5
       },
       "predicted_pollutants_timeline": {
         "pm2_5": {
           "point": [
-            67.34,
-            60.95,
-            51.61,
-            46.48,
-            44.96,
-            45.24,
-            45.79
+            49.29,
+            32.74,
+            22.59,
+            31.21,
+            41.62,
+            47.35,
+            49.67
           ],
           "q10": [
-            49.29,
-            39.22,
-            27.61,
-            21.94,
-            16.9,
-            16.27,
-            16.78
+            39.73,
+            18.72,
+            5.82,
+            15.88,
+            24.67,
+            31.5,
+            33.53
           ],
           "q90": [
-            79.7,
-            78.68,
-            74.6,
-            72.1,
-            75.03,
-            76.19,
-            77.81
+            61.63,
+            49.36,
+            40.77,
+            48.68,
+            58.65,
+            61.85,
+            63.09
           ]
         },
         "pm10": {
           "point": [
-            75.36,
-            73.35,
-            68.57,
-            64.28,
-            63.73,
-            61.41,
-            60.87
+            55.11,
+            39.43,
+            31.62,
+            37.77,
+            47.21,
+            53.83,
+            59.88
           ],
           "q10": [
-            57.38,
-            49.07,
-            39.11,
-            30.81,
-            25.14,
-            20.82,
-            19.04
+            44.32,
+            23.64,
+            12.78,
+            19.13,
+            26.34,
+            34.0,
+            39.67
           ],
           "q90": [
-            84.16,
-            87.16,
-            87.76,
-            87.03,
-            90.99,
-            90.39,
-            92.26
+            67.65,
+            56.92,
+            51.09,
+            57.69,
+            67.65,
+            72.2,
+            76.83
           ]
         },
         "no2": {
           "point": [
-            6.87,
-            6.12,
-            5.61,
-            5.37,
-            5.15,
-            4.93,
-            4.68
+            10.33,
+            8.64,
+            8.09,
+            7.3,
+            6.82,
+            6.15,
+            6.35
           ],
           "q10": [
-            3.86,
-            3.29,
-            3.06,
-            2.95,
-            2.73,
+            5.67,
+            4.01,
+            3.47,
+            2.85,
             2.67,
-            2.55
+            2.15,
+            2.33
           ],
           "q90": [
-            11.73,
-            11.36,
-            10.83,
-            10.64,
-            10.52,
-            10.21,
-            9.75
+            15.56,
+            14.92,
+            15.41,
+            15.24,
+            15.18,
+            14.58,
+            14.83
           ]
         },
         "so2": {
           "point": [
-            15.01,
-            12.91,
-            9.95,
-            8.33,
-            8.24,
-            8.51,
-            9.82
+            15.68,
+            13.35,
+            12.97,
+            12.06,
+            11.28,
+            11.77,
+            12.7
           ],
           "q10": [
-            10.19,
-            7.45,
-            4.06,
-            2.33,
-            1.44,
-            1.43,
-            2.75
+            9.21,
+            6.66,
+            5.4,
+            4.79,
+            2.87,
+            3.42,
+            3.99
           ],
           "q90": [
-            18.65,
-            17.56,
-            15.3,
-            14.13,
-            14.71,
-            15.14,
-            16.21
+            20.57,
+            19.02,
+            19.79,
+            19.48,
+            19.55,
+            20.08,
+            21.01
           ]
         },
         "co": {
           "point": [
-            0.35,
-            0.34,
-            0.35,
-            0.35,
-            0.35,
-            0.34,
-            0.34
+            0.42,
+            0.45,
+            0.46,
+            0.5,
+            0.42,
+            0.44,
+            0.44
           ],
           "q10": [
-            0.29,
-            0.27,
-            0.27,
-            0.27,
-            0.27,
-            0.26,
-            0.26
+            0.33,
+            0.35,
+            0.36,
+            0.4,
+            0.31,
+            0.34,
+            0.33
           ],
           "q90": [
-            0.41,
-            0.41,
-            0.42,
-            0.42,
-            0.43,
-            0.41,
-            0.42
+            0.51,
+            0.54,
+            0.57,
+            0.61,
+            0.53,
+            0.56,
+            0.57
           ]
         },
         "o3": {
           "point": [
-            140.76,
-            139.5,
-            137.96,
-            136.22,
-            136.56,
+            138.88,
+            137.24,
             135.06,
-            137.69
+            134.44,
+            131.59,
+            135.49,
+            140.19
           ],
           "q10": [
-            123.22,
-            116.07,
-            110.5,
-            106.37,
-            103.66,
-            100.15,
-            103.42
+            117.0,
+            111.01,
+            104.32,
+            101.94,
+            96.56,
+            102.07,
+            109.15
           ],
           "q90": [
-            151.0,
-            152.62,
-            153.08,
-            152.53,
-            154.19,
-            152.89,
-            154.75
+            151.94,
+            152.33,
+            152.64,
+            153.15,
+            152.42,
+            154.6,
+            157.25
           ]
         }
       },
       "daily_forecasts": [
         {
           "day_index": 1,
-          "target_date": "2026-11-20",
-          "predicted_aqi": 160,
+          "target_date": "2026-11-21",
+          "predicted_aqi": 157,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            143,
-            180
+            137,
+            183
           ],
-          "change_from_latest": -4,
+          "change_from_latest": -13,
           "direct_aqi_prediction": 166,
           "predicted_pollutants": {
-            "pm2_5": 67.34,
-            "pm10": 75.36,
-            "no2": 6.87,
-            "so2": 15.01,
-            "co": 0.35,
-            "o3": 140.76
+            "pm2_5": 49.29,
+            "pm10": 55.11,
+            "no2": 10.33,
+            "so2": 15.68,
+            "co": 0.42,
+            "o3": 138.88
           },
           "cpcb_sub_indices": {
-            "pm2_5": 124,
-            "pm10": 75,
-            "no2": 9,
-            "so2": 19,
-            "co": 18,
-            "o3": 160
+            "pm2_5": 82,
+            "pm10": 55,
+            "no2": 13,
+            "so2": 20,
+            "co": 21,
+            "o3": 157
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 2,
-          "target_date": "2026-11-21",
-          "predicted_aqi": 158,
+          "target_date": "2026-11-22",
+          "predicted_aqi": 155,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            134,
-            181
+            128,
+            183
           ],
-          "change_from_latest": -6,
+          "change_from_latest": -15,
           "direct_aqi_prediction": 163,
           "predicted_pollutants": {
-            "pm2_5": 60.95,
-            "pm10": 73.35,
-            "no2": 6.12,
-            "so2": 12.91,
-            "co": 0.34,
-            "o3": 139.5
+            "pm2_5": 32.74,
+            "pm10": 39.43,
+            "no2": 8.64,
+            "so2": 13.35,
+            "co": 0.45,
+            "o3": 137.24
           },
           "cpcb_sub_indices": {
-            "pm2_5": 103,
-            "pm10": 73,
-            "no2": 8,
-            "so2": 16,
-            "co": 17,
-            "o3": 158
+            "pm2_5": 55,
+            "pm10": 39,
+            "no2": 11,
+            "so2": 17,
+            "co": 22,
+            "o3": 155
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 3,
-          "target_date": "2026-11-22",
-          "predicted_aqi": 156,
+          "target_date": "2026-11-23",
+          "predicted_aqi": 152,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            126,
-            182
+            118,
+            184
           ],
-          "change_from_latest": -8,
-          "direct_aqi_prediction": 161,
+          "change_from_latest": -18,
+          "direct_aqi_prediction": 160,
           "predicted_pollutants": {
-            "pm2_5": 51.61,
-            "pm10": 68.57,
-            "no2": 5.61,
-            "so2": 9.95,
-            "co": 0.35,
-            "o3": 137.96
+            "pm2_5": 22.59,
+            "pm10": 31.62,
+            "no2": 8.09,
+            "so2": 12.97,
+            "co": 0.46,
+            "o3": 135.06
           },
           "cpcb_sub_indices": {
-            "pm2_5": 86,
-            "pm10": 69,
-            "no2": 7,
-            "so2": 12,
-            "co": 18,
-            "o3": 156
+            "pm2_5": 38,
+            "pm10": 32,
+            "no2": 10,
+            "so2": 16,
+            "co": 23,
+            "o3": 152
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 4,
-          "target_date": "2026-11-23",
-          "predicted_aqi": 153,
+          "target_date": "2026-11-24",
+          "predicted_aqi": 151,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            120,
-            181
+            114,
+            184
           ],
-          "change_from_latest": -11,
-          "direct_aqi_prediction": 159,
+          "change_from_latest": -19,
+          "direct_aqi_prediction": 158,
           "predicted_pollutants": {
-            "pm2_5": 46.48,
-            "pm10": 64.28,
-            "no2": 5.37,
-            "so2": 8.33,
-            "co": 0.35,
-            "o3": 136.22
+            "pm2_5": 31.21,
+            "pm10": 37.77,
+            "no2": 7.3,
+            "so2": 12.06,
+            "co": 0.5,
+            "o3": 134.44
           },
           "cpcb_sub_indices": {
-            "pm2_5": 77,
-            "pm10": 64,
-            "no2": 7,
-            "so2": 10,
-            "co": 18,
-            "o3": 153
+            "pm2_5": 52,
+            "pm10": 38,
+            "no2": 9,
+            "so2": 15,
+            "co": 25,
+            "o3": 151
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 5,
-          "target_date": "2026-11-24",
-          "predicted_aqi": 154,
+          "target_date": "2026-11-25",
+          "predicted_aqi": 146,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            116,
-            184
+            107,
+            183
           ],
-          "change_from_latest": -10,
-          "direct_aqi_prediction": 159,
+          "change_from_latest": -24,
+          "direct_aqi_prediction": 154,
           "predicted_pollutants": {
-            "pm2_5": 44.96,
-            "pm10": 63.73,
-            "no2": 5.15,
-            "so2": 8.24,
-            "co": 0.35,
-            "o3": 136.56
+            "pm2_5": 41.62,
+            "pm10": 47.21,
+            "no2": 6.82,
+            "so2": 11.28,
+            "co": 0.42,
+            "o3": 131.59
           },
           "cpcb_sub_indices": {
-            "pm2_5": 75,
-            "pm10": 64,
-            "no2": 6,
-            "so2": 10,
-            "co": 18,
-            "o3": 154
+            "pm2_5": 69,
+            "pm10": 47,
+            "no2": 9,
+            "so2": 14,
+            "co": 21,
+            "o3": 146
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 6,
-          "target_date": "2026-11-25",
+          "target_date": "2026-11-26",
           "predicted_aqi": 152,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            111,
-            182
+            113,
+            185
           ],
-          "change_from_latest": -12,
-          "direct_aqi_prediction": 156,
+          "change_from_latest": -18,
+          "direct_aqi_prediction": 159,
           "predicted_pollutants": {
-            "pm2_5": 45.24,
-            "pm10": 61.41,
-            "no2": 4.93,
-            "so2": 8.51,
-            "co": 0.34,
-            "o3": 135.06
+            "pm2_5": 47.35,
+            "pm10": 53.83,
+            "no2": 6.15,
+            "so2": 11.77,
+            "co": 0.44,
+            "o3": 135.49
           },
           "cpcb_sub_indices": {
-            "pm2_5": 75,
-            "pm10": 61,
-            "no2": 6,
-            "so2": 11,
-            "co": 17,
+            "pm2_5": 79,
+            "pm10": 54,
+            "no2": 8,
+            "so2": 15,
+            "co": 22,
             "o3": 152
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 7,
-          "target_date": "2026-11-26",
-          "predicted_aqi": 155,
+          "target_date": "2026-11-27",
+          "predicted_aqi": 159,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            114,
-            183
+            122,
+            188
           ],
-          "change_from_latest": -9,
-          "direct_aqi_prediction": 159,
+          "change_from_latest": -11,
+          "direct_aqi_prediction": 165,
           "predicted_pollutants": {
-            "pm2_5": 45.79,
-            "pm10": 60.87,
-            "no2": 4.68,
-            "so2": 9.82,
-            "co": 0.34,
-            "o3": 137.69
+            "pm2_5": 49.67,
+            "pm10": 59.88,
+            "no2": 6.35,
+            "so2": 12.7,
+            "co": 0.44,
+            "o3": 140.19
           },
           "cpcb_sub_indices": {
-            "pm2_5": 76,
-            "pm10": 61,
-            "no2": 6,
-            "so2": 12,
-            "co": 17,
-            "o3": 155
+            "pm2_5": 83,
+            "pm10": 60,
+            "no2": 8,
+            "so2": 16,
+            "co": 22,
+            "o3": 159
           },
           "is_cpcb_compliant": true
         }
@@ -2403,18 +2427,18 @@
         "trend_sentiment": "neutral",
         "predicted_dominant_pollutant": "O3",
         "highest_predicted_day": {
-          "date": "2026-11-20",
-          "aqi": 160,
+          "date": "2026-11-27",
+          "aqi": 159,
           "category": "Moderate"
         },
         "lowest_predicted_day": {
           "date": "2026-11-25",
-          "aqi": 152,
+          "aqi": 146,
           "category": "Moderate"
         },
         "largest_pollutant_shift": {
-          "pollutant": "NO2",
-          "magnitude": 4.08
+          "pollutant": "PM2.5",
+          "magnitude": 8.51
         }
       },
       "chart_history": [
@@ -2468,7 +2492,13 @@
         },
         {
           "date": "2026-11-19",
-          "aqi": 164,
+          "aqi": 152,
+          "category": "Moderate",
+          "is_forecast": false
+        },
+        {
+          "date": "2026-11-20",
+          "aqi": 170,
           "category": "Moderate",
           "is_forecast": false
         }
@@ -2481,405 +2511,405 @@
     },
     "Hyderabad": {
       "city": "Hyderabad",
-      "latest_observation_date": "2026-11-19",
-      "forecast_generation_time": "2026-11-19T14:14:46.195375Z",
+      "latest_observation_date": "2026-11-20",
+      "forecast_generation_time": "2026-11-20T13:52:48.077959Z",
       "model_name": "Google TimesFM 2.5 (200M Foundation Model)",
       "model_version": "2.5-200m-pytorch",
       "input_source": "supabase_recent_atmospheric",
-      "latest_observed_aqi": 131,
+      "latest_observed_aqi": 118,
       "latest_observed_category": "Moderate",
       "latest_observed_pollutants": {
-        "pm2_5": 55.7,
-        "pm10": 60.05,
-        "no2": 9.95,
-        "so2": 22.85,
-        "co": 0.42,
-        "o3": 120.0
+        "pm2_5": 42.05,
+        "pm10": 43.9,
+        "no2": 10.9,
+        "so2": 19.2,
+        "co": 0.49,
+        "o3": 109.5
       },
       "predicted_pollutants_timeline": {
         "pm2_5": {
           "point": [
-            49.19,
-            48.2,
-            47.99,
-            47.89,
-            47.69,
-            47.49,
-            47.5
+            45.6,
+            45.76,
+            45.38,
+            45.91,
+            45.53,
+            45.46,
+            45.23
           ],
           "q10": [
-            37.11,
-            35.48,
-            35.08,
-            34.6,
-            34.15,
-            33.78,
-            33.69
+            35.74,
+            35.54,
+            34.83,
+            35.2,
+            34.39,
+            34.24,
+            33.82
           ],
           "q90": [
-            61.58,
-            61.67,
-            61.95,
-            62.19,
-            62.66,
-            62.63,
-            62.8
+            56.49,
+            57.23,
+            57.2,
+            57.96,
+            57.9,
+            57.94,
+            57.92
           ]
         },
         "pm10": {
           "point": [
-            55.18,
-            54.48,
-            54.85,
-            54.8,
-            55.04,
-            54.42,
-            54.4
+            50.04,
+            51.02,
+            51.28,
+            51.88,
+            51.24,
+            51.22,
+            51.19
           ],
           "q10": [
-            41.38,
-            40.14,
-            40.13,
-            39.67,
-            39.48,
-            38.75,
-            38.49
+            37.58,
+            37.84,
+            37.55,
+            37.9,
+            36.66,
+            36.53,
+            36.18
           ],
           "q90": [
-            70.26,
-            70.27,
-            71.33,
-            71.43,
-            72.45,
-            71.77,
-            72.11
+            64.73,
+            66.67,
+            67.34,
+            68.16,
+            67.84,
+            67.99,
+            68.2
           ]
         },
         "no2": {
           "point": [
-            9.32,
-            9.34,
-            8.0,
-            8.57,
-            7.96,
-            7.55,
-            7.7
+            9.75,
+            8.79,
+            8.64,
+            7.9,
+            7.41,
+            7.59,
+            7.07
           ],
           "q10": [
-            6.07,
-            5.67,
-            4.06,
-            4.35,
-            3.42,
-            2.82,
-            2.67
+            7.07,
+            5.62,
+            5.13,
+            4.19,
+            3.44,
+            3.52,
+            2.69
           ],
           "q90": [
-            14.0,
-            14.85,
-            14.19,
-            15.08,
-            14.96,
-            14.8,
-            15.33
+            13.94,
+            13.87,
+            14.37,
+            13.93,
+            13.62,
+            13.99,
+            13.62
           ]
         },
         "so2": {
           "point": [
-            18.99,
-            18.36,
+            18.39,
             18.17,
-            17.99,
-            17.93,
             17.87,
-            17.83
+            17.87,
+            17.87,
+            17.81,
+            17.79
           ],
           "q10": [
-            14.56,
-            13.92,
-            13.7,
-            13.48,
-            13.39,
-            13.24,
-            13.1
+            14.6,
+            14.25,
+            13.76,
+            13.65,
+            13.43,
+            13.32,
+            13.2
           ],
           "q90": [
-            24.15,
-            23.91,
-            23.95,
-            23.83,
-            23.96,
-            23.94,
-            23.95
+            22.84,
+            22.97,
+            22.91,
+            23.12,
+            23.32,
+            23.32,
+            23.41
           ]
         },
         "co": {
           "point": [
+            0.44,
+            0.43,
+            0.45,
+            0.43,
+            0.42,
             0.41,
-            0.4,
-            0.4,
-            0.4,
-            0.39,
-            0.38,
-            0.39
+            0.4
           ],
           "q10": [
+            0.33,
+            0.32,
             0.32,
             0.31,
+            0.3,
             0.29,
-            0.29,
-            0.27,
-            0.27,
-            0.27
+            0.29
           ],
           "q90": [
-            0.53,
-            0.55,
-            0.56,
-            0.58,
-            0.58,
-            0.58,
-            0.58
+            0.6,
+            0.61,
+            0.64,
+            0.62,
+            0.62,
+            0.61,
+            0.59
           ]
         },
         "o3": {
           "point": [
-            116.17,
-            115.03,
-            114.73,
-            114.27,
-            115.12,
-            116.32,
-            115.34
+            110.89,
+            110.99,
+            110.12,
+            111.27,
+            111.83,
+            111.46,
+            111.47
           ],
           "q10": [
-            99.47,
-            95.36,
-            93.6,
-            92.39,
-            92.39,
-            93.28,
-            92.27
+            95.48,
+            92.82,
+            90.67,
+            91.57,
+            91.39,
+            90.63,
+            90.3
           ],
           "q90": [
-            127.27,
-            127.81,
-            128.78,
-            128.82,
-            130.34,
-            131.35,
-            130.62
+            121.16,
+            122.93,
+            122.94,
+            124.33,
+            125.33,
+            125.11,
+            125.43
           ]
         }
       },
       "daily_forecasts": [
         {
           "day_index": 1,
-          "target_date": "2026-11-20",
-          "predicted_aqi": 124,
+          "target_date": "2026-11-21",
+          "predicted_aqi": 116,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            107,
-            143
+            101,
+            134
           ],
-          "change_from_latest": -7,
-          "direct_aqi_prediction": 129,
+          "change_from_latest": -2,
+          "direct_aqi_prediction": 120,
           "predicted_pollutants": {
-            "pm2_5": 49.19,
-            "pm10": 55.18,
-            "no2": 9.32,
-            "so2": 18.99,
-            "co": 0.41,
-            "o3": 116.17
+            "pm2_5": 45.6,
+            "pm10": 50.04,
+            "no2": 9.75,
+            "so2": 18.39,
+            "co": 0.44,
+            "o3": 110.89
           },
           "cpcb_sub_indices": {
-            "pm2_5": 82,
-            "pm10": 55,
+            "pm2_5": 76,
+            "pm10": 50,
             "no2": 12,
-            "so2": 24,
-            "co": 20,
-            "o3": 124
+            "so2": 23,
+            "co": 22,
+            "o3": 116
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 2,
-          "target_date": "2026-11-21",
-          "predicted_aqi": 122,
+          "target_date": "2026-11-22",
+          "predicted_aqi": 116,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            101,
-            144
+            96,
+            136
           ],
-          "change_from_latest": -9,
-          "direct_aqi_prediction": 127,
+          "change_from_latest": -2,
+          "direct_aqi_prediction": 120,
           "predicted_pollutants": {
-            "pm2_5": 48.2,
-            "pm10": 54.48,
-            "no2": 9.34,
-            "so2": 18.36,
-            "co": 0.4,
-            "o3": 115.03
+            "pm2_5": 45.76,
+            "pm10": 51.02,
+            "no2": 8.79,
+            "so2": 18.17,
+            "co": 0.43,
+            "o3": 110.99
           },
           "cpcb_sub_indices": {
-            "pm2_5": 80,
-            "pm10": 54,
-            "no2": 12,
+            "pm2_5": 76,
+            "pm10": 51,
+            "no2": 11,
             "so2": 23,
-            "co": 20,
-            "o3": 122
+            "co": 22,
+            "o3": 116
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 3,
-          "target_date": "2026-11-22",
-          "predicted_aqi": 122,
+          "target_date": "2026-11-23",
+          "predicted_aqi": 115,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            97,
-            144
+            93,
+            137
           ],
-          "change_from_latest": -9,
-          "direct_aqi_prediction": 125,
+          "change_from_latest": -3,
+          "direct_aqi_prediction": 119,
           "predicted_pollutants": {
-            "pm2_5": 47.99,
-            "pm10": 54.85,
-            "no2": 8.0,
-            "so2": 18.17,
-            "co": 0.4,
-            "o3": 114.73
+            "pm2_5": 45.38,
+            "pm10": 51.28,
+            "no2": 8.64,
+            "so2": 17.87,
+            "co": 0.45,
+            "o3": 110.12
           },
           "cpcb_sub_indices": {
-            "pm2_5": 80,
-            "pm10": 55,
-            "no2": 10,
-            "so2": 23,
-            "co": 20,
-            "o3": 122
+            "pm2_5": 76,
+            "pm10": 51,
+            "no2": 11,
+            "so2": 22,
+            "co": 22,
+            "o3": 115
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 4,
-          "target_date": "2026-11-23",
-          "predicted_aqi": 121,
+          "target_date": "2026-11-24",
+          "predicted_aqi": 117,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            95,
-            144
+            94,
+            138
           ],
-          "change_from_latest": -10,
-          "direct_aqi_prediction": 124,
+          "change_from_latest": -1,
+          "direct_aqi_prediction": 120,
           "predicted_pollutants": {
-            "pm2_5": 47.89,
-            "pm10": 54.8,
-            "no2": 8.57,
-            "so2": 17.99,
-            "co": 0.4,
-            "o3": 114.27
+            "pm2_5": 45.91,
+            "pm10": 51.88,
+            "no2": 7.9,
+            "so2": 17.87,
+            "co": 0.43,
+            "o3": 111.27
           },
           "cpcb_sub_indices": {
-            "pm2_5": 80,
-            "pm10": 55,
-            "no2": 11,
+            "pm2_5": 77,
+            "pm10": 52,
+            "no2": 10,
             "so2": 22,
-            "co": 20,
-            "o3": 121
+            "co": 22,
+            "o3": 117
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 5,
-          "target_date": "2026-11-24",
-          "predicted_aqi": 122,
+          "target_date": "2026-11-25",
+          "predicted_aqi": 117,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            97,
-            147
+            94,
+            139
           ],
-          "change_from_latest": -9,
-          "direct_aqi_prediction": 126,
+          "change_from_latest": -1,
+          "direct_aqi_prediction": 121,
           "predicted_pollutants": {
-            "pm2_5": 47.69,
-            "pm10": 55.04,
-            "no2": 7.96,
-            "so2": 17.93,
-            "co": 0.39,
-            "o3": 115.12
+            "pm2_5": 45.53,
+            "pm10": 51.24,
+            "no2": 7.41,
+            "so2": 17.87,
+            "co": 0.42,
+            "o3": 111.83
           },
           "cpcb_sub_indices": {
-            "pm2_5": 79,
-            "pm10": 55,
-            "no2": 10,
+            "pm2_5": 76,
+            "pm10": 51,
+            "no2": 9,
             "so2": 22,
-            "co": 20,
-            "o3": 122
+            "co": 21,
+            "o3": 117
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 6,
-          "target_date": "2026-11-25",
-          "predicted_aqi": 124,
+          "target_date": "2026-11-26",
+          "predicted_aqi": 117,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            98,
-            147
+            94,
+            139
           ],
-          "change_from_latest": -7,
-          "direct_aqi_prediction": 128,
+          "change_from_latest": -1,
+          "direct_aqi_prediction": 121,
           "predicted_pollutants": {
-            "pm2_5": 47.49,
-            "pm10": 54.42,
-            "no2": 7.55,
-            "so2": 17.87,
-            "co": 0.38,
-            "o3": 116.32
+            "pm2_5": 45.46,
+            "pm10": 51.22,
+            "no2": 7.59,
+            "so2": 17.81,
+            "co": 0.41,
+            "o3": 111.46
           },
           "cpcb_sub_indices": {
-            "pm2_5": 79,
-            "pm10": 54,
+            "pm2_5": 76,
+            "pm10": 51,
             "no2": 9,
             "so2": 22,
-            "co": 19,
-            "o3": 124
+            "co": 20,
+            "o3": 117
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 7,
-          "target_date": "2026-11-26",
-          "predicted_aqi": 123,
+          "target_date": "2026-11-27",
+          "predicted_aqi": 117,
           "predicted_category": "Moderate",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            97,
-            146
+            93,
+            139
           ],
-          "change_from_latest": -8,
-          "direct_aqi_prediction": 126,
+          "change_from_latest": -1,
+          "direct_aqi_prediction": 121,
           "predicted_pollutants": {
-            "pm2_5": 47.5,
-            "pm10": 54.4,
-            "no2": 7.7,
-            "so2": 17.83,
-            "co": 0.39,
-            "o3": 115.34
+            "pm2_5": 45.23,
+            "pm10": 51.19,
+            "no2": 7.07,
+            "so2": 17.79,
+            "co": 0.4,
+            "o3": 111.47
           },
           "cpcb_sub_indices": {
-            "pm2_5": 79,
-            "pm10": 54,
-            "no2": 10,
+            "pm2_5": 75,
+            "pm10": 51,
+            "no2": 9,
             "so2": 22,
             "co": 20,
-            "o3": 123
+            "o3": 117
           },
           "is_cpcb_compliant": true
         }
@@ -2889,18 +2919,18 @@
         "trend_sentiment": "neutral",
         "predicted_dominant_pollutant": "O3",
         "highest_predicted_day": {
-          "date": "2026-11-20",
-          "aqi": 124,
+          "date": "2026-11-24",
+          "aqi": 117,
           "category": "Moderate"
         },
         "lowest_predicted_day": {
           "date": "2026-11-23",
-          "aqi": 121,
+          "aqi": 115,
           "category": "Moderate"
         },
         "largest_pollutant_shift": {
-          "pollutant": "PM2.5",
-          "magnitude": 6.51
+          "pollutant": "PM10",
+          "magnitude": 6.14
         }
       },
       "chart_history": [
@@ -2954,7 +2984,13 @@
         },
         {
           "date": "2026-11-19",
-          "aqi": 131,
+          "aqi": 122,
+          "category": "Moderate",
+          "is_forecast": false
+        },
+        {
+          "date": "2026-11-20",
+          "aqi": 118,
           "category": "Moderate",
           "is_forecast": false
         }
@@ -2967,405 +3003,405 @@
     },
     "Ahmedabad": {
       "city": "Ahmedabad",
-      "latest_observation_date": "2026-11-19",
-      "forecast_generation_time": "2026-11-19T14:14:48.084235Z",
+      "latest_observation_date": "2026-11-20",
+      "forecast_generation_time": "2026-11-20T13:52:49.881912Z",
       "model_name": "Google TimesFM 2.5 (200M Foundation Model)",
       "model_version": "2.5-200m-pytorch",
       "input_source": "supabase_recent_atmospheric",
-      "latest_observed_aqi": 106,
+      "latest_observed_aqi": 112,
       "latest_observed_category": "Moderate",
       "latest_observed_pollutants": {
-        "pm2_5": 40.2,
-        "pm10": 45.15,
-        "no2": 14.7,
-        "so2": 10.5,
-        "co": 0.32,
-        "o3": 83.5
+        "pm2_5": 38.15,
+        "pm10": 40.1,
+        "no2": 14.05,
+        "so2": 12.7,
+        "co": 0.4,
+        "o3": 94.0
       },
       "predicted_pollutants_timeline": {
         "pm2_5": {
           "point": [
-            41.76,
-            42.0,
-            40.16,
-            41.96,
-            44.49,
-            45.12,
-            42.28
+            39.57,
+            39.93,
+            41.59,
+            42.77,
+            44.74,
+            40.92,
+            37.81
           ],
           "q10": [
-            23.33,
-            21.0,
-            16.89,
-            19.03,
-            20.65,
-            22.1,
-            18.67
+            25.45,
+            22.54,
+            22.5,
+            22.97,
+            24.34,
+            20.99,
+            17.62
           ],
           "q90": [
-            57.76,
-            60.54,
-            60.89,
-            62.62,
-            65.66,
-            66.17,
-            64.15
+            53.92,
+            57.08,
+            60.17,
+            61.65,
+            64.31,
+            60.52,
+            58.18
           ]
         },
         "pm10": {
           "point": [
-            45.91,
-            47.23,
-            46.7,
-            47.87,
-            48.55,
-            50.4,
-            47.4
+            43.14,
+            44.99,
+            48.0,
+            47.63,
+            49.73,
+            45.74,
+            42.43
           ],
           "q10": [
-            31.35,
-            30.61,
-            28.56,
-            28.61,
-            28.05,
-            30.19,
-            26.75
+            27.61,
+            26.41,
+            27.5,
+            26.18,
+            27.82,
+            24.88,
+            22.01
           ],
           "q90": [
-            62.97,
-            66.7,
-            67.67,
-            69.4,
-            71.22,
-            73.09,
-            70.19
+            60.15,
+            64.66,
+            69.42,
+            69.49,
+            72.32,
+            67.87,
+            64.49
           ]
         },
         "no2": {
           "point": [
-            23.89,
-            26.23,
-            26.84,
-            30.24,
-            27.19,
-            26.59,
-            25.28
+            18.84,
+            22.01,
+            25.0,
+            23.53,
+            23.91,
+            21.3,
+            19.84
           ],
           "q10": [
-            2.67,
-            1.23,
-            0.0,
-            1.38,
-            0.0,
-            0.0,
+            5.2,
+            3.98,
+            3.25,
+            2.02,
+            1.58,
+            0.3,
             0.0
           ],
           "q90": [
-            52.73,
-            59.86,
-            62.29,
-            68.0,
-            66.64,
-            66.43,
-            64.51
+            44.0,
+            51.26,
+            58.47,
+            56.15,
+            58.42,
+            54.84,
+            53.76
           ]
         },
         "so2": {
           "point": [
-            10.73,
-            10.95,
-            10.9,
-            11.23,
-            10.82,
-            10.86,
-            10.64
+            11.83,
+            11.86,
+            12.41,
+            12.38,
+            12.09,
+            11.43,
+            11.09
           ],
           "q10": [
-            6.44,
-            6.13,
-            5.75,
-            5.74,
-            5.11,
-            5.1,
-            4.71
+            7.31,
+            6.78,
+            6.96,
+            6.66,
+            6.2,
+            5.53,
+            5.06
           ],
           "q90": [
-            15.26,
-            16.25,
-            16.63,
+            16.56,
             17.22,
-            17.19,
-            17.33,
-            17.1
+            18.24,
+            18.36,
+            18.4,
+            17.67,
+            17.46
           ]
         },
         "co": {
           "point": [
-            0.35,
-            0.37,
-            0.38,
-            0.38,
-            0.36,
-            0.37,
-            0.37
+            0.39,
+            0.39,
+            0.4,
+            0.39,
+            0.39,
+            0.39,
+            0.39
           ],
           "q10": [
-            0.22,
-            0.23,
-            0.22,
-            0.22,
-            0.2,
-            0.2,
-            0.2
+            0.28,
+            0.26,
+            0.26,
+            0.25,
+            0.24,
+            0.24,
+            0.24
           ],
           "q90": [
-            0.51,
-            0.57,
-            0.58,
-            0.6,
+            0.54,
+            0.56,
             0.59,
-            0.6,
+            0.58,
+            0.59,
+            0.59,
             0.6
           ]
         },
         "o3": {
           "point": [
-            80.01,
-            79.5,
-            78.93,
-            77.7,
-            78.61,
-            78.86,
-            79.77
+            86.95,
+            84.18,
+            81.24,
+            82.39,
+            81.89,
+            83.49,
+            83.16
           ],
           "q10": [
-            55.32,
-            50.04,
-            47.52,
-            44.51,
-            44.96,
-            44.79,
-            46.37
+            60.02,
+            50.42,
+            45.58,
+            46.23,
+            45.83,
+            46.2,
+            46.46
           ],
           "q90": [
-            90.96,
-            91.99,
-            92.61,
-            92.15,
-            93.98,
-            93.75,
-            94.54
+            99.69,
+            102.08,
+            101.31,
+            102.19,
+            102.52,
+            103.94,
+            103.65
           ]
         }
       },
       "daily_forecasts": [
         {
           "day_index": 1,
-          "target_date": "2026-11-20",
-          "predicted_aqi": 80,
+          "target_date": "2026-11-21",
+          "predicted_aqi": 87,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            74,
-            153
+            80,
+            158
           ],
-          "change_from_latest": -26,
-          "direct_aqi_prediction": 114,
+          "change_from_latest": -25,
+          "direct_aqi_prediction": 115,
           "predicted_pollutants": {
-            "pm2_5": 41.76,
-            "pm10": 45.91,
-            "no2": 23.89,
-            "so2": 10.73,
-            "co": 0.35,
-            "o3": 80.01
+            "pm2_5": 39.57,
+            "pm10": 43.14,
+            "no2": 18.84,
+            "so2": 11.83,
+            "co": 0.39,
+            "o3": 86.95
           },
           "cpcb_sub_indices": {
-            "pm2_5": 70,
-            "pm10": 46,
-            "no2": 30,
-            "so2": 13,
-            "co": 18,
-            "o3": 80
+            "pm2_5": 66,
+            "pm10": 43,
+            "no2": 24,
+            "so2": 15,
+            "co": 20,
+            "o3": 87
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 2,
-          "target_date": "2026-11-21",
-          "predicted_aqi": 80,
+          "target_date": "2026-11-22",
+          "predicted_aqi": 84,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            73,
-            166
+            72,
+            156
           ],
-          "change_from_latest": -26,
-          "direct_aqi_prediction": 119,
+          "change_from_latest": -28,
+          "direct_aqi_prediction": 109,
           "predicted_pollutants": {
-            "pm2_5": 42.0,
-            "pm10": 47.23,
-            "no2": 26.23,
-            "so2": 10.95,
-            "co": 0.37,
-            "o3": 79.5
+            "pm2_5": 39.93,
+            "pm10": 44.99,
+            "no2": 22.01,
+            "so2": 11.86,
+            "co": 0.39,
+            "o3": 84.18
           },
           "cpcb_sub_indices": {
-            "pm2_5": 70,
-            "pm10": 47,
-            "no2": 33,
-            "so2": 14,
-            "co": 18,
-            "o3": 80
+            "pm2_5": 67,
+            "pm10": 45,
+            "no2": 28,
+            "so2": 15,
+            "co": 20,
+            "o3": 84
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 3,
-          "target_date": "2026-11-22",
-          "predicted_aqi": 79,
+          "target_date": "2026-11-23",
+          "predicted_aqi": 81,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            66,
-            162
+            68,
+            156
           ],
-          "change_from_latest": -27,
-          "direct_aqi_prediction": 113,
+          "change_from_latest": -31,
+          "direct_aqi_prediction": 107,
           "predicted_pollutants": {
-            "pm2_5": 40.16,
-            "pm10": 46.7,
-            "no2": 26.84,
-            "so2": 10.9,
-            "co": 0.38,
-            "o3": 78.93
+            "pm2_5": 41.59,
+            "pm10": 48.0,
+            "no2": 25.0,
+            "so2": 12.41,
+            "co": 0.4,
+            "o3": 81.24
           },
           "cpcb_sub_indices": {
-            "pm2_5": 67,
-            "pm10": 47,
-            "no2": 34,
-            "so2": 14,
-            "co": 19,
-            "o3": 79
+            "pm2_5": 69,
+            "pm10": 48,
+            "no2": 31,
+            "so2": 16,
+            "co": 20,
+            "o3": 81
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 4,
-          "target_date": "2026-11-23",
-          "predicted_aqi": 78,
+          "target_date": "2026-11-24",
+          "predicted_aqi": 82,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            62,
-            163
+            74,
+            165
           ],
-          "change_from_latest": -28,
-          "direct_aqi_prediction": 112,
+          "change_from_latest": -30,
+          "direct_aqi_prediction": 114,
           "predicted_pollutants": {
-            "pm2_5": 41.96,
-            "pm10": 47.87,
-            "no2": 30.24,
-            "so2": 11.23,
-            "co": 0.38,
-            "o3": 77.7
+            "pm2_5": 42.77,
+            "pm10": 47.63,
+            "no2": 23.53,
+            "so2": 12.38,
+            "co": 0.39,
+            "o3": 82.39
           },
           "cpcb_sub_indices": {
-            "pm2_5": 70,
+            "pm2_5": 71,
             "pm10": 48,
-            "no2": 38,
-            "so2": 14,
-            "co": 19,
-            "o3": 78
+            "no2": 29,
+            "so2": 15,
+            "co": 20,
+            "o3": 82
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 5,
-          "target_date": "2026-11-24",
-          "predicted_aqi": 79,
+          "target_date": "2026-11-25",
+          "predicted_aqi": 82,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            68,
+            76,
             172
           ],
-          "change_from_latest": -27,
+          "change_from_latest": -30,
           "direct_aqi_prediction": 119,
           "predicted_pollutants": {
-            "pm2_5": 44.49,
-            "pm10": 48.55,
-            "no2": 27.19,
-            "so2": 10.82,
-            "co": 0.36,
-            "o3": 78.61
+            "pm2_5": 44.74,
+            "pm10": 49.73,
+            "no2": 23.91,
+            "so2": 12.09,
+            "co": 0.39,
+            "o3": 81.89
           },
           "cpcb_sub_indices": {
-            "pm2_5": 74,
-            "pm10": 49,
-            "no2": 34,
-            "so2": 14,
-            "co": 18,
-            "o3": 79
+            "pm2_5": 75,
+            "pm10": 50,
+            "no2": 30,
+            "so2": 15,
+            "co": 20,
+            "o3": 82
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 6,
-          "target_date": "2026-11-25",
-          "predicted_aqi": 79,
+          "target_date": "2026-11-26",
+          "predicted_aqi": 83,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
             68,
-            175
+            162
           ],
-          "change_from_latest": -27,
-          "direct_aqi_prediction": 121,
+          "change_from_latest": -29,
+          "direct_aqi_prediction": 111,
           "predicted_pollutants": {
-            "pm2_5": 45.12,
-            "pm10": 50.4,
-            "no2": 26.59,
-            "so2": 10.86,
-            "co": 0.37,
-            "o3": 78.86
+            "pm2_5": 40.92,
+            "pm10": 45.74,
+            "no2": 21.3,
+            "so2": 11.43,
+            "co": 0.39,
+            "o3": 83.49
           },
           "cpcb_sub_indices": {
-            "pm2_5": 75,
-            "pm10": 50,
-            "no2": 33,
+            "pm2_5": 68,
+            "pm10": 46,
+            "no2": 27,
             "so2": 14,
-            "co": 18,
-            "o3": 79
+            "co": 20,
+            "o3": 83
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 7,
-          "target_date": "2026-11-26",
-          "predicted_aqi": 80,
+          "target_date": "2026-11-27",
+          "predicted_aqi": 83,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            61,
-            166
+            64,
+            157
           ],
-          "change_from_latest": -26,
-          "direct_aqi_prediction": 113,
+          "change_from_latest": -29,
+          "direct_aqi_prediction": 106,
           "predicted_pollutants": {
-            "pm2_5": 42.28,
-            "pm10": 47.4,
-            "no2": 25.28,
-            "so2": 10.64,
-            "co": 0.37,
-            "o3": 79.77
+            "pm2_5": 37.81,
+            "pm10": 42.43,
+            "no2": 19.84,
+            "so2": 11.09,
+            "co": 0.39,
+            "o3": 83.16
           },
           "cpcb_sub_indices": {
-            "pm2_5": 70,
-            "pm10": 47,
-            "no2": 32,
-            "so2": 13,
-            "co": 18,
-            "o3": 80
+            "pm2_5": 63,
+            "pm10": 42,
+            "no2": 25,
+            "so2": 14,
+            "co": 20,
+            "o3": 83
           },
           "is_cpcb_compliant": true
         }
@@ -3375,18 +3411,18 @@
         "trend_sentiment": "positive",
         "predicted_dominant_pollutant": "O3",
         "highest_predicted_day": {
-          "date": "2026-11-20",
-          "aqi": 80,
+          "date": "2026-11-21",
+          "aqi": 87,
           "category": "Satisfactory"
         },
         "lowest_predicted_day": {
           "date": "2026-11-23",
-          "aqi": 78,
+          "aqi": 81,
           "category": "Satisfactory"
         },
         "largest_pollutant_shift": {
-          "pollutant": "NO2",
-          "magnitude": 9.19
+          "pollutant": "O3",
+          "magnitude": 7.05
         }
       },
       "chart_history": [
@@ -3440,7 +3476,13 @@
         },
         {
           "date": "2026-11-19",
-          "aqi": 106,
+          "aqi": 94,
+          "category": "Satisfactory",
+          "is_forecast": false
+        },
+        {
+          "date": "2026-11-20",
+          "aqi": 112,
           "category": "Moderate",
           "is_forecast": false
         }
@@ -3453,221 +3495,221 @@
     },
     "Pune": {
       "city": "Pune",
-      "latest_observation_date": "2026-11-19",
-      "forecast_generation_time": "2026-11-19T14:14:49.606223Z",
+      "latest_observation_date": "2026-11-20",
+      "forecast_generation_time": "2026-11-20T13:52:51.682048Z",
       "model_name": "Google TimesFM 2.5 (200M Foundation Model)",
       "model_version": "2.5-200m-pytorch",
       "input_source": "supabase_recent_atmospheric",
-      "latest_observed_aqi": 118,
+      "latest_observed_aqi": 120,
       "latest_observed_category": "Moderate",
       "latest_observed_pollutants": {
-        "pm2_5": 47.3,
-        "pm10": 52.7,
-        "no2": 9.3,
-        "so2": 10.25,
-        "co": 0.34,
-        "o3": 98.5
+        "pm2_5": 43.25,
+        "pm10": 46.5,
+        "no2": 10.9,
+        "so2": 10.05,
+        "co": 0.33,
+        "o3": 103.0
       },
       "predicted_pollutants_timeline": {
         "pm2_5": {
           "point": [
-            45.37,
-            44.81,
-            44.5,
-            42.99,
-            42.59,
-            42.67,
-            44.13
+            42.13,
+            41.81,
+            40.71,
+            40.71,
+            41.65,
+            43.42,
+            43.04
           ],
           "q10": [
-            34.42,
-            32.92,
-            32.01,
-            30.2,
-            29.28,
-            29.02,
-            30.01
+            33.9,
+            32.47,
+            30.79,
+            30.31,
+            30.43,
+            31.74,
+            30.9
           ],
           "q90": [
-            56.93,
-            57.57,
-            58.27,
-            57.18,
-            57.55,
-            57.56,
-            59.78
+            51.2,
+            52.14,
+            51.84,
+            52.31,
+            54.03,
+            56.09,
+            56.15
           ]
         },
         "pm10": {
           "point": [
-            50.61,
-            50.19,
-            49.7,
-            48.09,
-            47.4,
-            47.47,
-            49.1
+            46.38,
+            46.26,
+            45.16,
+            45.26,
+            46.17,
+            47.84,
+            47.33
           ],
           "q10": [
-            38.76,
-            37.43,
-            36.3,
-            34.6,
-            33.41,
-            33.24,
-            34.13
+            37.35,
+            36.24,
+            34.74,
+            34.55,
+            34.56,
+            35.64,
+            34.58
           ],
           "q90": [
-            64.24,
-            65.24,
-            65.85,
-            64.49,
-            64.43,
-            64.44,
-            67.04
+            56.83,
+            57.98,
+            57.52,
+            57.92,
+            59.58,
+            61.76,
+            61.8
           ]
         },
         "no2": {
           "point": [
-            11.43,
-            11.73,
-            12.08,
-            12.16,
-            12.24,
-            12.09,
-            12.62
+            11.54,
+            11.83,
+            12.03,
+            11.84,
+            11.76,
+            12.51,
+            12.16
           ],
           "q10": [
-            6.4,
-            6.05,
-            5.79,
-            5.64,
-            5.25,
-            5.08,
-            5.27
+            7.61,
+            7.24,
+            7.12,
+            6.87,
+            6.46,
+            6.98,
+            6.52
           ],
           "q90": [
-            21.22,
-            22.8,
-            23.92,
-            24.17,
-            24.65,
-            24.57,
-            25.34
+            19.62,
+            21.42,
+            22.2,
+            22.28,
+            22.6,
+            23.79,
+            23.4
           ]
         },
         "so2": {
           "point": [
-            11.33,
-            12.05,
-            12.14,
-            11.86,
-            11.49,
-            11.55,
-            11.73
+            11.56,
+            11.81,
+            11.83,
+            11.42,
+            11.29,
+            11.06,
+            11.5
           ],
           "q10": [
-            8.51,
-            8.77,
-            8.59,
-            8.25,
-            7.62,
-            7.6,
-            7.61
+            8.65,
+            8.63,
+            8.54,
+            8.04,
+            7.71,
+            7.51,
+            7.74
           ],
           "q90": [
-            14.54,
-            15.65,
-            15.99,
-            15.7,
-            15.54,
-            15.56,
-            15.91
+            14.74,
+            15.25,
+            15.34,
+            15.01,
+            14.97,
+            14.8,
+            15.4
           ]
         },
         "co": {
           "point": [
+            0.36,
             0.37,
             0.39,
+            0.39,
+            0.37,
             0.4,
-            0.4,
-            0.4,
-            0.4,
-            0.41
+            0.39
           ],
           "q10": [
-            0.27,
-            0.27,
-            0.27,
-            0.27,
             0.25,
+            0.25,
+            0.26,
             0.24,
-            0.25
+            0.22,
+            0.24,
+            0.22
           ],
           "q90": [
             0.48,
             0.52,
-            0.54,
             0.55,
-            0.56,
+            0.55,
+            0.54,
             0.57,
-            0.6
+            0.57
           ]
         },
         "o3": {
           "point": [
-            98.63,
-            99.24,
-            98.24,
-            98.38,
-            98.41,
-            98.79,
-            97.7
+            99.08,
+            97.95,
+            97.55,
+            97.81,
+            98.36,
+            97.11,
+            97.79
           ],
           "q10": [
-            76.82,
-            76.44,
-            74.71,
-            74.06,
-            73.23,
-            73.15,
-            71.99
+            79.37,
+            77.03,
+            75.91,
+            75.79,
+            75.78,
+            74.24,
+            74.65
           ],
           "q90": [
-            123.8,
-            126.57,
-            126.31,
-            127.28,
-            128.19,
-            129.02,
-            128.1
+            120.11,
+            120.46,
+            121.18,
+            121.85,
+            123.37,
+            122.01,
+            123.26
           ]
         }
       },
       "daily_forecasts": [
         {
           "day_index": 1,
-          "target_date": "2026-11-20",
+          "target_date": "2026-11-21",
           "predicted_aqi": 99,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
             95,
-            142
+            141
           ],
-          "change_from_latest": -19,
-          "direct_aqi_prediction": 120,
+          "change_from_latest": -21,
+          "direct_aqi_prediction": 118,
           "predicted_pollutants": {
-            "pm2_5": 45.37,
-            "pm10": 50.61,
-            "no2": 11.43,
-            "so2": 11.33,
-            "co": 0.37,
-            "o3": 98.63
+            "pm2_5": 42.13,
+            "pm10": 46.38,
+            "no2": 11.54,
+            "so2": 11.56,
+            "co": 0.36,
+            "o3": 99.08
           },
           "cpcb_sub_indices": {
-            "pm2_5": 76,
-            "pm10": 51,
+            "pm2_5": 70,
+            "pm10": 46,
             "no2": 14,
             "so2": 14,
             "co": 18,
@@ -3677,57 +3719,57 @@
         },
         {
           "day_index": 2,
-          "target_date": "2026-11-21",
-          "predicted_aqi": 99,
-          "predicted_category": "Satisfactory",
-          "dominant_pollutant": "O3",
-          "uncertainty_range": [
-            91,
-            145
-          ],
-          "change_from_latest": -19,
-          "direct_aqi_prediction": 120,
-          "predicted_pollutants": {
-            "pm2_5": 44.81,
-            "pm10": 50.19,
-            "no2": 11.73,
-            "so2": 12.05,
-            "co": 0.39,
-            "o3": 99.24
-          },
-          "cpcb_sub_indices": {
-            "pm2_5": 75,
-            "pm10": 50,
-            "no2": 15,
-            "so2": 15,
-            "co": 20,
-            "o3": 99
-          },
-          "is_cpcb_compliant": true
-        },
-        {
-          "day_index": 3,
           "target_date": "2026-11-22",
           "predicted_aqi": 98,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            88,
-            147
+            91,
+            144
           ],
-          "change_from_latest": -20,
-          "direct_aqi_prediction": 119,
+          "change_from_latest": -22,
+          "direct_aqi_prediction": 118,
           "predicted_pollutants": {
-            "pm2_5": 44.5,
-            "pm10": 49.7,
-            "no2": 12.08,
-            "so2": 12.14,
-            "co": 0.4,
-            "o3": 98.24
+            "pm2_5": 41.81,
+            "pm10": 46.26,
+            "no2": 11.83,
+            "so2": 11.81,
+            "co": 0.37,
+            "o3": 97.95
           },
           "cpcb_sub_indices": {
-            "pm2_5": 74,
-            "pm10": 50,
+            "pm2_5": 70,
+            "pm10": 46,
+            "no2": 15,
+            "so2": 15,
+            "co": 18,
+            "o3": 98
+          },
+          "is_cpcb_compliant": true
+        },
+        {
+          "day_index": 3,
+          "target_date": "2026-11-23",
+          "predicted_aqi": 98,
+          "predicted_category": "Satisfactory",
+          "dominant_pollutant": "O3",
+          "uncertainty_range": [
+            86,
+            144
+          ],
+          "change_from_latest": -22,
+          "direct_aqi_prediction": 116,
+          "predicted_pollutants": {
+            "pm2_5": 40.71,
+            "pm10": 45.16,
+            "no2": 12.03,
+            "so2": 11.83,
+            "co": 0.39,
+            "o3": 97.55
+          },
+          "cpcb_sub_indices": {
+            "pm2_5": 68,
+            "pm10": 45,
             "no2": 15,
             "so2": 15,
             "co": 20,
@@ -3737,29 +3779,29 @@
         },
         {
           "day_index": 4,
-          "target_date": "2026-11-23",
+          "target_date": "2026-11-24",
           "predicted_aqi": 98,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            84,
-            147
+            88,
+            148
           ],
-          "change_from_latest": -20,
-          "direct_aqi_prediction": 118,
+          "change_from_latest": -22,
+          "direct_aqi_prediction": 119,
           "predicted_pollutants": {
-            "pm2_5": 42.99,
-            "pm10": 48.09,
-            "no2": 12.16,
-            "so2": 11.86,
-            "co": 0.4,
-            "o3": 98.38
+            "pm2_5": 40.71,
+            "pm10": 45.26,
+            "no2": 11.84,
+            "so2": 11.42,
+            "co": 0.39,
+            "o3": 97.81
           },
           "cpcb_sub_indices": {
-            "pm2_5": 72,
-            "pm10": 48,
+            "pm2_5": 68,
+            "pm10": 45,
             "no2": 15,
-            "so2": 15,
+            "so2": 14,
             "co": 20,
             "o3": 98
           },
@@ -3767,89 +3809,89 @@
         },
         {
           "day_index": 5,
-          "target_date": "2026-11-24",
+          "target_date": "2026-11-25",
           "predicted_aqi": 98,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            83,
+            87,
             149
           ],
-          "change_from_latest": -20,
+          "change_from_latest": -22,
           "direct_aqi_prediction": 119,
           "predicted_pollutants": {
-            "pm2_5": 42.59,
-            "pm10": 47.4,
-            "no2": 12.24,
-            "so2": 11.49,
-            "co": 0.4,
-            "o3": 98.41
+            "pm2_5": 41.65,
+            "pm10": 46.17,
+            "no2": 11.76,
+            "so2": 11.29,
+            "co": 0.37,
+            "o3": 98.36
           },
           "cpcb_sub_indices": {
-            "pm2_5": 71,
-            "pm10": 47,
+            "pm2_5": 69,
+            "pm10": 46,
             "no2": 15,
             "so2": 14,
-            "co": 20,
+            "co": 18,
             "o3": 98
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 6,
-          "target_date": "2026-11-25",
-          "predicted_aqi": 99,
+          "target_date": "2026-11-26",
+          "predicted_aqi": 97,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            83,
-            149
+            88,
+            150
           ],
-          "change_from_latest": -19,
-          "direct_aqi_prediction": 119,
+          "change_from_latest": -23,
+          "direct_aqi_prediction": 121,
           "predicted_pollutants": {
-            "pm2_5": 42.67,
-            "pm10": 47.47,
-            "no2": 12.09,
-            "so2": 11.55,
+            "pm2_5": 43.42,
+            "pm10": 47.84,
+            "no2": 12.51,
+            "so2": 11.06,
             "co": 0.4,
-            "o3": 98.79
+            "o3": 97.11
           },
           "cpcb_sub_indices": {
-            "pm2_5": 71,
-            "pm10": 47,
-            "no2": 15,
+            "pm2_5": 72,
+            "pm10": 48,
+            "no2": 16,
             "so2": 14,
             "co": 20,
-            "o3": 99
+            "o3": 97
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 7,
-          "target_date": "2026-11-26",
+          "target_date": "2026-11-27",
           "predicted_aqi": 98,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "O3",
           "uncertainty_range": [
-            84,
-            151
+            88,
+            152
           ],
-          "change_from_latest": -20,
+          "change_from_latest": -22,
           "direct_aqi_prediction": 121,
           "predicted_pollutants": {
-            "pm2_5": 44.13,
-            "pm10": 49.1,
-            "no2": 12.62,
-            "so2": 11.73,
-            "co": 0.41,
-            "o3": 97.7
+            "pm2_5": 43.04,
+            "pm10": 47.33,
+            "no2": 12.16,
+            "so2": 11.5,
+            "co": 0.39,
+            "o3": 97.79
           },
           "cpcb_sub_indices": {
-            "pm2_5": 74,
-            "pm10": 49,
-            "no2": 16,
-            "so2": 15,
+            "pm2_5": 72,
+            "pm10": 47,
+            "no2": 15,
+            "so2": 14,
             "co": 20,
             "o3": 98
           },
@@ -3861,18 +3903,18 @@
         "trend_sentiment": "positive",
         "predicted_dominant_pollutant": "O3",
         "highest_predicted_day": {
-          "date": "2026-11-20",
+          "date": "2026-11-21",
           "aqi": 99,
           "category": "Satisfactory"
         },
         "lowest_predicted_day": {
-          "date": "2026-11-22",
-          "aqi": 98,
+          "date": "2026-11-26",
+          "aqi": 97,
           "category": "Satisfactory"
         },
         "largest_pollutant_shift": {
-          "pollutant": "NO2",
-          "magnitude": 2.13
+          "pollutant": "O3",
+          "magnitude": 3.92
         }
       },
       "chart_history": [
@@ -3926,7 +3968,13 @@
         },
         {
           "date": "2026-11-19",
-          "aqi": 118,
+          "aqi": 107,
+          "category": "Moderate",
+          "is_forecast": false
+        },
+        {
+          "date": "2026-11-20",
+          "aqi": 120,
           "category": "Moderate",
           "is_forecast": false
         }
@@ -3939,405 +3987,405 @@
     },
     "Jaipur": {
       "city": "Jaipur",
-      "latest_observation_date": "2026-11-19",
-      "forecast_generation_time": "2026-11-19T14:14:51.065106Z",
+      "latest_observation_date": "2026-11-20",
+      "forecast_generation_time": "2026-11-20T13:52:53.486009Z",
       "model_name": "Google TimesFM 2.5 (200M Foundation Model)",
       "model_version": "2.5-200m-pytorch",
       "input_source": "supabase_recent_atmospheric",
-      "latest_observed_aqi": 125,
+      "latest_observed_aqi": 173,
       "latest_observed_category": "Moderate",
       "latest_observed_pollutants": {
-        "pm2_5": 49.55,
-        "pm10": 52.15,
-        "no2": 19.15,
-        "so2": 11.9,
-        "co": 0.61,
-        "o3": 78.0
+        "pm2_5": 65.6,
+        "pm10": 67.3,
+        "no2": 21.45,
+        "so2": 13.85,
+        "co": 0.64,
+        "o3": 92.5
       },
       "predicted_pollutants_timeline": {
         "pm2_5": {
           "point": [
-            49.29,
-            49.54,
-            50.13,
-            53.24,
-            49.99,
-            47.35,
-            46.33
+            62.08,
+            60.06,
+            59.57,
+            55.69,
+            53.7,
+            49.21,
+            50.57
           ],
           "q10": [
-            33.26,
-            29.19,
-            27.27,
-            29.33,
-            24.25,
-            21.83,
-            20.95
+            39.97,
+            34.9,
+            32.74,
+            28.99,
+            26.36,
+            22.93,
+            24.68
           ],
           "q90": [
-            70.45,
-            74.45,
-            76.97,
-            82.31,
-            79.88,
-            77.09,
-            76.35
+            84.71,
+            87.15,
+            89.78,
+            86.6,
+            87.07,
+            82.9,
+            85.36
           ]
         },
         "pm10": {
           "point": [
-            53.38,
-            55.35,
-            57.3,
-            60.49,
-            56.74,
-            53.25,
-            51.85
+            66.27,
+            65.23,
+            66.49,
+            62.34,
+            60.24,
+            56.13,
+            59.15
           ],
           "q10": [
-            26.23,
-            21.9,
-            20.56,
-            22.41,
-            16.39,
-            13.28,
-            11.79
+            38.54,
+            33.97,
+            32.54,
+            28.37,
+            26.75,
+            25.1,
+            27.13
           ],
           "q90": [
-            87.04,
-            94.32,
-            98.9,
-            103.58,
-            101.83,
-            98.35,
-            97.81
+            101.24,
+            106.41,
+            112.34,
+            108.03,
+            107.37,
+            101.88,
+            106.92
           ]
         },
         "no2": {
           "point": [
-            20.39,
-            21.26,
-            21.82,
-            23.18,
-            21.8,
-            20.56,
-            20.31
+            22.28,
+            23.02,
+            24.06,
+            22.7,
+            21.93,
+            21.48,
+            21.78
           ],
           "q10": [
-            12.8,
-            12.03,
-            11.35,
-            12.04,
-            10.13,
-            9.36,
-            9.22
+            15.44,
+            14.52,
+            14.3,
+            13.19,
+            12.4,
+            12.41,
+            12.53
           ],
           "q90": [
-            34.27,
-            38.13,
-            40.24,
-            43.04,
-            41.76,
-            40.4,
-            39.85
+            34.45,
+            38.03,
+            40.91,
+            39.88,
+            39.38,
+            38.88,
+            39.61
           ]
         },
         "so2": {
           "point": [
-            11.28,
-            11.52,
-            11.59,
-            12.38,
-            11.33,
-            11.12,
-            10.93
+            12.76,
+            12.58,
+            13.18,
+            12.46,
+            12.33,
+            11.81,
+            12.16
           ],
           "q10": [
-            6.92,
-            6.6,
-            6.43,
-            6.92,
-            5.8,
-            5.7,
-            5.59
+            7.73,
+            7.07,
+            7.28,
+            6.57,
+            6.34,
+            5.97,
+            6.22
           ],
           "q90": [
-            17.37,
-            18.69,
-            19.17,
-            20.38,
-            19.45,
-            19.21,
-            18.95
+            19.09,
+            19.66,
+            20.75,
+            20.02,
+            20.09,
+            19.49,
+            20.04
           ]
         },
         "co": {
           "point": [
-            0.55,
+            0.62,
+            0.59,
+            0.6,
+            0.56,
             0.53,
-            0.5,
-            0.52,
-            0.47,
-            0.41,
-            0.39
+            0.48,
+            0.46
           ],
           "q10": [
+            0.41,
             0.34,
-            0.29,
-            0.25,
+            0.31,
             0.26,
-            0.21,
-            0.18,
+            0.23,
+            0.2,
             0.18
           ],
           "q90": [
-            0.86,
-            0.92,
-            0.94,
+            0.87,
+            0.93,
             0.99,
-            0.95,
-            0.89,
-            0.86
+            0.97,
+            0.96,
+            0.92,
+            0.9
           ]
         },
         "o3": {
           "point": [
-            72.9,
-            72.47,
-            70.97,
-            70.12,
-            72.57,
-            73.61,
-            72.71
+            78.5,
+            74.35,
+            70.75,
+            75.45,
+            76.53,
+            74.89,
+            71.89
           ],
           "q10": [
-            49.64,
-            45.95,
-            42.75,
-            41.25,
-            43.13,
-            44.21,
-            42.76
+            55.36,
+            48.51,
+            43.71,
+            48.34,
+            48.49,
+            46.39,
+            42.5
           ],
           "q90": [
-            92.04,
-            94.08,
-            94.37,
-            94.01,
-            97.12,
-            97.76,
-            97.27
+            99.19,
+            97.35,
+            94.98,
+            99.64,
+            101.28,
+            100.12,
+            97.96
           ]
         }
       },
       "daily_forecasts": [
         {
           "day_index": 1,
-          "target_date": "2026-11-20",
-          "predicted_aqi": 82,
-          "predicted_category": "Satisfactory",
+          "target_date": "2026-11-21",
+          "predicted_aqi": 107,
+          "predicted_category": "Moderate",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            75,
-            165
+            90,
+            210
           ],
-          "change_from_latest": -43,
-          "direct_aqi_prediction": 109,
+          "change_from_latest": -66,
+          "direct_aqi_prediction": 139,
           "predicted_pollutants": {
-            "pm2_5": 49.29,
-            "pm10": 53.38,
-            "no2": 20.39,
-            "so2": 11.28,
-            "co": 0.55,
-            "o3": 72.9
+            "pm2_5": 62.08,
+            "pm10": 66.27,
+            "no2": 22.28,
+            "so2": 12.76,
+            "co": 0.62,
+            "o3": 78.5
           },
           "cpcb_sub_indices": {
-            "pm2_5": 82,
-            "pm10": 53,
-            "no2": 25,
-            "so2": 14,
-            "co": 28,
-            "o3": 73
+            "pm2_5": 107,
+            "pm10": 66,
+            "no2": 28,
+            "so2": 16,
+            "co": 31,
+            "o3": 78
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 2,
-          "target_date": "2026-11-21",
-          "predicted_aqi": 83,
+          "target_date": "2026-11-22",
+          "predicted_aqi": 100,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            72,
-            175
+            81,
+            217
           ],
-          "change_from_latest": -42,
-          "direct_aqi_prediction": 109,
+          "change_from_latest": -73,
+          "direct_aqi_prediction": 133,
           "predicted_pollutants": {
-            "pm2_5": 49.54,
-            "pm10": 55.35,
-            "no2": 21.26,
-            "so2": 11.52,
-            "co": 0.53,
-            "o3": 72.47
+            "pm2_5": 60.06,
+            "pm10": 65.23,
+            "no2": 23.02,
+            "so2": 12.58,
+            "co": 0.59,
+            "o3": 74.35
           },
           "cpcb_sub_indices": {
-            "pm2_5": 83,
-            "pm10": 55,
-            "no2": 27,
-            "so2": 14,
-            "co": 26,
-            "o3": 72
+            "pm2_5": 100,
+            "pm10": 65,
+            "no2": 29,
+            "so2": 16,
+            "co": 30,
+            "o3": 74
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 3,
-          "target_date": "2026-11-22",
-          "predicted_aqi": 84,
+          "target_date": "2026-11-23",
+          "predicted_aqi": 99,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            72,
-            187
+            78,
+            226
           ],
-          "change_from_latest": -41,
-          "direct_aqi_prediction": 113,
+          "change_from_latest": -74,
+          "direct_aqi_prediction": 132,
           "predicted_pollutants": {
-            "pm2_5": 50.13,
-            "pm10": 57.3,
-            "no2": 21.82,
-            "so2": 11.59,
-            "co": 0.5,
-            "o3": 70.97
+            "pm2_5": 59.57,
+            "pm10": 66.49,
+            "no2": 24.06,
+            "so2": 13.18,
+            "co": 0.6,
+            "o3": 70.75
           },
           "cpcb_sub_indices": {
-            "pm2_5": 84,
-            "pm10": 57,
-            "no2": 27,
-            "so2": 14,
-            "co": 25,
+            "pm2_5": 99,
+            "pm10": 66,
+            "no2": 30,
+            "so2": 16,
+            "co": 30,
             "o3": 71
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 4,
-          "target_date": "2026-11-23",
-          "predicted_aqi": 89,
+          "target_date": "2026-11-24",
+          "predicted_aqi": 93,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            72,
-            193
+            74,
+            222
           ],
-          "change_from_latest": -36,
-          "direct_aqi_prediction": 115,
+          "change_from_latest": -80,
+          "direct_aqi_prediction": 127,
           "predicted_pollutants": {
-            "pm2_5": 53.24,
-            "pm10": 60.49,
-            "no2": 23.18,
-            "so2": 12.38,
-            "co": 0.52,
-            "o3": 70.12
+            "pm2_5": 55.69,
+            "pm10": 62.34,
+            "no2": 22.7,
+            "so2": 12.46,
+            "co": 0.56,
+            "o3": 75.45
           },
           "cpcb_sub_indices": {
-            "pm2_5": 89,
-            "pm10": 60,
-            "no2": 29,
-            "so2": 15,
-            "co": 26,
-            "o3": 70
+            "pm2_5": 93,
+            "pm10": 62,
+            "no2": 28,
+            "so2": 16,
+            "co": 28,
+            "o3": 75
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 5,
-          "target_date": "2026-11-24",
-          "predicted_aqi": 83,
+          "target_date": "2026-11-25",
+          "predicted_aqi": 90,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            68,
-            195
+            69,
+            220
           ],
-          "change_from_latest": -42,
-          "direct_aqi_prediction": 113,
+          "change_from_latest": -83,
+          "direct_aqi_prediction": 120,
           "predicted_pollutants": {
-            "pm2_5": 49.99,
-            "pm10": 56.74,
-            "no2": 21.8,
-            "so2": 11.33,
-            "co": 0.47,
-            "o3": 72.57
+            "pm2_5": 53.7,
+            "pm10": 60.24,
+            "no2": 21.93,
+            "so2": 12.33,
+            "co": 0.53,
+            "o3": 76.53
           },
           "cpcb_sub_indices": {
-            "pm2_5": 83,
-            "pm10": 57,
+            "pm2_5": 90,
+            "pm10": 60,
             "no2": 27,
-            "so2": 14,
-            "co": 24,
-            "o3": 73
+            "so2": 15,
+            "co": 26,
+            "o3": 77
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 6,
-          "target_date": "2026-11-25",
-          "predicted_aqi": 79,
+          "target_date": "2026-11-26",
+          "predicted_aqi": 82,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            66,
-            187
+            65,
+            208
           ],
-          "change_from_latest": -46,
-          "direct_aqi_prediction": 107,
+          "change_from_latest": -91,
+          "direct_aqi_prediction": 111,
           "predicted_pollutants": {
-            "pm2_5": 47.35,
-            "pm10": 53.25,
-            "no2": 20.56,
-            "so2": 11.12,
-            "co": 0.41,
-            "o3": 73.61
+            "pm2_5": 49.21,
+            "pm10": 56.13,
+            "no2": 21.48,
+            "so2": 11.81,
+            "co": 0.48,
+            "o3": 74.89
           },
           "cpcb_sub_indices": {
-            "pm2_5": 79,
-            "pm10": 53,
-            "no2": 26,
-            "so2": 14,
-            "co": 20,
-            "o3": 74
+            "pm2_5": 82,
+            "pm10": 56,
+            "no2": 27,
+            "so2": 15,
+            "co": 24,
+            "o3": 75
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 7,
-          "target_date": "2026-11-26",
-          "predicted_aqi": 77,
+          "target_date": "2026-11-27",
+          "predicted_aqi": 84,
           "predicted_category": "Satisfactory",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            64,
-            185
+            65,
+            213
           ],
-          "change_from_latest": -48,
-          "direct_aqi_prediction": 104,
+          "change_from_latest": -89,
+          "direct_aqi_prediction": 111,
           "predicted_pollutants": {
-            "pm2_5": 46.33,
-            "pm10": 51.85,
-            "no2": 20.31,
-            "so2": 10.93,
-            "co": 0.39,
-            "o3": 72.71
+            "pm2_5": 50.57,
+            "pm10": 59.15,
+            "no2": 21.78,
+            "so2": 12.16,
+            "co": 0.46,
+            "o3": 71.89
           },
           "cpcb_sub_indices": {
-            "pm2_5": 77,
-            "pm10": 52,
-            "no2": 25,
-            "so2": 14,
-            "co": 20,
-            "o3": 73
+            "pm2_5": 84,
+            "pm10": 59,
+            "no2": 27,
+            "so2": 15,
+            "co": 23,
+            "o3": 72
           },
           "is_cpcb_compliant": true
         }
@@ -4347,18 +4395,18 @@
         "trend_sentiment": "positive",
         "predicted_dominant_pollutant": "PM2.5",
         "highest_predicted_day": {
-          "date": "2026-11-23",
-          "aqi": 89,
-          "category": "Satisfactory"
+          "date": "2026-11-21",
+          "aqi": 107,
+          "category": "Moderate"
         },
         "lowest_predicted_day": {
           "date": "2026-11-26",
-          "aqi": 77,
+          "aqi": 82,
           "category": "Satisfactory"
         },
         "largest_pollutant_shift": {
           "pollutant": "O3",
-          "magnitude": 5.1
+          "magnitude": 14.0
         }
       },
       "chart_history": [
@@ -4412,7 +4460,13 @@
         },
         {
           "date": "2026-11-19",
-          "aqi": 125,
+          "aqi": 110,
+          "category": "Moderate",
+          "is_forecast": false
+        },
+        {
+          "date": "2026-11-20",
+          "aqi": 173,
           "category": "Moderate",
           "is_forecast": false
         }
@@ -4425,426 +4479,426 @@
     },
     "Lucknow": {
       "city": "Lucknow",
-      "latest_observation_date": "2026-11-19",
-      "forecast_generation_time": "2026-11-19T14:14:53.006836Z",
+      "latest_observation_date": "2026-11-20",
+      "forecast_generation_time": "2026-11-20T13:52:55.303324Z",
       "model_name": "Google TimesFM 2.5 (200M Foundation Model)",
       "model_version": "2.5-200m-pytorch",
       "input_source": "supabase_recent_atmospheric",
-      "latest_observed_aqi": 235,
+      "latest_observed_aqi": 224,
       "latest_observed_category": "Poor",
       "latest_observed_pollutants": {
-        "pm2_5": 117.6,
-        "pm10": 124.45,
-        "no2": 28.55,
-        "so2": 21.25,
-        "co": 0.69,
-        "o3": 79.0
+        "pm2_5": 99.6,
+        "pm10": 103.35,
+        "no2": 25.8,
+        "so2": 19.05,
+        "co": 0.63,
+        "o3": 77.0
       },
       "predicted_pollutants_timeline": {
         "pm2_5": {
           "point": [
-            111.02,
-            109.62,
-            101.77,
-            101.23,
-            102.86,
-            105.07,
-            103.32
+            97.52,
+            95.94,
+            99.98,
+            99.55,
+            105.75,
+            103.32,
+            93.06
           ],
           "q10": [
-            67.91,
-            64.65,
-            57.54,
-            55.96,
-            55.38,
-            57.38,
-            55.03
+            64.35,
+            57.48,
+            58.56,
+            55.25,
+            57.74,
+            56.41,
+            48.4
           ],
           "q90": [
-            163.39,
-            168.3,
-            162.17,
-            162.95,
-            167.57,
-            171.69,
-            170.36
+            140.08,
+            145.49,
+            153.55,
+            156.45,
+            166.75,
+            163.35,
+            150.64
           ]
         },
         "pm10": {
           "point": [
-            125.86,
-            123.79,
-            108.83,
-            111.54,
-            114.08,
-            119.53,
-            117.99
+            102.97,
+            103.18,
+            107.86,
+            109.09,
+            115.86,
+            112.64,
+            101.36
           ],
           "q10": [
-            80.57,
-            76.34,
-            65.06,
-            66.77,
-            64.35,
-            68.39,
-            65.59
+            70.72,
+            65.46,
+            66.25,
+            63.63,
+            65.45,
+            63.9,
+            55.95
           ],
           "q90": [
-            184.2,
-            189.8,
-            173.39,
-            177.42,
-            185.14,
-            194.24,
-            192.46
+            147.65,
+            155.74,
+            166.14,
+            171.92,
+            184.18,
+            179.64,
+            164.82
           ]
         },
         "no2": {
           "point": [
-            27.25,
-            27.33,
-            27.72,
-            28.42,
-            26.26,
-            25.21,
-            24.79
+            27.62,
+            28.49,
+            29.78,
+            26.96,
+            27.21,
+            26.48,
+            25.63
           ],
           "q10": [
-            10.66,
-            9.1,
-            8.22,
-            7.99,
-            4.89,
-            4.15,
-            3.58
+            13.71,
+            11.85,
+            11.3,
+            8.52,
+            7.94,
+            7.38,
+            6.6
           ],
           "q90": [
-            47.6,
-            50.92,
-            53.08,
-            55.08,
-            54.5,
-            53.9,
-            54.07
+            44.59,
+            49.36,
+            52.9,
+            50.64,
+            52.12,
+            51.87,
+            51.03
           ]
         },
         "so2": {
           "point": [
-            19.35,
-            21.43,
-            19.36,
-            21.13,
-            19.22,
-            21.59,
-            20.36
+            20.39,
+            20.52,
+            20.97,
+            20.32,
+            21.0,
+            20.73,
+            20.59
           ],
           "q10": [
-            14.0,
-            15.66,
-            13.41,
-            14.77,
-            12.47,
-            14.56,
-            13.27
+            14.25,
+            13.99,
+            14.09,
+            13.28,
+            13.65,
+            13.36,
+            13.1
           ],
           "q90": [
-            25.05,
-            27.94,
-            26.08,
-            28.26,
-            26.76,
-            29.72,
-            28.54
+            27.23,
+            27.84,
+            28.67,
+            28.08,
+            29.13,
+            28.91,
+            28.87
           ]
         },
         "co": {
           "point": [
-            0.62,
             0.6,
             0.58,
-            0.57,
-            0.59,
-            0.62,
-            0.62
+            0.55,
+            0.58,
+            0.6,
+            0.61,
+            0.55
           ],
           "q10": [
-            0.36,
+            0.39,
+            0.35,
+            0.31,
             0.32,
-            0.29,
-            0.28,
-            0.3,
             0.34,
-            0.33
+            0.35,
+            0.29
           ],
           "q90": [
-            0.89,
+            0.83,
+            0.84,
+            0.84,
+            0.87,
             0.92,
-            0.91,
-            0.89,
             0.93,
-            0.97,
-            0.98
+            0.87
           ]
         },
         "o3": {
           "point": [
-            75.53,
-            75.28,
-            73.97,
-            73.86,
-            74.72,
-            76.01,
-            74.54
+            73.54,
+            70.72,
+            68.49,
+            72.13,
+            72.81,
+            70.66,
+            71.01
           ],
           "q10": [
-            39.57,
-            36.09,
-            32.97,
-            31.99,
-            31.81,
-            32.74,
-            31.14
+            41.21,
+            33.94,
+            30.0,
+            33.55,
+            33.16,
+            30.21,
+            30.1
           ],
           "q90": [
-            98.53,
-            99.14,
-            99.24,
-            99.84,
-            102.04,
-            102.85,
-            101.76
+            96.07,
+            96.27,
+            95.53,
+            99.13,
+            101.06,
+            99.04,
+            99.62
           ]
         }
       },
       "daily_forecasts": [
         {
           "day_index": 1,
-          "target_date": "2026-11-20",
-          "predicted_aqi": 270,
+          "target_date": "2026-11-21",
+          "predicted_aqi": 225,
           "predicted_category": "Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
             154,
-            308
+            296
           ],
-          "change_from_latest": 35,
-          "direct_aqi_prediction": 232,
+          "change_from_latest": 1,
+          "direct_aqi_prediction": 226,
           "predicted_pollutants": {
-            "pm2_5": 111.02,
-            "pm10": 125.86,
-            "no2": 27.25,
-            "so2": 19.35,
-            "co": 0.62,
-            "o3": 75.53
+            "pm2_5": 97.52,
+            "pm10": 102.97,
+            "no2": 27.62,
+            "so2": 20.39,
+            "co": 0.6,
+            "o3": 73.54
           },
           "cpcb_sub_indices": {
-            "pm2_5": 270,
-            "pm10": 117,
-            "no2": 34,
-            "so2": 24,
-            "co": 31,
-            "o3": 76
+            "pm2_5": 225,
+            "pm10": 102,
+            "no2": 35,
+            "so2": 25,
+            "co": 30,
+            "o3": 74
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 2,
-          "target_date": "2026-11-21",
-          "predicted_aqi": 265,
+          "target_date": "2026-11-22",
+          "predicted_aqi": 220,
           "predicted_category": "Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            142,
-            324
+            141,
+            308
           ],
-          "change_from_latest": 30,
-          "direct_aqi_prediction": 232,
+          "change_from_latest": -4,
+          "direct_aqi_prediction": 225,
           "predicted_pollutants": {
-            "pm2_5": 109.62,
-            "pm10": 123.79,
-            "no2": 27.33,
-            "so2": 21.43,
-            "co": 0.6,
-            "o3": 75.28
+            "pm2_5": 95.94,
+            "pm10": 103.18,
+            "no2": 28.49,
+            "so2": 20.52,
+            "co": 0.58,
+            "o3": 70.72
           },
           "cpcb_sub_indices": {
-            "pm2_5": 265,
-            "pm10": 116,
-            "no2": 34,
-            "so2": 27,
-            "co": 30,
-            "o3": 75
+            "pm2_5": 220,
+            "pm10": 102,
+            "no2": 36,
+            "so2": 26,
+            "co": 29,
+            "o3": 71
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 3,
-          "target_date": "2026-11-22",
-          "predicted_aqi": 239,
+          "target_date": "2026-11-23",
+          "predicted_aqi": 233,
           "predicted_category": "Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            130,
-            327
+            148,
+            331
           ],
-          "change_from_latest": 4,
-          "direct_aqi_prediction": 226,
+          "change_from_latest": 9,
+          "direct_aqi_prediction": 239,
           "predicted_pollutants": {
-            "pm2_5": 101.77,
-            "pm10": 108.83,
-            "no2": 27.72,
-            "so2": 19.36,
-            "co": 0.58,
-            "o3": 73.97
+            "pm2_5": 99.98,
+            "pm10": 107.86,
+            "no2": 29.78,
+            "so2": 20.97,
+            "co": 0.55,
+            "o3": 68.49
           },
           "cpcb_sub_indices": {
-            "pm2_5": 239,
-            "pm10": 106,
-            "no2": 35,
-            "so2": 24,
-            "co": 29,
-            "o3": 74
+            "pm2_5": 233,
+            "pm10": 105,
+            "no2": 37,
+            "so2": 26,
+            "co": 28,
+            "o3": 68
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 4,
-          "target_date": "2026-11-23",
-          "predicted_aqi": 237,
+          "target_date": "2026-11-24",
+          "predicted_aqi": 232,
           "predicted_category": "Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            129,
-            334
+            138,
+            329
           ],
-          "change_from_latest": 2,
-          "direct_aqi_prediction": 229,
+          "change_from_latest": 8,
+          "direct_aqi_prediction": 233,
           "predicted_pollutants": {
-            "pm2_5": 101.23,
-            "pm10": 111.54,
-            "no2": 28.42,
-            "so2": 21.13,
-            "co": 0.57,
-            "o3": 73.86
+            "pm2_5": 99.55,
+            "pm10": 109.09,
+            "no2": 26.96,
+            "so2": 20.32,
+            "co": 0.58,
+            "o3": 72.13
           },
           "cpcb_sub_indices": {
-            "pm2_5": 237,
-            "pm10": 108,
-            "no2": 36,
-            "so2": 26,
-            "co": 28,
-            "o3": 74
+            "pm2_5": 232,
+            "pm10": 106,
+            "no2": 34,
+            "so2": 25,
+            "co": 29,
+            "o3": 72
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 5,
-          "target_date": "2026-11-24",
-          "predicted_aqi": 243,
+          "target_date": "2026-11-25",
+          "predicted_aqi": 252,
           "predicted_category": "Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            126,
-            342
+            138,
+            339
           ],
-          "change_from_latest": 8,
-          "direct_aqi_prediction": 230,
+          "change_from_latest": 28,
+          "direct_aqi_prediction": 236,
           "predicted_pollutants": {
-            "pm2_5": 102.86,
-            "pm10": 114.08,
-            "no2": 26.26,
-            "so2": 19.22,
-            "co": 0.59,
-            "o3": 74.72
+            "pm2_5": 105.75,
+            "pm10": 115.86,
+            "no2": 27.21,
+            "so2": 21.0,
+            "co": 0.6,
+            "o3": 72.81
           },
           "cpcb_sub_indices": {
-            "pm2_5": 243,
-            "pm10": 109,
-            "no2": 33,
-            "so2": 24,
+            "pm2_5": 252,
+            "pm10": 111,
+            "no2": 34,
+            "so2": 26,
             "co": 30,
-            "o3": 75
+            "o3": 73
           },
           "is_cpcb_compliant": true
         },
         {
           "day_index": 6,
-          "target_date": "2026-11-25",
-          "predicted_aqi": 250,
-          "predicted_category": "Poor",
-          "dominant_pollutant": "PM2.5",
-          "uncertainty_range": [
-            131,
-            347
-          ],
-          "change_from_latest": 15,
-          "direct_aqi_prediction": 234,
-          "predicted_pollutants": {
-            "pm2_5": 105.07,
-            "pm10": 119.53,
-            "no2": 25.21,
-            "so2": 21.59,
-            "co": 0.62,
-            "o3": 76.01
-          },
-          "cpcb_sub_indices": {
-            "pm2_5": 250,
-            "pm10": 113,
-            "no2": 32,
-            "so2": 27,
-            "co": 31,
-            "o3": 76
-          },
-          "is_cpcb_compliant": true
-        },
-        {
-          "day_index": 7,
           "target_date": "2026-11-26",
           "predicted_aqi": 244,
           "predicted_category": "Poor",
           "dominant_pollutant": "PM2.5",
           "uncertainty_range": [
-            120,
-            340
+            135,
+            335
           ],
-          "change_from_latest": 9,
-          "direct_aqi_prediction": 224,
+          "change_from_latest": 20,
+          "direct_aqi_prediction": 232,
           "predicted_pollutants": {
             "pm2_5": 103.32,
-            "pm10": 117.99,
-            "no2": 24.79,
-            "so2": 20.36,
-            "co": 0.62,
-            "o3": 74.54
+            "pm10": 112.64,
+            "no2": 26.48,
+            "so2": 20.73,
+            "co": 0.61,
+            "o3": 70.66
           },
           "cpcb_sub_indices": {
             "pm2_5": 244,
-            "pm10": 112,
-            "no2": 31,
-            "so2": 25,
-            "co": 31,
-            "o3": 75
+            "pm10": 108,
+            "no2": 33,
+            "so2": 26,
+            "co": 30,
+            "o3": 71
+          },
+          "is_cpcb_compliant": true
+        },
+        {
+          "day_index": 7,
+          "target_date": "2026-11-27",
+          "predicted_aqi": 210,
+          "predicted_category": "Poor",
+          "dominant_pollutant": "PM2.5",
+          "uncertainty_range": [
+            114,
+            318
+          ],
+          "change_from_latest": -14,
+          "direct_aqi_prediction": 212,
+          "predicted_pollutants": {
+            "pm2_5": 93.06,
+            "pm10": 101.36,
+            "no2": 25.63,
+            "so2": 20.59,
+            "co": 0.55,
+            "o3": 71.01
+          },
+          "cpcb_sub_indices": {
+            "pm2_5": 210,
+            "pm10": 101,
+            "no2": 32,
+            "so2": 26,
+            "co": 28,
+            "o3": 71
           },
           "is_cpcb_compliant": true
         }
       ],
       "insights": {
-        "trend_direction": "Modest Increase in AQI",
-        "trend_sentiment": "negative",
+        "trend_direction": "Relatively Stable Air Quality",
+        "trend_sentiment": "neutral",
         "predicted_dominant_pollutant": "PM2.5",
         "highest_predicted_day": {
-          "date": "2026-11-20",
-          "aqi": 270,
+          "date": "2026-11-25",
+          "aqi": 252,
           "category": "Poor"
         },
         "lowest_predicted_day": {
-          "date": "2026-11-23",
-          "aqi": 237,
+          "date": "2026-11-27",
+          "aqi": 210,
           "category": "Poor"
         },
         "largest_pollutant_shift": {
-          "pollutant": "PM2.5",
-          "magnitude": 6.58
+          "pollutant": "O3",
+          "magnitude": 3.46
         }
       },
       "chart_history": [
@@ -4898,7 +4952,13 @@
         },
         {
           "date": "2026-11-19",
-          "aqi": 235,
+          "aqi": 253,
+          "category": "Poor",
+          "is_forecast": false
+        },
+        {
+          "date": "2026-11-20",
+          "aqi": 224,
           "category": "Poor",
           "is_forecast": false
         }
